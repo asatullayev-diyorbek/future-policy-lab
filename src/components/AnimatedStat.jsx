@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { useThemeStore } from "../store/theme"
 
 const fadeUp = {
@@ -17,8 +17,11 @@ export default function AnimatedStat({ value, label, icon: Icon, color, bg, bgDa
   const dark = theme === "dark"
   const [display, setDisplay] = useState(0)
   const rafRef = useRef(null)
+  const cardRef = useRef(null)
+  const inView = useInView(cardRef, { once: true, amount: 0.6 })
 
   useEffect(() => {
+    if (!inView) return
     const duration = 1400
     const start = performance.now()
     const tick = (now) => {
@@ -29,20 +32,21 @@ export default function AnimatedStat({ value, label, icon: Icon, color, bg, bgDa
     }
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [value])
+  }, [inView, value])
 
   return (
     <motion.div
+      ref={cardRef}
       variants={fadeUp}
-      className={`flex flex-col items-center gap-3 p-6 rounded-2xl border text-center ${
-        dark ? "bg-white/3 border-white/8" : "bg-white border-slate-200 shadow-sm"
+      className={`flex flex-col items-center gap-3 p-6 rounded-2xl border text-center transition-colors ${
+        dark ? "bg-white/3 border-white/8 hover:border-white/15" : "bg-white border-slate-200 shadow-sm hover:border-slate-300"
       }`}
     >
       <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${dark ? bgDark : bg}`}>
         <Icon size={20} className={color} />
       </div>
       <div>
-        <div className={`text-3xl font-extrabold tracking-tight ${dark ? "text-white" : "text-slate-900"}`}>
+        <div className={`text-3xl font-extrabold tracking-tight tabular-nums ${dark ? "text-white" : "text-slate-900"}`}>
           {formatNum(display)}{suffix}
         </div>
         <div className={`text-xs mt-1 font-medium ${dark ? "text-slate-500" : "text-slate-500"}`}>

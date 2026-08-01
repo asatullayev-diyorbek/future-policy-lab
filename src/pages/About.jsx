@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
-import { FlaskConical, FileText, MessageSquare, Library, Eye, MessageCircle } from "lucide-react"
+import { Quote, FlaskConical, FileText, MessageSquare, Library, Eye, MessageCircle, ArrowRight } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { AVENUES, PILLARS } from "../data/content"
 import { getSiteStats } from "../utils/siteStats"
@@ -44,26 +45,26 @@ export default function About() {
         image="/about-header.png"
       />
 
+      {/* Mission + Stats */}
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-white"}`}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
+            className={`relative p-8 sm:p-10 rounded-2xl border mb-16 ${
+              dark ? "border-white/8 bg-gradient-to-br from-blue-600/10 to-transparent" : "border-blue-100 bg-gradient-to-br from-blue-50 to-white"
+            }`}
           >
-            <p className={`text-base sm:text-lg leading-relaxed ${dark ? "text-slate-300" : "text-slate-700"}`}>
+            <Quote size={34} className={`mb-4 ${dark ? "text-blue-500/40" : "text-blue-200"}`} />
+            <p className={`text-lg sm:text-xl leading-relaxed font-medium max-w-3xl ${dark ? "text-slate-200" : "text-slate-800"}`}>
               Our mission is to encourage independent thinking and provide practical ideas grounded in empirical
-              evidence rather than speculation. Through five core avenues of engagement, we aim to make policy
-              discussions accessible to students, young researchers, and future leaders.
+              evidence rather than speculation — making policy discussions accessible to students, young
+              researchers, and future leaders.
             </p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Platform stats */}
-      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-slate-50"}`}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -105,40 +106,45 @@ export default function About() {
       {/* Five avenues */}
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-slate-50"}`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <motion.h2
+          <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-10 text-center ${dark ? "text-white" : "text-slate-900"}`}
+            className="text-center mb-10"
           >
-            Five Core Avenues of Engagement
-          </motion.h2>
+            <span className={`text-xs font-bold uppercase tracking-widest ${dark ? "text-blue-400" : "text-blue-700"}`}>
+              How We Work
+            </span>
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mt-2 ${dark ? "text-white" : "text-slate-900"}`}>
+              Five Core Avenues of Engagement
+            </h2>
+          </motion.div>
 
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="flex flex-col gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
-            {AVENUES.map(({ icon: Icon, number, title, summary, color, bg, bgDark }) => (
+            {AVENUES.map(({ icon: Icon, number, title, summary, color, bg, bgDark }, i) => (
               <motion.div
                 key={title}
                 variants={fadeUp}
-                className={`flex items-start gap-5 p-6 rounded-2xl border ${
-                  dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white"
-                }`}
+                className={`flex items-start gap-4 p-5 rounded-2xl border ${
+                  i === AVENUES.length - 1 ? "sm:col-span-2" : ""
+                } ${dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white"}`}
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${dark ? bgDark : bg}`}>
-                  <Icon size={22} className={color} />
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${dark ? bgDark : bg}`}>
+                  <Icon size={20} className={color} />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2.5 mb-1.5">
-                    <span className={`font-mono text-xs font-bold ${dark ? "text-slate-600" : "text-slate-400"}`}>{number}</span>
-                    <h3 className={`font-bold text-lg ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`font-mono text-[11px] font-bold ${dark ? "text-slate-600" : "text-slate-400"}`}>{number}</span>
+                    <h3 className={`font-bold text-base ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
                   </div>
-                  <p className={`text-sm leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{summary}</p>
+                  <p className={`text-[13.5px] leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{summary}</p>
                 </div>
               </motion.div>
             ))}
@@ -146,7 +152,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* PEC0 Core Pillars */}
+      {/* PECO Core Pillars */}
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-white"}`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div
@@ -186,6 +192,42 @@ export default function About() {
                 <p className={`text-sm leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{desc}</p>
               </motion.div>
             ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-slate-50"}`}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${dark ? "text-white" : "text-slate-900"}`}>
+              Want to be part of it?
+            </h2>
+            <p className={`text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto ${dark ? "text-slate-400" : "text-slate-500"}`}>
+              Submit research, propose a policy brief, or join a live debate — there are several ways to get involved.
+            </p>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 active:scale-95 transition-all"
+                style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.3)" }}
+              >
+                Get Involved <ArrowRight size={17} />
+              </Link>
+              <Link
+                to="/research"
+                className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-[15px] border transition-all active:scale-95 ${
+                  dark ? "border-white/12 text-slate-200 hover:bg-white/5" : "border-slate-300 text-slate-700 hover:bg-white"
+                }`}
+              >
+                Explore Research
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
