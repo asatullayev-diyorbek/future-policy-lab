@@ -15,7 +15,7 @@ import { recordView, getComments, addComment } from "../utils/engagement"
 import ResourceCard from "../components/ResourceCard"
 import NotFound from "./NotFound"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 import { tagLabel } from "../i18n/tagLabels"
 
 const KIND_META = {
@@ -53,7 +53,7 @@ export default function ResourceDetail() {
   const related = getRelatedResources(resource)
   const relatedResearch = resource.related_research_slug ? getResearchBySlug(resource.related_research_slug) : null
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const formattedDate = new Date(resource.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })

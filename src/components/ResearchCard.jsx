@@ -4,6 +4,7 @@ import { useThemeStore } from "../store/theme"
 import { RESEARCH_THEMES } from "../data/research"
 import { useTranslation } from "../i18n/useTranslation"
 import { L } from "../i18n/localize"
+import { localeFor } from "../i18n/localize"
 
 export default function ResearchCard({ article }) {
   const { theme } = useThemeStore()
@@ -12,7 +13,7 @@ export default function ResearchCard({ article }) {
   const rt = RESEARCH_THEMES.find((r) => r.id === article.theme)
   const themeName = rt ? L(rt, "name", lang) : article.theme
 
-  const formattedDate = new Date(article.published_at).toLocaleDateString(lang === "uz" ? "uz-UZ" : "en-US", {
+  const formattedDate = new Date(article.published_at).toLocaleDateString(localeFor(lang), {
     year: "numeric", month: "short", day: "numeric",
   })
 

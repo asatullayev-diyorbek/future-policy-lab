@@ -12,7 +12,7 @@ import MeetingsNewsCard from "../components/MeetingsNewsCard"
 import RSVPModal from "../components/RSVPModal"
 import NotFound from "./NotFound"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 import { tagLabel } from "../i18n/tagLabels"
 
 export default function MeetingNewsDetail() {
@@ -53,7 +53,7 @@ export default function MeetingNewsDetail() {
   const related = getRelatedMeetingsNews(item)
   const isPast = isEvent && new Date(item.date) < new Date()
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const displayDate = new Date(isEvent ? item.date : item.published_at)
   const formattedDate = displayDate.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
   const formattedTime = isEvent ? displayDate.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit" }) : null

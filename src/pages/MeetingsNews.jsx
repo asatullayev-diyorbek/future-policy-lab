@@ -6,7 +6,7 @@ import { useThemeStore } from "../store/theme"
 import { meetingsNews } from "../data/meetingsNews"
 import PageHero from "../components/PageHero"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -18,7 +18,7 @@ export default function MeetingsNews() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
 
   const events = meetingsNews
     .filter((m) => m.type === "event")

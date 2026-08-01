@@ -12,7 +12,7 @@ import { recordView, getComments, addComment } from "../utils/engagement"
 import PolicyBriefCard from "../components/PolicyBriefCard"
 import NotFound from "./NotFound"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 import { tagLabel } from "../i18n/tagLabels"
 
 export default function PolicyBriefDetail() {
@@ -43,7 +43,7 @@ export default function PolicyBriefDetail() {
   const related = getRelatedBriefs(brief)
   const relatedResearch = brief.related_research_slug ? getResearchBySlug(brief.related_research_slug) : null
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const formattedDate = new Date(brief.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })

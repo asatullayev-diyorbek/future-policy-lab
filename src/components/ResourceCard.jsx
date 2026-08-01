@@ -3,6 +3,7 @@ import { Eye, Wrench, Database, BookMarked } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { useTranslation } from "../i18n/useTranslation"
 import { L } from "../i18n/localize"
+import { localeFor } from "../i18n/localize"
 
 const KIND_META = {
   tool: { icon: Wrench, label: "Tool", label_uz: "Vosita" },
@@ -18,7 +19,7 @@ export default function ResourceCard({ resource }) {
   const Icon = meta.icon
   const label = lang === "uz" ? meta.label_uz : meta.label
 
-  const formattedDate = new Date(resource.published_at).toLocaleDateString(lang === "uz" ? "uz-UZ" : "en-US", {
+  const formattedDate = new Date(resource.published_at).toLocaleDateString(localeFor(lang), {
     year: "numeric", month: "short", day: "numeric",
   })
 

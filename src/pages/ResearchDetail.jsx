@@ -12,7 +12,7 @@ import YoutubeEmbed from "../components/YoutubeEmbed"
 import ResearchCard from "../components/ResearchCard"
 import NotFound from "./NotFound"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 import { tagLabel } from "../i18n/tagLabels"
 
 export default function ResearchDetail() {
@@ -42,7 +42,7 @@ export default function ResearchDetail() {
   const themeName = rt ? L(rt, "name", lang) : article.theme
   const related = getRelatedResearch(article)
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const formattedDate = new Date(article.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })

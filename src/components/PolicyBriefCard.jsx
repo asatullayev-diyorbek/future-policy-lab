@@ -4,6 +4,7 @@ import { useThemeStore } from "../store/theme"
 import { BRIEF_THEMES } from "../data/policyBriefs"
 import { useTranslation } from "../i18n/useTranslation"
 import { L } from "../i18n/localize"
+import { localeFor } from "../i18n/localize"
 
 export default function PolicyBriefCard({ brief }) {
   const { theme } = useThemeStore()
@@ -12,7 +13,7 @@ export default function PolicyBriefCard({ brief }) {
   const bt = BRIEF_THEMES.find((b) => b.id === brief.theme)
   const themeName = bt ? L(bt, "name", lang) : brief.theme
 
-  const formattedDate = new Date(brief.published_at).toLocaleDateString(lang === "uz" ? "uz-UZ" : "en-US", {
+  const formattedDate = new Date(brief.published_at).toLocaleDateString(localeFor(lang), {
     year: "numeric", month: "short", day: "numeric",
   })
 

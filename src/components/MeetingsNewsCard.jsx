@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { Eye, CalendarDays, MapPin, Megaphone } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 
 export default function MeetingsNewsCard({ item }) {
   const { theme } = useThemeStore()
@@ -10,7 +10,7 @@ export default function MeetingsNewsCard({ item }) {
   const { t, lang } = useTranslation()
   const isEvent = item.type === "event"
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const formattedDate = new Date((isEvent ? item.date : item.published_at)).toLocaleDateString(locale, {
     year: "numeric", month: "short", day: "numeric",
     ...(isEvent ? { hour: "numeric", minute: "2-digit" } : {}),

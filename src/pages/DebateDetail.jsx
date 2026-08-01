@@ -9,7 +9,7 @@ import { recordView, getComments, addComment } from "../utils/engagement"
 import DebateCard from "../components/DebateCard"
 import NotFound from "./NotFound"
 import { useTranslation } from "../i18n/useTranslation"
-import { L } from "../i18n/localize"
+import { L, localeFor } from "../i18n/localize"
 
 function StanceBadge({ stance, dark, t }) {
   const STANCE_META = {
@@ -66,7 +66,7 @@ export default function DebateDetail() {
   const themeName = dt ? L(dt, "name", lang) : debate.theme
   const related = getRelatedDebates(debate)
 
-  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const locale = localeFor(lang)
   const formattedDate = new Date(debate.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })
