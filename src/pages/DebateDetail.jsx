@@ -8,15 +8,16 @@ import { getDebateBySlug, getRelatedDebates, DEBATE_THEMES } from "../data/debat
 import { recordView, getComments, addComment } from "../utils/engagement"
 import DebateCard from "../components/DebateCard"
 import NotFound from "./NotFound"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
-const STANCES = [
-  { id: "for", label: "Agree with For", icon: ThumbsUp, color: "emerald" },
-  { id: "against", label: "Agree with Against", icon: ThumbsDown, color: "rose" },
-  { id: "undecided", label: "Undecided", icon: HelpCircle, color: "slate" },
-]
-
-function StanceBadge({ stance, dark }) {
-  const meta = STANCES.find((s) => s.id === stance)
+function StanceBadge({ stance, dark, t }) {
+  const STANCE_META = {
+    for: { label: t("debates.agreeFor"), icon: ThumbsUp, color: "emerald" },
+    against: { label: t("debates.agreeAgainst"), icon: ThumbsDown, color: "rose" },
+    undecided: { label: t("debates.undecided"), icon: HelpCircle, color: "slate" },
+  }
+  const meta = STANCE_META[stance]
   if (!meta) return null
   const Icon = meta.icon
   const cls = {
@@ -36,6 +37,13 @@ export default function DebateDetail() {
   const { slug } = useParams()
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
+
+  const STANCES = [
+    { id: "for", label: t("debates.agreeFor"), icon: ThumbsUp, color: "emerald" },
+    { id: "against", label: t("debates.agreeAgainst"), icon: ThumbsDown, color: "rose" },
+    { id: "undecided", label: t("debates.undecided"), icon: HelpCircle, color: "slate" },
+  ]
 
   const debate = getDebateBySlug(slug)
   const [views, setViews] = useState(debate?.base_views ?? 0)
@@ -54,10 +62,12 @@ export default function DebateDetail() {
 
   if (!debate) return <NotFound />
 
-  const themeName = DEBATE_THEMES.find((t) => t.id === debate.theme)?.name ?? debate.theme
+  const dt = DEBATE_THEMES.find((d) => d.id === debate.theme)
+  const themeName = dt ? L(dt, "name", lang) : debate.theme
   const related = getRelatedDebates(debate)
 
-  const formattedDate = new Date(debate.published_at).toLocaleDateString("en-US", {
+  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const formattedDate = new Date(debate.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })
 
@@ -72,7 +82,7 @@ export default function DebateDetail() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
-      setFormError("Name and comment are required.")
+      setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
@@ -89,20 +99,22 @@ export default function DebateDetail() {
       : "bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-violet-400"
   }`
 
+  const motion_ = L(debate, "motion", lang)
+
   return (
     <>
       <Helmet>
-        <title>{debate.motion} — Future Policy Lab</title>
-        <meta name="description" content={debate.excerpt} />
-        <meta property="og:title" content={debate.motion} />
-        <meta property="og:description" content={debate.excerpt} />
+        <title>{motion_} — Future Policy Lab</title>
+        <meta name="description" content={L(debate, "excerpt", lang)} />
+        <meta property="og:title" content={motion_} />
+        <meta property="og:description" content={L(debate, "excerpt", lang)} />
         <meta property="og:image" content={debate.cover} />
       </Helmet>
 
       {/* Cover hero */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
         <div className="relative w-full aspect-video overflow-hidden rounded-2xl">
-          <img src={debate.cover} alt={debate.motion} className="w-full h-full object-cover" />
+          <img src={debate.cover} alt={motion_} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
           <div className="absolute top-5 left-4 sm:left-8 flex items-center gap-2">
@@ -110,7 +122,7 @@ export default function DebateDetail() {
               to="/debates"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 backdrop-blur-sm text-white text-sm font-medium hover:bg-black/60 transition-colors border border-white/15"
             >
-              <ArrowLeft size={15} /> Debates
+              <ArrowLeft size={15} /> {t("debates.backLabel")}
             </Link>
           </div>
 
@@ -118,7 +130,7 @@ export default function DebateDetail() {
             <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
               debate.status === "open" ? "bg-emerald-500 text-white" : "bg-slate-600 text-white"
             }`}>
-              {debate.status === "open" ? "Open for discussion" : "Closed"}
+              {debate.status === "open" ? t("debates.openForDiscussion") : t("debates.closed")}
             </span>
           </div>
 
@@ -128,7 +140,7 @@ export default function DebateDetail() {
                 {themeName}
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight drop-shadow-lg">
-                {debate.motion}
+                {motion_}
               </h1>
             </div>
           </div>
@@ -145,7 +157,7 @@ export default function DebateDetail() {
           }`}
         >
           <span className="flex items-center gap-1.5"><Calendar size={13} /> {formattedDate}</span>
-          <span className="flex items-center gap-1.5"><Users size={13} /> {debate.participants} participants</span>
+          <span className="flex items-center gap-1.5"><Users size={13} /> {debate.participants} {t("debates.participants")}</span>
           <span className="flex items-center gap-1.5"><Eye size={13} /> {views.toLocaleString()}</span>
           <span className="flex items-center gap-1.5"><MessageCircle size={13} /> {comments.length}</span>
         </motion.div>
@@ -162,10 +174,10 @@ export default function DebateDetail() {
           }`}>
             <div className="flex items-center gap-2 mb-4">
               <ThumbsUp size={18} className="text-emerald-600" />
-              <h2 className={`font-bold text-base ${dark ? "text-emerald-400" : "text-emerald-700"}`}>For</h2>
+              <h2 className={`font-bold text-base ${dark ? "text-emerald-400" : "text-emerald-700"}`}>{t("debates.for")}</h2>
             </div>
             <p className={`text-sm leading-relaxed mb-4 ${dark ? "text-slate-200" : "text-slate-800"}`}>
-              {debate.forPosition.summary}
+              {L(debate.forPosition, "summary", lang)}
             </p>
             <p className={`text-xs font-semibold ${dark ? "text-slate-500" : "text-slate-500"}`}>
               — {debate.forPosition.author}
@@ -177,10 +189,10 @@ export default function DebateDetail() {
           }`}>
             <div className="flex items-center gap-2 mb-4">
               <ThumbsDown size={18} className="text-rose-600" />
-              <h2 className={`font-bold text-base ${dark ? "text-rose-400" : "text-rose-700"}`}>Against</h2>
+              <h2 className={`font-bold text-base ${dark ? "text-rose-400" : "text-rose-700"}`}>{t("debates.against")}</h2>
             </div>
             <p className={`text-sm leading-relaxed mb-4 ${dark ? "text-slate-200" : "text-slate-800"}`}>
-              {debate.againstPosition.summary}
+              {L(debate.againstPosition, "summary", lang)}
             </p>
             <p className={`text-xs font-semibold ${dark ? "text-slate-500" : "text-slate-500"}`}>
               — {debate.againstPosition.author}
@@ -192,7 +204,7 @@ export default function DebateDetail() {
         {totalStanced > 0 && (
           <div className={`rounded-2xl border p-5 mb-8 ${dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white"}`}>
             <h3 className={`flex items-center gap-2 text-sm font-bold mb-3 ${dark ? "text-white" : "text-slate-900"}`}>
-              <Scale size={15} className="text-violet-600" /> Community sentiment
+              <Scale size={15} className="text-violet-600" /> {t("debates.sentiment")}
             </h3>
             <div className="flex w-full h-2.5 rounded-full overflow-hidden mb-2">
               <div className="bg-emerald-500" style={{ width: `${forPct}%` }} />
@@ -200,9 +212,9 @@ export default function DebateDetail() {
               <div className={dark ? "bg-white/15" : "bg-slate-300"} style={{ width: `${undecidedPct}%` }} />
             </div>
             <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs ${dark ? "text-slate-500" : "text-slate-500"}`}>
-              <span>For {forPct}%</span>
-              <span>Against {againstPct}%</span>
-              <span>Undecided {undecidedPct}%</span>
+              <span>{t("debates.forPct")} {forPct}%</span>
+              <span>{t("debates.againstPct")} {againstPct}%</span>
+              <span>{t("debates.undecidedPct")} {undecidedPct}%</span>
             </div>
           </div>
         )}
@@ -211,7 +223,7 @@ export default function DebateDetail() {
         <div className="pt-2 pb-16">
           <h2 className={`text-xl font-bold mb-6 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
             <MessageCircle size={20} className="text-violet-600" />
-            Join the discussion
+            {t("debates.joinDiscussion")}
             {comments.length > 0 && (
               <span className={`text-sm font-normal ${dark ? "text-slate-500" : "text-slate-400"}`}>
                 · {comments.length}
@@ -233,9 +245,9 @@ export default function DebateDetail() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <span className={`text-sm font-semibold ${dark ? "text-slate-200" : "text-slate-800"}`}>{c.name}</span>
-                      <StanceBadge stance={c.stance} dark={dark} />
+                      <StanceBadge stance={c.stance} dark={dark} t={t} />
                       <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-                        {new Date(c.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(c.created_at).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
                       </span>
                     </div>
                     <p className={`text-sm leading-relaxed ${dark ? "text-slate-400" : "text-slate-600"}`}>{c.content}</p>
@@ -246,18 +258,18 @@ export default function DebateDetail() {
           )}
 
           <div className={`rounded-2xl border p-6 ${dark ? "bg-white/3 border-white/8" : "bg-white border-slate-200 shadow-sm"}`}>
-            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>Add your voice</h3>
+            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>{t("debates.addYourVoice")}</h3>
 
             {submitted && (
               <div className="mb-4 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm flex items-center gap-2">
-                <Check size={14} /> Your comment has been posted.
+                <Check size={14} /> {t("common.commentPosted")}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className={`block text-xs font-medium mb-2 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Where do you stand?
+                  {t("debates.whereStand")}
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {STANCES.map(({ id, label, icon: Icon }) => (
@@ -281,23 +293,23 @@ export default function DebateDetail() {
 
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Name <span className="text-rose-500">*</span>
+                  {t("common.name")} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Your name"
+                  placeholder={t("common.yourName")}
                   className={inputCls}
                 />
               </div>
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Comment <span className="text-rose-500">*</span>
+                  {t("common.comment")} <span className="text-rose-500">*</span>
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="Make your case..."
+                  placeholder={t("debates.commentPlaceholder")}
                   value={form.content}
                   onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
                   className={`${inputCls} resize-none`}
@@ -310,7 +322,7 @@ export default function DebateDetail() {
                 type="submit"
                 className="self-start flex items-center gap-2 px-6 py-2.5 rounded-xl bg-violet-600 text-white font-semibold text-sm hover:bg-violet-500 active:scale-[0.98] transition-all"
               >
-                <Send size={14} /> Post Comment
+                <Send size={14} /> {t("common.postComment")}
               </button>
             </form>
           </div>
@@ -320,7 +332,7 @@ export default function DebateDetail() {
       {related.length > 0 && (
         <div className={`border-t py-14 ${dark ? "border-white/8 bg-[#080d16]" : "border-slate-200 bg-slate-50"}`}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>Related Debates</h2>
+            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>{t("debates.relatedTitle")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((d) => (
                 <div key={d.slug} className="h-full">

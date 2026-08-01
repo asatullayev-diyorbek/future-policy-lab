@@ -1,6 +1,6 @@
 export const ITEM_TYPES = [
-  { id: "event", name: "Events" },
-  { id: "news", name: "News" },
+  { id: "event", name: "Events", name_uz: "Uchrashuvlar" },
+  { id: "news", name: "News", name_uz: "Yangiliklar" },
 ]
 
 export const meetingsNews = [
@@ -9,11 +9,15 @@ export const meetingsNews = [
     slug: "seminar-evidence-based-policy-writing",
     type: "event",
     title: "Seminar: Writing Policy Recommendations from Empirical Data",
+    title_uz: "Seminar: Empirik ma'lumotlar asosida siyosat tavsiyalarini yozish",
     excerpt:
       "A hands-on session on translating research findings into decision-ready policy briefs, led by our Governance Fellow.",
+    excerpt_uz:
+      "Tadqiqot natijalarini qarorga tayyor siyosat bayonlariga aylantirish bo'yicha amaliy dars, Boshqaruv bo'yicha tadqiqotchimiz tomonidan olib boriladi.",
     cover: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&q=80",
     date: "2026-09-12T15:00:00Z",
     location: "Future Policy Lab HQ, Room 204 — also streamed online",
+    location_uz: "Future Policy Lab bosh ofisi, 204-xona — onlayn ham translyatsiya qilinadi",
     published_at: "2026-08-01T09:00:00Z",
     base_views: 320,
     base_attendees: 41,
@@ -33,14 +37,32 @@ Open to all lab members and any student or young researcher currently working on
 ## Format
 
 90 minutes: a 30-minute walkthrough followed by a live workshop on a sample dataset, with feedback from the Policy Briefs editorial team.`,
+    content_uz: `Ushbu amaliy seminar bizning tadqiqotchilarimiz empirik topilmalarni qaror qabul qiluvchi besh daqiqada harakat qila oladigan siyosat bayoniga aylantirish uchun ishlatadigan jarayonni ko'rsatadi.
+
+## Nimalarni o'rganasiz
+
+- Bayon qaysi bitta qarorni harakatga keltirishi kerakligini aniqlash
+- Tavsiyalarni amalga oshirish uchun yetarlicha aniq bo'ladigan qilib tuzish
+- Bayonlarni o'qish o'rniga arxivga tushirib qo'yadigan keng tarqalgan xatolar
+
+## Kim qatnashishi kerak
+
+Barcha lab a'zolari va siyosat tiliga aylantirmoqchi bo'lgan tadqiqot loyihasi ustida ishlayotgan har qanday talaba yoki yosh tadqiqotchi uchun ochiq. Oldindan siyosat yozish tajribasi talab qilinmaydi.
+
+## Format
+
+90 daqiqa: 30 daqiqalik tushuntirish, so'ngra namunaviy ma'lumotlar bazasi bo'yicha jonli trening, Siyosat bayonlari muharrirlar jamoasi fikr-mulohazalari bilan.`,
   },
   {
     id: 2,
     slug: "new-research-published-informal-sector",
     type: "news",
     title: "New Research Published: The Informal Sector's Role in Youth Employment",
+    title_uz: "Yangi tadqiqot chop etildi: norasmiy sektorning yoshlar bandligidagi o'rni",
     excerpt:
       "Our latest study on informal labor markets and portable benefits is now live, alongside a companion policy brief.",
+    excerpt_uz:
+      "Norasmiy mehnat bozorlari va ko'chma imtiyozlar bo'yicha eng so'nggi tadqiqotimiz, tegishli siyosat bayoni bilan birga endi mavjud.",
     cover: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=80",
     published_at: "2026-01-18T09:00:00Z",
     base_views: 480,
@@ -59,17 +81,35 @@ A companion policy brief, "Portable Benefits Over Formalization Mandates," disti
 - Policy Brief: Portable Benefits Over Formalization Mandates
 
 As always, we welcome comments and critique — reach out via Contact if you'd like to discuss the methodology or propose a follow-up study.`,
+    content_uz: `Biz eng so'nggi empirik tadqiqotimiz — "Norasmiy sektorning yoshlar bandligidagi o'rni" — ni ulashishdan xursandmiz, u endi Tadqiqotlar bo'limida mavjud.
+
+## Unda nima bor
+
+Tadqiqot oltita sohadagi dala ishlariga tayanib, ko'chma imtiyozlar — rasmiylashtirish talablari emas — yosh norasmiy ishchilarni himoya qilishning samaraliroq vositasi ekanligini ta'kidlaydi.
+
+## Tegishli o'qish
+
+Tegishli siyosat bayoni "Rasmiylashtirish talablari o'rniga ko'chma imtiyozlar" topilmalarni mehnat vazirliklari uchun uchta aniq tavsiyaga jamlaydi. Ikkalasi ham endi mavjud:
+
+- Tadqiqot: Norasmiy sektorning yoshlar bandligidagi o'rni
+- Siyosat bayoni: Rasmiylashtirish talablari o'rniga ko'chma imtiyozlar
+
+Har doimgidek, izoh va tanqidlarni kutib olamiz — metodologiyani muhokama qilish yoki keyingi tadqiqotni taklif qilish uchun Aloqa orqali murojaat qiling.`,
   },
   {
     id: 3,
     slug: "panel-discussion-algorithmic-accountability",
     type: "event",
     title: "Panel: Algorithmic Accountability in Public Services",
+    title_uz: "Panel: davlat xizmatlarida algoritmik javobgarlik",
     excerpt:
       "A panel discussion with technology policy researchers on due-process standards for automated eligibility systems.",
+    excerpt_uz:
+      "Avtomatlashtirilgan huquq berish tizimlari uchun adolatli jarayon standartlari bo'yicha texnologiya siyosati tadqiqotchilari bilan panel muhokamasi.",
     cover: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&q=80",
     date: "2026-10-03T16:30:00Z",
     location: "Online — link shared after RSVP",
+    location_uz: "Onlayn — havola ro'yxatdan o'tgandan keyin yuboriladi",
     published_at: "2026-08-15T09:00:00Z",
     base_views: 275,
     base_attendees: 58,
@@ -89,14 +129,32 @@ Our Technology Policy Researcher will be joined by two guest practitioners curre
 ## How to join
 
 RSVP below to receive the streaming link 24 hours before the session. Q&A will be open to all attendees in the final 20 minutes.`,
+    content_uz: `Avtomatlashtirilgan huquq berish tizimlari bo'yicha tadqiqot auditimizdan so'ng, biz amaliy oshkoralik standarti qanday ko'rinishi kerakligini muhokama qilish uchun panel tashkil qilmoqdamiz.
+
+## Panel ishtirokchilari
+
+Bizning Texnologiya siyosati tadqiqotchimizga davlat sektori xaridlarida algoritmik javobgarlik standartlari ustida ishlayotgan ikki mehmon mutaxassis qo'shiladi.
+
+## Muhokama mavzulari
+
+- Imtiyoz algoritm tomonidan rad etilganda idoralar ariza beruvchilarga aslida nima qarzdor
+- Oshkoralik talablari qonun bilan belgilanishi yoki xarid standartlari orqali hal qilinishi kerakmi
+- Bizning chop etilgan tadqiqotimizdagi to'qqiz tizim auditidan saboqlar
+
+## Qanday qo'shilish mumkin
+
+Sessiyadan 24 soat oldin translyatsiya havolasini olish uchun quyida ro'yxatdan o'ting. So'nggi 20 daqiqada barcha ishtirokchilar uchun savol-javob ochiq bo'ladi.`,
   },
   {
     id: 4,
     slug: "lab-update-new-reading-list-research-methods",
     type: "news",
     title: "New Reading List: Research Methods for Policy Analysis",
+    title_uz: "Yangi o'quv ro'yxati: siyosat tahlili uchun tadqiqot metodlari",
     excerpt:
       "A curated set of readings and methodology guides added to the Resources section for members building research literacy.",
+    excerpt_uz:
+      "Tadqiqot savodxonligini oshirayotgan a'zolar uchun Resurslar bo'limiga qo'shilgan tanlangan o'qish materiallari va metodologik qo'llanmalar to'plami.",
     cover: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80",
     published_at: "2025-12-20T09:00:00Z",
     base_views: 190,
@@ -112,17 +170,32 @@ The list covers survey design, causal inference basics, and structuring a litera
 Several members preparing their first independent research project asked for a starting point that doesn't assume a graduate-level statistics background. This list is our answer.
 
 Browse it under Resources, or reach out via Contact if there's a specific method or tool you'd like us to add a guide for next.`,
+    content_uz: `Biz Resurslar bo'limiga siyosat tahlili uchun asosiy tadqiqot metodlariga qaratilgan yangi tanlangan o'quv ro'yxatini qo'shdik.
+
+## Nima kiritilgan
+
+Ro'yxat so'rov dizayni, sabab-oqibat tahlili asoslari va siyosatga oid savol uchun adabiyotlar sharhini tuzishni qamrab oladi — bu empirik ishga yangi kelgan talabalar va yosh tadqiqotchilar uchun mo'ljallangan.
+
+## Nega hozir
+
+Birinchi mustaqil tadqiqot loyihasini tayyorlayotgan bir qancha a'zolar magistratura darajasidagi statistika bilimini talab qilmaydigan boshlang'ich nuqta so'rashdi. Ushbu ro'yxat bizning javobimiz.
+
+Uni Resurslar bo'limida ko'rib chiqing yoki keyingi qo'llanma qo'shishimizni istagan aniq metod yoki vosita bo'lsa, Aloqa orqali murojaat qiling.`,
   },
   {
     id: 5,
     slug: "workshop-designing-community-surveys",
     type: "event",
     title: "Workshop: Designing Surveys That Hold Up to Scrutiny",
+    title_uz: "Trening: tekshiruvga bardosh beradigan so'rovlarni loyihalash",
     excerpt:
       "A practical workshop on survey design fundamentals, using our municipal-trust study as a working example.",
+    excerpt_uz:
+      "So'rov dizayni asoslari bo'yicha amaliy trening, munitsipal ishonch tadqiqotimiz ishchi misol sifatida qo'llaniladi.",
     cover: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80",
     date: "2026-09-26T14:00:00Z",
     location: "Future Policy Lab HQ, Room 118",
+    location_uz: "Future Policy Lab bosh ofisi, 118-xona",
     published_at: "2026-08-20T09:00:00Z",
     base_views: 210,
     base_attendees: 27,
@@ -138,14 +211,28 @@ Browse it under Resources, or reach out via Contact if there's a specific method
 ## Who should attend
 
 Anyone planning fieldwork for a research project, brief, or debate prep this term. Space is limited — RSVP to reserve a seat.`,
+    content_uz: `So'rov dizaynidagi xatolar ko'pincha tadqiqot dala ishiga chiqqunga qadar ko'rinmaydi. Ushbu trening o'zimizning munitsipal shaffoflik tadqiqotimizni ishchi misol sifatida ishlatib, keng tarqalgan xato nuqtalarini ko'rsatadi.
+
+## Nimalarni qamrab olamiz
+
+- Respondentlarni yo'naltirmaydigan so'z tanlash
+- Ekspert baholovidan o'tadigan namuna olish qarorlari
+- Dala ishi boshlanishidan oldin so'rov vositasini oldindan ro'yxatdan o'tkazish
+
+## Kim qatnashishi kerak
+
+Ushbu semestrda tadqiqot loyihasi, bayon yoki munozaraga tayyorgarlik uchun dala ishini rejalashtirayotgan har kim. O'rinlar cheklangan — o'rin band qilish uchun ro'yxatdan o'ting.`,
   },
   {
     id: 6,
     slug: "lab-milestone-first-cohort-research-published",
     type: "news",
     title: "Milestone: Our First Cohort of Research Papers Is Now Live",
+    title_uz: "Yutuq: birinchi tadqiqotlar to'plamimiz endi mavjud",
     excerpt:
       "Six original studies spanning education, governance, economic development, technology, and sustainability are now published.",
+    excerpt_uz:
+      "Ta'lim, boshqaruv, iqtisodiy rivojlanish, texnologiya va barqarorlik bo'yicha oltita original tadqiqot endi chop etildi.",
     cover: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80",
     published_at: "2025-10-09T09:00:00Z",
     base_views: 615,
@@ -159,6 +246,15 @@ Six empirical studies, each paired with a companion policy brief, covering rural
 ## Thank you
 
 This cohort represents months of fieldwork, data collection, and review from our research fellows and the students who contributed interviews and survey data. Explore the full set under Research and Policy Briefs, and join the conversation on any of them under Debates.`,
+    content_uz: `Biz muhim bosqichni nishonlaymiz: birinchi to'liq original tadqiqotlar to'plamimiz besh asosiy mavzumizning barchasi bo'yicha chop etildi.
+
+## Nima mavjud
+
+Har biri tegishli siyosat bayoni bilan birlashtirilgan oltita empirik tadqiqot — qishloq ta'lim kirish imkoniyati, munitsipal shaffoflik, norasmiy mehnat bozorlari, algoritmik javobgarlik, suv tanqisligiga moslashish va raqamli savodxonlik natijalarini qamrab oladi.
+
+## Rahmat
+
+Ushbu to'plam bizning tadqiqot bo'yicha hamkasblarimiz va intervyu hamda so'rov ma'lumotlarini taqdim etgan talabalarning oylab davom etgan dala ishi, ma'lumot yig'ish va ko'rib chiqish natijasidir. To'liq to'plamni Tadqiqotlar va Siyosat bayonlari bo'limida ko'ring va Munozaralar bo'limida ularning har biri bo'yicha suhbatga qo'shiling.`,
   },
 ]
 

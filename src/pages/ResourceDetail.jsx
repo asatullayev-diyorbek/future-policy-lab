@@ -14,17 +14,21 @@ import { getResearchBySlug } from "../data/research"
 import { recordView, getComments, addComment } from "../utils/engagement"
 import ResourceCard from "../components/ResourceCard"
 import NotFound from "./NotFound"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
+import { tagLabel } from "../i18n/tagLabels"
 
 const KIND_META = {
-  tool: { icon: Wrench, label: "Tool" },
-  dataset: { icon: Database, label: "Dataset" },
-  "reading-list": { icon: BookMarked, label: "Reading List" },
+  tool: { icon: Wrench },
+  dataset: { icon: Database },
+  "reading-list": { icon: BookMarked },
 }
 
 export default function ResourceDetail() {
   const { slug } = useParams()
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
 
   const resource = getResourceBySlug(slug)
   const [views, setViews] = useState(resource?.base_views ?? 0)
@@ -44,18 +48,22 @@ export default function ResourceDetail() {
   if (!resource) return <NotFound />
 
   const kindMeta = KIND_META[resource.kind]
-  const kindName = RESOURCE_KINDS.find((k) => k.id === resource.kind)?.name ?? resource.kind
+  const rk = RESOURCE_KINDS.find((k) => k.id === resource.kind)
+  const kindName = rk ? L(rk, "name", lang) : resource.kind
   const related = getRelatedResources(resource)
   const relatedResearch = resource.related_research_slug ? getResearchBySlug(resource.related_research_slug) : null
 
-  const formattedDate = new Date(resource.published_at).toLocaleDateString("en-US", {
+  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const formattedDate = new Date(resource.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })
+
+  const format = lang === "uz" && resource.format_uz ? resource.format_uz : resource.format
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
-      setFormError("Name and comment are required.")
+      setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
@@ -90,19 +98,21 @@ export default function ResourceDetail() {
     },
   }
 
+  const title = L(resource, "title", lang)
+
   return (
     <>
       <Helmet>
-        <title>{resource.title} — Future Policy Lab</title>
-        <meta name="description" content={resource.excerpt} />
-        <meta property="og:title" content={resource.title} />
-        <meta property="og:description" content={resource.excerpt} />
+        <title>{title} — Future Policy Lab</title>
+        <meta name="description" content={L(resource, "excerpt", lang)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={L(resource, "excerpt", lang)} />
         <meta property="og:image" content={resource.cover} />
       </Helmet>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
         <div className="relative w-full aspect-video overflow-hidden rounded-2xl">
-          <img src={resource.cover} alt={resource.title} className="w-full h-full object-cover" />
+          <img src={resource.cover} alt={title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
           <div className="absolute top-5 left-4 sm:left-8">
@@ -110,7 +120,7 @@ export default function ResourceDetail() {
               to="/resources"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 backdrop-blur-sm text-white text-sm font-medium hover:bg-black/60 transition-colors border border-white/15"
             >
-              <ArrowLeft size={15} /> Resources
+              <ArrowLeft size={15} /> {t("resources.backLabel")}
             </Link>
           </div>
 
@@ -120,7 +130,7 @@ export default function ResourceDetail() {
                 <kindMeta.icon size={12} /> {kindName}
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight drop-shadow-lg">
-                {resource.title}
+                {title}
               </h1>
             </div>
           </div>
@@ -148,7 +158,7 @@ export default function ResourceDetail() {
                   <span key={tag} className={`flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full ${
                     dark ? "bg-white/5 text-slate-400" : "bg-slate-100 text-slate-500"
                   }`}>
-                    <Tag size={9} /> {tag}
+                    <Tag size={9} /> {tagLabel(tag, lang)}
                   </span>
                 ))}
               </div>
@@ -163,18 +173,18 @@ export default function ResourceDetail() {
           }`}>
             <div className="flex-1">
               <p className={`text-xs font-bold uppercase tracking-widest mb-1 ${dark ? "text-slate-500" : "text-slate-400"}`}>
-                Format
+                {t("resources.format")}
               </p>
-              <p className={`text-sm font-medium ${dark ? "text-slate-200" : "text-slate-800"}`}>{resource.format}</p>
+              <p className={`text-sm font-medium ${dark ? "text-slate-200" : "text-slate-800"}`}>{format}</p>
             </div>
             <button
               disabled
-              title="Downloads open once the resource library is live"
+              title={t("resources.downloadDisabled")}
               className={`shrink-0 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm cursor-not-allowed opacity-60 ${
                 dark ? "bg-white/10 text-white" : "bg-white text-slate-700 border border-slate-300"
               }`}
             >
-              <Download size={16} /> Download
+              <Download size={16} /> {t("resources.download")}
             </button>
           </div>
         )}
@@ -185,7 +195,7 @@ export default function ResourceDetail() {
             dark ? "border-pink-500/20 bg-pink-600/8" : "border-pink-200 bg-pink-50"
           }`}>
             <h2 className={`flex items-center gap-2 font-bold text-base mb-4 ${dark ? "text-pink-400" : "text-pink-700"}`}>
-              <BookMarked size={18} /> Reading List
+              <BookMarked size={18} /> {t("resources.readingList")}
             </h2>
             <ol className="flex flex-col gap-3">
               {resource.readings.map((r, i) => (
@@ -211,7 +221,7 @@ export default function ResourceDetail() {
           className="py-2"
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-            {resource.content}
+            {L(resource, "content", lang)}
           </ReactMarkdown>
         </motion.article>
 
@@ -227,10 +237,10 @@ export default function ResourceDetail() {
             </div>
             <div className="flex-1 min-w-0">
               <p className={`text-xs font-bold uppercase tracking-widest mb-1 ${dark ? "text-slate-500" : "text-slate-400"}`}>
-                Related research
+                {t("common.relatedResearch")}
               </p>
               <p className={`text-sm font-semibold truncate ${dark ? "text-slate-200" : "text-slate-800"}`}>
-                {relatedResearch.title}
+                {L(relatedResearch, "title", lang)}
               </p>
             </div>
             <ArrowRight size={16} className={`shrink-0 transition-transform group-hover:translate-x-1 ${dark ? "text-slate-500" : "text-slate-400"}`} />
@@ -241,7 +251,7 @@ export default function ResourceDetail() {
         <div className="pt-6 pb-16 border-t mt-4" style={{ borderColor: dark ? "rgba(255,255,255,0.07)" : "#e2e8f0" }}>
           <h2 className={`text-xl font-bold mb-6 mt-8 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
             <MessageCircle size={20} className="text-pink-600" />
-            Comments
+            {t("common.comments")}
             {comments.length > 0 && (
               <span className={`text-sm font-normal ${dark ? "text-slate-500" : "text-slate-400"}`}>
                 · {comments.length}
@@ -264,7 +274,7 @@ export default function ResourceDetail() {
                     <div className="flex items-center gap-3 mb-1.5">
                       <span className={`text-sm font-semibold ${dark ? "text-slate-200" : "text-slate-800"}`}>{c.name}</span>
                       <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-                        {new Date(c.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(c.created_at).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
                       </span>
                     </div>
                     <p className={`text-sm leading-relaxed ${dark ? "text-slate-400" : "text-slate-600"}`}>{c.content}</p>
@@ -275,34 +285,34 @@ export default function ResourceDetail() {
           )}
 
           <div className={`rounded-2xl border p-6 ${dark ? "bg-white/3 border-white/8" : "bg-white border-slate-200 shadow-sm"}`}>
-            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>Leave a comment</h3>
+            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>{t("common.leaveComment")}</h3>
 
             {submitted && (
               <div className="mb-4 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm flex items-center gap-2">
-                <Check size={14} /> Your comment has been posted.
+                <Check size={14} /> {t("common.commentPosted")}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Name <span className="text-rose-500">*</span>
+                  {t("common.name")} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Your name"
+                  placeholder={t("common.yourName")}
                   className={inputCls}
                 />
               </div>
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Comment <span className="text-rose-500">*</span>
+                  {t("common.comment")} <span className="text-rose-500">*</span>
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="Share your thoughts..."
+                  placeholder={t("resources.commentPlaceholder")}
                   value={form.content}
                   onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
                   className={`${inputCls} resize-none`}
@@ -315,7 +325,7 @@ export default function ResourceDetail() {
                 type="submit"
                 className="self-start flex items-center gap-2 px-6 py-2.5 rounded-xl bg-pink-600 text-white font-semibold text-sm hover:bg-pink-500 active:scale-[0.98] transition-all"
               >
-                <Send size={14} /> Post Comment
+                <Send size={14} /> {t("common.postComment")}
               </button>
             </form>
           </div>
@@ -325,7 +335,7 @@ export default function ResourceDetail() {
       {related.length > 0 && (
         <div className={`border-t py-14 ${dark ? "border-white/8 bg-[#080d16]" : "border-slate-200 bg-slate-50"}`}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>More {kindName}</h2>
+            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>{kindName}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((r) => (
                 <div key={r.slug} className="h-full">

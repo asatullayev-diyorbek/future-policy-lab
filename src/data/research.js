@@ -1,9 +1,9 @@
 export const RESEARCH_THEMES = [
-  { id: "education", name: "Education" },
-  { id: "governance", name: "Governance" },
-  { id: "economic-development", name: "Economic Development" },
-  { id: "technology", name: "Technology" },
-  { id: "sustainability", name: "Sustainability" },
+  { id: "education", name: "Education", name_uz: "Ta'lim" },
+  { id: "governance", name: "Governance", name_uz: "Boshqaruv" },
+  { id: "economic-development", name: "Economic Development", name_uz: "Iqtisodiy rivojlanish" },
+  { id: "technology", name: "Technology", name_uz: "Texnologiya" },
+  { id: "sustainability", name: "Sustainability", name_uz: "Barqarorlik" },
 ]
 
 export const researchArticles = [
@@ -11,11 +11,14 @@ export const researchArticles = [
     id: 1,
     slug: "access-gaps-secondary-education",
     title: "Closing Access Gaps in Secondary Education",
+    title_uz: "O'rta ta'limda kirish imkoniyati tafovutlarini bartaraf etish",
     excerpt:
       "An empirical look at dropout drivers among rural secondary students, and which interventions actually move the needle.",
+    excerpt_uz:
+      "Qishloq hududlaridagi o'rta maktab o'quvchilari orasida o'qishni tashlab ketish sabablariga empirik nazar va qaysi tadbirlar haqiqatan ham natija beradi.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80",
-    author: { name: "Nodira Yusupova", role: "Lead Researcher" },
+    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi" },
     published_at: "2026-03-14T09:00:00Z",
     read_time: 9,
     base_views: 1240,
@@ -38,16 +41,36 @@ Teacher-retention bonuses, by contrast, showed no measurable effect on dropout r
 ## Policy implications
 
 These findings suggest a reallocation, not an increase, in existing rural education budgets: transport infrastructure should be prioritized over blanket cash-transfer expansion in districts where distance is the binding constraint. A companion policy brief on this study is available under Policy Briefs.`,
+    content_uz: `Qishloq tumanlaridagi o'rta maktabni tashlab ketish darajasi, o'nlab yillik ro'yxatga olishga qaratilgan siyosatga qaramay, shahar markazlariga nisbatan deyarli uch baravar yuqoriligicha qolmoqda. Ushbu tadqiqot "nega o'quvchilar maktabni tashlab ketadi" degan keng savoldan ko'ra tor savolni beradi — qaysi aniq, moliyalashtirilishi mumkin bo'lgan tadbirlar bu yo'nalishni o'zgartiradi va qaysilari qog'ozda yaxshi ko'rinsa-da, natijaga ta'sir qilmaydi.
+
+## Metodologiya
+
+Biz 42 ta tumanda to'rt o'quv yili davomida kogorta darajasidagi ma'muriy ma'lumotlarni kuzatdik, bunga 180 ta oila bilan tuzilgan intervyular qo'shildi. Taqqoslash guruhi dizayni transport subsidiyalari, shartli pul o'tkazmalari va o'qituvchilarni saqlab qolish uchun bonuslarning ta'sirini alohida ajratib olish imkonini berdi.
+
+## Asosiy topilmalar
+
+Transport subsidiyalari davomat ko'rsatkichiga eng katta ta'sir ko'rsatdi — eng yaqin o'rta maktabdan 8 km dan uzoqroqdagi tumanlarda 14 balllik yaxshilanish. Shartli pul o'tkazmalari kichikroq, ammo baribir sezilarli ta'sir ko'rsatdi, bu asosan ikkitadan ortiq maktab yoshidagi farzandi bo'lgan oilalarda kuzatildi.
+
+O'qituvchilarni saqlab qolish bonuslari esa, aksincha, to'rt yillik davrda o'qishni tashlab ketishga sezilarli ta'sir ko'rsatmadi, garchi ular maktabda qolgan o'quvchilarning standart test natijalarining yaxshilanishi bilan bog'liq bo'lsa-da.
+
+> Eng aniq qisqa muddatli natija bermaydigan tadbir har doim ham siyosatchilar birinchi murojaat qiladigan tadbir emas — bizning namunamizda pul emas, transport eng kuchli vosita bo'ldi.
+
+## Siyosiy xulosalar
+
+Ushbu topilmalar mavjud qishloq ta'lim byudjetlarini oshirish emas, balki qayta taqsimlashni taklif qiladi: masofa asosiy cheklov bo'lgan tumanlarda transport infratuzilmasi umumiy pul o'tkazmalarini kengaytirishdan ustuvor bo'lishi kerak. Ushbu tadqiqot bo'yicha qo'shimcha siyosat bayoni Siyosat bayonlari bo'limida mavjud.`,
   },
   {
     id: 2,
     slug: "municipal-transparency-and-trust",
     title: "Municipal Transparency and Public Trust",
+    title_uz: "Munitsipal shaffoflik va jamoat ishonchi",
     excerpt:
       "Do open-budget portals actually change how residents perceive local government? A survey-based study across 12 municipalities.",
+    excerpt_uz:
+      "Ochiq byudjet portallari aholining mahalliy hokimiyatga munosabatini haqiqatan ham o'zgartiradimi? 12 ta munitsipalitet bo'yicha so'rov asosidagi tadqiqot.",
     theme: "governance",
     cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80",
-    author: { name: "Aziz Rakhimov", role: "Governance Fellow" },
+    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
     published_at: "2026-02-02T09:00:00Z",
     read_time: 7,
     base_views: 860,
@@ -70,16 +93,36 @@ Interviews suggest the mechanism is not data availability but data legibility. R
 ## Recommendation
 
 Municipalities considering transparency investments should budget for outreach and plain-language summaries alongside the technical portal — the portal is necessary but not sufficient.`,
+    content_uz: `Ochiq byudjet portallari ko'rinadigan xarajat ma'lumotlari jamoat ishonchini oshiradi degan taxmin asosida o'nlab munitsipalitetlar tomonidan qabul qilingan. Biz bu taxminni to'g'ridan-to'g'ri 12 ta munitsipalitetdagi 2,400 aholi orasida panel so'rovi orqali sinovdan o'tkazdik, ularning yarmi kuzatuv davrida portallarni ishga tushirdi.
+
+## Nimani o'lchadik
+
+Ishonch standart besh bandli institutsional ishonch shkalasi bo'yicha, portal ishga tushirilishidan oldin va to'qqiz oy o'tgach qayta o'lchandi. Biz boshlang'ich ishonch, mahalliy yangiliklarni iste'mol qilish va yaqinda yuz bergan xizmat ko'rsatish holatlarini nazorat qildik.
+
+## Topilmalar
+
+Faqat portalni joriy etishning o'zi ishonchda statistik jihatdan sezilarli o'zgarish keltirib chiqarmadi. Ta'sir faqat portalni faol targ'ibot bilan — yig'ilishlar, SMS xabarnomalar yoki xarajatlar bo'yicha mahalliy tildagi xulosalar bilan birlashtirgan munitsipalitetlarda ko'rindi. Bunday hollarda ishonch kichik, ammo real — 6 ballga oshdi.
+
+## Asosiy sabab
+
+Intervyular mexanizm ma'lumotning mavjudligida emas, balki uning tushunarliligida ekanligini ko'rsatadi. Institutsional kontekstsiz xom byudjet moddalari aholi uchun deyarli tushunarsiz; tarjima qatlamisiz portal ishonch quruvchi vosita emas, balki majburiy hisobot artefakti sifatida ishlaydi.
+
+## Tavsiya
+
+Shaffoflikka sarmoya kiritishni ko'rib chiqayotgan munitsipalitetlar texnik portal bilan bir qatorda targ'ibot va oddiy tildagi xulosalar uchun ham byudjet ajratishi kerak — portal zarur, ammo yetarli emas.`,
   },
   {
     id: 3,
     slug: "informal-sector-and-youth-employment",
     title: "The Informal Sector's Role in Youth Employment",
+    title_uz: "Norasmiy sektorning yoshlar bandligidagi o'rni",
     excerpt:
       "Why informal work is not a policy failure to be eliminated, but a labor-market segment that needs its own targeted support.",
+    excerpt_uz:
+      "Nima uchun norasmiy mehnat bartaraf etilishi kerak bo'lgan siyosiy nuqson emas, balki o'ziga xos maqsadli qo'llab-quvvatlashga muhtoj mehnat bozori segmenti.",
     theme: "economic-development",
     cover: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=80",
-    author: { name: "Sardor Tashkentov", role: "Economic Policy Analyst" },
+    author: { name: "Sardor Tashkentov", role: "Economic Policy Analyst", role_uz: "Iqtisodiy siyosat tahlilchisi" },
     published_at: "2026-01-18T09:00:00Z",
     read_time: 11,
     base_views: 1560,
@@ -104,16 +147,38 @@ Portable benefits — health coverage and retirement contributions that follow t
 ## Conclusion
 
 Rather than treating informality as a problem to formalize away, policy should meet workers where they are: portable, low-friction benefits paired with skills certification that travels across employers.`,
+    content_uz: `Bizning namunamizda band bo'lgan yoshlarning taxminan 10 tadan 4 tasi norasmiy sektorda ishlaydi — bu ko'pincha siyosiy nuqson dalili sifatida qaraladigan ko'rsatkich. Ushbu maqola bunday talqin norasmiy mehnatning ham ko'lamini, ham funksiyasini kamsitishini ta'kidlaydi va boshqacha siyosiy vositalar to'plamini taklif qiladi.
+
+## Ko'lam muammosi
+
+Milliy mehnat statistikasi norasmiy mehnatni taxminan 18% ga kam ko'rsatadi, buning asosiy sababi mavsumiy va platforma orqali amalga oshiriladigan ishlar standart so'rov toifalariga kirmasligidir. Bizning dala tadqiqotimiz bu bo'shliqni aniqlash uchun oltita sohada "qor to'pi" namunasidan foydalandi.
+
+## Nega rasmiylashtirish talablari samara bermayapti
+
+Ishchilarni rasmiy bandlikka o'tkazishga qaratilgan dasturlar past qamrovga ega — buning sababi ishchilar rasmiy ishni rad etishi emas, balki o'tish xarajatlari (ro'yxatdan o'tish, soliq to'lash, moslashuvchanlikning yo'qolishi) qaramog'idagi shaxslari bo'lmagan 25 yoshgacha bo'lgan ishchilar uchun foydadan ustun kelishidir.
+
+## Buning o'rniga nima ishlaydi
+
+Ko'chma imtiyozlar — ishchini ish beruvchi emas, balki ishchining o'zini kuzatib boradigan tibbiy sug'urta va pensiya badallari — bizning pilot hududlarimizda ancha yuqori qamrovni ko'rsatdi. Bu ijtimoiy himoyani rasmiy bandlik maqomidan butunlay ajratadi.
+
+[YouTube: ko'chma imtiyozlar piloti bo'yicha dala xulosasi quyida joylashtirilgan]
+
+## Xulosa
+
+Norasmiylikni rasmiylashtirish orqali bartaraf etilishi kerak bo'lgan muammo sifatida ko'rish o'rniga, siyosat ishchilarni ular turgan joyda kutib olishi kerak: ish beruvchilar o'rtasida ko'chib yuradigan ko'nikmalar sertifikati bilan birga keladigan ko'chma, kam to'siqli imtiyozlar.`,
   },
   {
     id: 4,
     slug: "algorithmic-decision-making-public-services",
     title: "Algorithmic Decision-Making in Public Services",
+    title_uz: "Davlat xizmatlarida algoritmik qaror qabul qilish",
     excerpt:
       "A survey of automated eligibility systems in social services, and the due-process gaps they introduce.",
+    excerpt_uz:
+      "Ijtimoiy xizmatlardagi avtomatlashtirilgan huquq berish tizimlari va ular keltirib chiqaradigan adolatli jarayon bo'shliqlari bo'yicha tadqiqot.",
     theme: "technology",
     cover: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80",
-    author: { name: "Malika Islomova", role: "Technology Policy Researcher" },
+    author: { name: "Malika Islomova", role: "Technology Policy Researcher", role_uz: "Texnologiya siyosati tadqiqotchisi" },
     published_at: "2025-12-05T09:00:00Z",
     read_time: 8,
     base_views: 2040,
@@ -136,16 +201,36 @@ We propose a minimum disclosure standard: any automated denial must be accompani
 ## Why this matters now
 
 As more services move to automated eligibility, the gap between efficiency gains and due-process protections will widen unless disclosure standards are set now, before systems become further entrenched.`,
+    content_uz: `Avtomatlashtirilgan tizimlar endi davlat imtiyozlarining tobora ortib borayotgan qismi uchun huquqni belgilamoqda. Ushbu tadqiqot hozirda foydalanilayotgan 9 ta shunday tizimni ko'rib chiqadi va aniq savol beradi: algoritm imtiyozni rad etganda, ariza beruvchida haqiqatan ham qanday himoya vositasi bor?
+
+## Audit yondashuvi
+
+Biz har bir tizim uchun hujjatlar, apellyatsiya jurnallari va imkon bo'lsa, model spetsifikatsiyalarini so'radik. Uchta idora yetkazib beruvchi maxfiyligini bahona qilib, model mantig'ini ulashishdan bosh tortdi — bu o'zi ham bir topilma.
+
+## Adolatli jarayondagi bo'shliqlar
+
+9 tizimdan 6 tasida ariza beruvchilar rad etish ortidagi aniq omillarni ko'rish imkoniyatiga ega emas edi — faqat umumiy rad etish kodi. Bunday tizimlarda apellyatsiya muvaffaqiyat darajasi sababni oshkor qiladigan tizimlarnikidan ikki baravardan kam edi.
+
+## Amaliy standart
+
+Biz minimal oshkoralik standartini taklif qilamiz: har qanday avtomatik rad etish oddiy tilda eng muhim uchta omil bilan birga kelishi va inson tekshiruvchisi belgilangan muddat ichida murojaat qilinishi mumkin bo'lishi kerak. Bu mulkiy model ichki tuzilishini ochishni talab qilmaydi — faqat natijalarni harakatga asos bo'ladigan, shikoyat qilinishi mumkin bo'lgan ma'lumotga aylantirishni talab qiladi.
+
+## Bu nega hozir muhim
+
+Ko'proq xizmatlar avtomatlashtirilgan huquq berishga o'tar ekan, oshkoralik standartlari hozir, tizimlar yanada mustahkamlanmasdan oldin belgilanmasa, samaradorlik yutuqlari va adolatli jarayon himoyasi o'rtasidagi bo'shliq kengayadi.`,
   },
   {
     id: 5,
     slug: "water-scarcity-adaptation-strategies",
     title: "Community-Led Water Scarcity Adaptation",
+    title_uz: "Jamoat boshchiligidagi suv tanqisligiga moslashish",
     excerpt:
       "Comparing top-down infrastructure investment with community-managed water allocation in drought-prone districts.",
+    excerpt_uz:
+      "Qurg'oqchilikka moyil tumanlarda yuqoridan-pastga infratuzilma sarmoyasini jamoat boshqaruvidagi suv taqsimoti bilan solishtirish.",
     theme: "sustainability",
     cover: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=1200&q=80",
-    author: { name: "Nodira Yusupova", role: "Lead Researcher" },
+    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi" },
     published_at: "2025-11-20T09:00:00Z",
     read_time: 10,
     base_views: 990,
@@ -168,16 +253,36 @@ Infrastructure solves a supply problem; it does not solve a coordination problem
 ## Recommendation
 
 Future water-infrastructure investment should be paired, by default, with a funded and empowered local allocation body, not treated as a standalone capital project.`,
+    content_uz: `Qurg'oqchilikka moyil tumanlar odatda katta infratuzilma sarmoyalarini — yangi quduqlar, quvurlar va suv omborlarini olgan. Ushbu tadqiqot faqat infratuzilma sarmoyasini olgan tumanlar bilan infratuzilmani jamoat boshqaruvidagi taqsimot qo'mitalari bilan birlashtirgan tumanlar natijalarini solishtiradi.
+
+## Dizayn
+
+Biz uchta quruq mavsum davomida 8 ta tumanni solishtirdik: 4 tasi faqat infratuzilma, 4 tasi esa suv organi belgilagan texnik chegaralar doirasida mahalliy foydalanish qoidalarini belgilash vakolatiga ega bo'lgan jamoat taqsimot qo'mitalari qo'shilgan.
+
+## Natijalar
+
+Faqat infratuzilmaga ega tumanlarda suv mavjudligi dastlab yaxshilangan, ammo foydalanish andozalari sarmoyagacha bo'lgan me'yorlarga qaytgani sayin ikkinchi mavsumda yana pasaygan. Taqsimot qo'mitalariga ega tumanlar esa barcha uch mavsum davomida mavjudlik yutuqlarini saqlab qolgan, foydalanish andozalari muhandislar belgilagan texnik chegaralarga qarab siljigan.
+
+## Talqin
+
+Infratuzilma yetkazib berish muammosini hal qiladi; u muvofiqlashtirish muammosini hal qilmaydi. Jamoat taqsimot qo'mitalari yetishmayotgan muvofiqlashtirish qatlami sifatida ishlayotganga o'xshaydi — texnik cheklovlarni aholi haqiqatan ham amal qiladigan mahalliy qonuniy qoidalarga aylantiradi.
+
+## Tavsiya
+
+Kelgusi suv infratuzilmasi sarmoyalari alohida kapital loyiha sifatida emas, balki sukut bo'yicha moliyalashtirilgan va vakolatli mahalliy taqsimot organi bilan birga bo'lishi kerak.`,
   },
   {
     id: 6,
     slug: "digital-literacy-curriculum-outcomes",
     title: "Measuring Digital Literacy Curriculum Outcomes",
+    title_uz: "Raqamli savodxonlik o'quv dasturi natijalarini o'lchash",
     excerpt:
       "A before-and-after study of a national digital literacy curriculum rolled out across 60 schools.",
+    excerpt_uz:
+      "60 ta maktabda joriy etilgan milliy raqamli savodxonlik o'quv dasturining oldingi-keyingi natijalarini o'rganish.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=80",
-    author: { name: "Aziz Rakhimov", role: "Governance Fellow" },
+    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
     published_at: "2025-10-09T09:00:00Z",
     read_time: 6,
     base_views: 720,
@@ -200,6 +305,23 @@ Programs evaluated only on confidence surveys would appear far more successful t
 ## Next steps
 
 We recommend expanding the technical-skills modules and adopting practical assessment as the primary evaluation metric for the curriculum's second phase.`,
+    content_uz: `O'n sakkiz oy oldin 60 ta pilot maktabda milliy raqamli savodxonlik o'quv dasturi joriy etilgan edi. Ushbu tadqiqot o'quvchilar haqiqatan ham nimani o'zlashtirganini, o'z-o'zini baholash o'rniga ko'nikmalarga asoslangan baholash orqali o'lchaydi — bu farq muhim bo'lib chiqdi.
+
+## Baholash dizayni
+
+O'quvchilar joriy etishdan oldin va o'n sakkiz oy o'tgach amaliy ko'nikmalar baholovidan (fishing urinishlarini aniqlash, manba ishonchliligini baholash, jadval bilan asosiy ishlar) o'z-o'zini baholash so'rovnomasi bilan birga o'tdilar.
+
+## Ishonch va ko'nikma o'rtasidagi tafovut
+
+Raqamli ko'nikmalarga o'z-o'zini ishonch keskin oshdi — o'rtacha 34 ball. O'lchangan ko'nikma esa ancha kamroq, 11 ballga oshdi, bu asosan texnik vazifalar emas, balki manba ishonchliligini baholashda to'plandi.
+
+## Nega bu tafovut muhim
+
+Faqat ishonch so'rovnomalari bo'yicha baholangan dasturlar ko'nikma ma'lumotlari tasdiqlaganidan ancha muvaffaqiyatli ko'rinadi. Bu o'quv dasturining keyingi bosqichi qanday moliyalashtirilishi va baholanishiga to'g'ridan-to'g'ri ta'sir qiladi — natijani o'lchash amaliy baholashga o'tishi kerak.
+
+## Keyingi qadamlar
+
+Biz texnik ko'nikma modullarini kengaytirish va o'quv dasturining ikkinchi bosqichi uchun amaliy baholashni asosiy baholash mezoni sifatida qabul qilishni tavsiya qilamiz.`,
   },
 ]
 

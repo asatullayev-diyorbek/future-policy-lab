@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Mail, ArrowRight } from "lucide-react"
 import { useThemeStore } from "../store/theme"
+import { useTranslation } from "../i18n/useTranslation"
 
 const TelegramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
@@ -27,21 +28,22 @@ const SOCIALS = [
   { href: "#", label: "LinkedIn",  Icon: LinkedInIcon,  hoverLight: "hover:bg-sky-50 hover:text-sky-600 hover:border-sky-200",       hoverDark: "hover:bg-sky-500/10 hover:text-sky-400 hover:border-sky-500/30" },
 ]
 
-const FOOTER_LINKS = [
-  { to: "/about", label: "About Us" },
-  { to: "/research", label: "Research" },
-  { to: "/policy-briefs", label: "Policy Briefs" },
-  { to: "/debates", label: "Debates" },
-  { to: "/meetings-news/events", label: "Meetings" },
-  { to: "/meetings-news/news", label: "News" },
-  { to: "/resources", label: "Resources" },
-]
-
 export default function Footer() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t } = useTranslation()
   const [email, setEmail] = useState("")
   const [sent, setSent] = useState(false)
+
+  const FOOTER_LINKS = [
+    { to: "/about", label: t("nav.about") },
+    { to: "/research", label: t("nav.research") },
+    { to: "/policy-briefs", label: t("nav.policyBriefs") },
+    { to: "/debates", label: t("nav.debates") },
+    { to: "/meetings-news/events", label: t("nav.meetings") },
+    { to: "/meetings-news/news", label: t("nav.news") },
+    { to: "/resources", label: t("nav.resources") },
+  ]
 
   const handleSubscribe = (e) => {
     e.preventDefault()
@@ -73,7 +75,7 @@ export default function Footer() {
             </Link>
 
             <p className={`text-sm leading-relaxed mb-7 max-w-[340px] ${dark ? "text-slate-500" : "text-slate-500"}`}>
-              A youth-led policy platform bringing together rigorous research, critical analysis, and public dialogue — grounded in empirical evidence, not speculation.
+              {t("footer.tagline")}
             </p>
 
             <div className="flex items-center gap-2.5">
@@ -97,7 +99,7 @@ export default function Footer() {
           {/* Links */}
           <div>
             <h4 className={`text-xs font-bold uppercase tracking-widest mb-4 ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              Explore
+              {t("footer.explore")}
             </h4>
             <ul className="flex flex-col gap-2.5">
               {FOOTER_LINKS.map((l) => (
@@ -124,10 +126,10 @@ export default function Footer() {
             </div>
 
             <h4 className={`font-bold text-[15px] mb-1.5 ${dark ? "text-white" : "text-slate-900"}`}>
-              Stay informed
+              {t("footer.stayInformed")}
             </h4>
             <p className={`text-sm leading-relaxed mb-5 ${dark ? "text-slate-500" : "text-slate-500"}`}>
-              New research, policy briefs, and lab updates — straight to your inbox.
+              {t("footer.newsletterDesc")}
             </p>
 
             {sent ? (
@@ -135,7 +137,7 @@ export default function Footer() {
                 dark ? "bg-emerald-500/10 text-emerald-400" : "bg-emerald-50 text-emerald-600"
               }`}>
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                Subscribed — thank you!
+                {t("footer.subscribed")}
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -143,7 +145,7 @@ export default function Footer() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@email.com"
+                  placeholder={t("footer.emailPlaceholder")}
                   className={`flex-1 px-4 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                     dark
                       ? "bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus:border-blue-500/50"
@@ -165,10 +167,10 @@ export default function Footer() {
           dark ? "border-white/[0.06]" : "border-slate-200"
         }`}>
           <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-            © {new Date().getFullYear()} Future Policy Lab. All rights reserved.
+            © {new Date().getFullYear()} Future Policy Lab. {t("footer.rights")}
           </span>
           <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-            Evidence-Based Youth Research Initiative
+            {t("footer.initiative")}
           </span>
         </div>
       </div>

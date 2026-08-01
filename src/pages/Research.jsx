@@ -5,6 +5,8 @@ import { useThemeStore } from "../store/theme"
 import { researchArticles, RESEARCH_THEMES } from "../data/research"
 import PageHero from "../components/PageHero"
 import ResearchCard from "../components/ResearchCard"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,6 +17,7 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 export default function Research() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
   const [activeTheme, setActiveTheme] = useState("all")
 
   const filtered = useMemo(() => {
@@ -35,12 +38,12 @@ export default function Research() {
 
   return (
     <>
-      <Helmet><title>Research — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("research.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="01 — Research"
-        title="Original, Evidence-Based Research"
-        subtitle="Data-backed academic papers and empirical studies addressing systemic challenges in education, governance, economic development, technology, and sustainability."
+        eyebrow={t("research.eyebrow")}
+        title={t("research.heroTitle")}
+        subtitle={t("research.heroSubtitle")}
         image="/research-header.png"
       />
 
@@ -54,11 +57,11 @@ export default function Research() {
             className="flex flex-wrap items-center gap-2 mb-10"
           >
             <button onClick={() => setActiveTheme("all")} className={filterCls(activeTheme === "all")}>
-              All
+              {t("common.all")}
             </button>
-            {RESEARCH_THEMES.map((t) => (
-              <button key={t.id} onClick={() => setActiveTheme(t.id)} className={filterCls(activeTheme === t.id)}>
-                {t.name}
+            {RESEARCH_THEMES.map((rt) => (
+              <button key={rt.id} onClick={() => setActiveTheme(rt.id)} className={filterCls(activeTheme === rt.id)}>
+                {L(rt, "name", lang)}
               </button>
             ))}
           </motion.div>
@@ -79,7 +82,7 @@ export default function Research() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              No research published in this theme yet.
+              {t("research.empty")}
             </p>
           )}
         </div>

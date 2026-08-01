@@ -5,6 +5,7 @@ import { useThemeStore } from "../store/theme"
 import { meetingsNews } from "../data/meetingsNews"
 import PageHero from "../components/PageHero"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
+import { useTranslation } from "../i18n/useTranslation"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,6 +16,7 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 export default function News() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t } = useTranslation()
 
   const news = useMemo(() => {
     return meetingsNews
@@ -24,12 +26,12 @@ export default function News() {
 
   return (
     <>
-      <Helmet><title>News — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("news.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="Meetings & News — News"
-        title="Lab Announcements & Updates"
-        subtitle="New research drops, resource additions, and milestones from Future Policy Lab."
+        eyebrow={t("news.eyebrow")}
+        title={t("news.heroTitle")}
+        subtitle={t("news.heroSubtitle")}
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
@@ -50,7 +52,7 @@ export default function News() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              No news posted yet.
+              {t("news.empty")}
             </p>
           )}
         </div>

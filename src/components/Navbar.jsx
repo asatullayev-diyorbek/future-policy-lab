@@ -2,22 +2,25 @@ import { useState, useEffect } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { Menu, X, ArrowRight } from "lucide-react"
 import ThemeToggle from "./ThemeToggle"
+import LanguageToggle from "./LanguageToggle"
 import { useThemeStore } from "../store/theme"
-
-const NAV_LINKS = [
-  { to: "/", label: "Home", end: true },
-  { to: "/about", label: "About Us" },
-  { to: "/research", label: "Research" },
-  { to: "/policy-briefs", label: "Policy Briefs" },
-  { to: "/debates", label: "Debates" },
-  { to: "/meetings-news/events", label: "Meetings" },
-  { to: "/meetings-news/news", label: "News" },
-  { to: "/resources", label: "Resources" },
-]
+import { useTranslation } from "../i18n/useTranslation"
 
 export default function Navbar() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t } = useTranslation()
+
+  const NAV_LINKS = [
+    { to: "/", label: t("nav.home"), end: true },
+    { to: "/about", label: t("nav.about") },
+    { to: "/research", label: t("nav.research") },
+    { to: "/policy-briefs", label: t("nav.policyBriefs") },
+    { to: "/debates", label: t("nav.debates") },
+    { to: "/meetings-news/events", label: t("nav.meetings") },
+    { to: "/meetings-news/news", label: t("nav.news") },
+    { to: "/resources", label: t("nav.resources") },
+  ]
 
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
@@ -74,7 +77,7 @@ export default function Navbar() {
                 Future Policy <span className="text-blue-500">Lab</span>
               </span>
               <span className={`text-[10px] font-semibold uppercase tracking-widest ${dark ? "text-slate-500" : "text-slate-400"}`}>
-                Youth-Led Academic &amp; Policy Platform
+                {t("nav.tagline")}
               </span>
             </div>
           </Link>
@@ -90,6 +93,8 @@ export default function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2 shrink-0">
+            <LanguageToggle dark={dark} />
+
             <Link
               to="/contact"
               className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-semibold transition-all duration-200 ${
@@ -98,7 +103,7 @@ export default function Navbar() {
                   : "bg-blue-700 text-white hover:bg-blue-600"
               }`}
             >
-              Contact <ArrowRight size={13} />
+              {t("nav.contact")} <ArrowRight size={13} />
             </Link>
 
             <ThemeToggle dark={dark} />
@@ -129,7 +134,7 @@ export default function Navbar() {
             </NavLink>
           ))}
           <NavLink to="/contact" className={({ isActive }) => mobileLinkCls(isActive)}>
-            Contact
+            {t("nav.contact")}
           </NavLink>
         </div>
       </div>

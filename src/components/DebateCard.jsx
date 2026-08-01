@@ -2,11 +2,15 @@ import { Link } from "react-router-dom"
 import { Eye, Users, MessageSquare } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { DEBATE_THEMES } from "../data/debates"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 export default function DebateCard({ debate }) {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
-  const themeName = DEBATE_THEMES.find((t) => t.id === debate.theme)?.name ?? debate.theme
+  const { t, lang } = useTranslation()
+  const dt = DEBATE_THEMES.find((d) => d.id === debate.theme)
+  const themeName = dt ? L(dt, "name", lang) : debate.theme
 
   return (
     <Link
@@ -20,7 +24,7 @@ export default function DebateCard({ debate }) {
       <div className="relative aspect-video overflow-hidden">
         <img
           src={debate.cover}
-          alt={debate.motion}
+          alt={L(debate, "motion", lang)}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
@@ -32,7 +36,7 @@ export default function DebateCard({ debate }) {
             ? "bg-emerald-500/90 text-white"
             : "bg-slate-500/90 text-white"
         }`}>
-          {debate.status === "open" ? "Open" : "Closed"}
+          {debate.status === "open" ? t("debates.open") : t("debates.closed")}
         </span>
       </div>
 
@@ -40,10 +44,10 @@ export default function DebateCard({ debate }) {
         <h3 className={`font-bold text-[15px] leading-snug mb-2 transition-colors ${
           dark ? "text-white group-hover:text-violet-400" : "text-slate-900 group-hover:text-violet-700"
         }`}>
-          {debate.motion}
+          {L(debate, "motion", lang)}
         </h3>
         <p className={`text-[13px] leading-relaxed mb-4 flex-1 ${dark ? "text-slate-500" : "text-slate-500"}`}>
-          {debate.excerpt}
+          {L(debate, "excerpt", lang)}
         </p>
 
         <div className={`flex items-center gap-3.5 text-[11.5px] pt-3 border-t ${

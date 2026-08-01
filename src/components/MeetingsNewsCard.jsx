@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom"
 import { Eye, CalendarDays, MapPin, Megaphone } from "lucide-react"
 import { useThemeStore } from "../store/theme"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 export default function MeetingsNewsCard({ item }) {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
   const isEvent = item.type === "event"
 
-  const formattedDate = new Date((isEvent ? item.date : item.published_at)).toLocaleDateString("en-US", {
+  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const formattedDate = new Date((isEvent ? item.date : item.published_at)).toLocaleDateString(locale, {
     year: "numeric", month: "short", day: "numeric",
     ...(isEvent ? { hour: "numeric", minute: "2-digit" } : {}),
   })
@@ -26,7 +30,7 @@ export default function MeetingsNewsCard({ item }) {
       <div className="relative aspect-video overflow-hidden">
         <img
           src={item.cover}
-          alt={item.title}
+          alt={L(item, "title", lang)}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
@@ -34,11 +38,11 @@ export default function MeetingsNewsCard({ item }) {
           isEvent ? "bg-orange-600" : "bg-slate-700"
         }`}>
           {isEvent ? <CalendarDays size={11} /> : <Megaphone size={11} />}
-          {isEvent ? "Event" : "News"}
+          {isEvent ? t("meetingsNews.eventBadge") : t("meetingsNews.newsBadge")}
         </span>
         {isEvent && isPast && (
           <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/60 text-white text-[11px] font-semibold">
-            Past
+            {t("events.past")}
           </span>
         )}
       </div>
@@ -47,10 +51,10 @@ export default function MeetingsNewsCard({ item }) {
         <h3 className={`font-bold text-[15px] leading-snug mb-2 transition-colors ${
           dark ? "text-white group-hover:text-orange-400" : "text-slate-900 group-hover:text-orange-700"
         }`}>
-          {item.title}
+          {L(item, "title", lang)}
         </h3>
         <p className={`text-[13px] leading-relaxed mb-4 flex-1 ${dark ? "text-slate-500" : "text-slate-500"}`}>
-          {item.excerpt}
+          {L(item, "excerpt", lang)}
         </p>
 
         <div className={`flex flex-col gap-1.5 text-[11.5px] pt-3 border-t ${
@@ -61,7 +65,7 @@ export default function MeetingsNewsCard({ item }) {
             <span className="flex items-center gap-1 ml-auto"><Eye size={11} /> {item.base_views.toLocaleString()}</span>
           </div>
           {isEvent && item.location && (
-            <span className="flex items-center gap-1 truncate"><MapPin size={11} className="shrink-0" /> {item.location}</span>
+            <span className="flex items-center gap-1 truncate"><MapPin size={11} className="shrink-0" /> {L(item, "location", lang)}</span>
           )}
         </div>
       </div>

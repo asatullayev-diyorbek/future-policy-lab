@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { X, CalendarCheck } from "lucide-react"
 import { useThemeStore } from "../store/theme"
+import { useTranslation } from "../i18n/useTranslation"
 
 export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t } = useTranslation()
 
   const [form, setForm] = useState({ name: "", email: "", phone: "" })
   const [error, setError] = useState("")
@@ -27,8 +29,8 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!form.name.trim()) { setError("Full name is required."); return }
-    if (!form.email.trim() && !form.phone.trim()) { setError("Provide an email or a phone number so we can reach you."); return }
+    if (!form.name.trim()) { setError(t("rsvpModal.nameRequired")); return }
+    if (!form.email.trim() && !form.phone.trim()) { setError(t("rsvpModal.contactRequired")); return }
     setError("")
     onSubmit(form)
   }
@@ -55,14 +57,14 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
             </div>
             <div>
               <h2 id="rsvp-modal-title" className={`text-sm font-bold ${dark ? "text-white" : "text-slate-900"}`}>
-                RSVP to attend
+                {t("rsvpModal.title")}
               </h2>
               <p className={`text-xs truncate max-w-[260px] ${dark ? "text-slate-500" : "text-slate-500"}`}>{eventTitle}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("common.close")}
             className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
               dark ? "text-slate-500 hover:bg-white/8 hover:text-white" : "text-slate-400 hover:bg-slate-100 hover:text-slate-700"
             }`}
@@ -74,21 +76,21 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
         <form onSubmit={handleSubmit} className="px-6 py-6 flex flex-col gap-4">
           <div>
             <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-              Full name <span className="text-rose-500">*</span>
+              {t("rsvpModal.fullName")} <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
               autoFocus
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              placeholder="e.g. Dilnoza Karimova"
+              placeholder={t("rsvpModal.namePlaceholder")}
               className={inputCls}
             />
           </div>
 
           <div>
             <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-              Email
+              {t("rsvpModal.email")}
             </label>
             <input
               type="email"
@@ -101,7 +103,7 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
 
           <div>
             <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-              Phone
+              {t("rsvpModal.phone")}
             </label>
             <input
               type="tel"
@@ -113,7 +115,7 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
           </div>
 
           <p className={`text-[11px] leading-relaxed ${dark ? "text-slate-600" : "text-slate-400"}`}>
-            Provide at least an email or a phone number — we'll use it only to send details about this event.
+            {t("rsvpModal.note")}
           </p>
 
           {error && <p className="text-xs text-rose-500">{error}</p>}
@@ -123,7 +125,7 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
               type="submit"
               className="flex-1 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-orange-600 text-white font-bold text-sm hover:bg-orange-500 active:scale-[0.98] transition-all"
             >
-              <CalendarCheck size={15} /> Confirm RSVP
+              <CalendarCheck size={15} /> {t("rsvpModal.confirm")}
             </button>
             <button
               type="button"
@@ -132,7 +134,7 @@ export default function RSVPModal({ eventTitle, onClose, onSubmit }) {
                 dark ? "border-white/12 text-slate-300 hover:bg-white/5" : "border-slate-300 text-slate-600 hover:bg-slate-50"
               }`}
             >
-              Cancel
+              {t("rsvpModal.cancel")}
             </button>
           </div>
         </form>

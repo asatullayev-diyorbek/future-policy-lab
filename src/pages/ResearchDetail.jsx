@@ -11,11 +11,15 @@ import { recordView, getComments, addComment } from "../utils/engagement"
 import YoutubeEmbed from "../components/YoutubeEmbed"
 import ResearchCard from "../components/ResearchCard"
 import NotFound from "./NotFound"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
+import { tagLabel } from "../i18n/tagLabels"
 
 export default function ResearchDetail() {
   const { slug } = useParams()
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
 
   const article = getResearchBySlug(slug)
   const [views, setViews] = useState(article?.base_views ?? 0)
@@ -34,17 +38,19 @@ export default function ResearchDetail() {
 
   if (!article) return <NotFound />
 
-  const themeName = RESEARCH_THEMES.find((t) => t.id === article.theme)?.name ?? article.theme
+  const rt = RESEARCH_THEMES.find((r) => r.id === article.theme)
+  const themeName = rt ? L(rt, "name", lang) : article.theme
   const related = getRelatedResearch(article)
 
-  const formattedDate = new Date(article.published_at).toLocaleDateString("en-US", {
+  const locale = lang === "uz" ? "uz-UZ" : "en-US"
+  const formattedDate = new Date(article.published_at).toLocaleDateString(locale, {
     year: "numeric", month: "long", day: "numeric",
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
-      setFormError("Name and comment are required.")
+      setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
@@ -89,13 +95,15 @@ export default function ResearchDetail() {
     },
   }
 
+  const title = L(article, "title", lang)
+
   return (
     <>
       <Helmet>
-        <title>{article.title} — Future Policy Lab</title>
-        <meta name="description" content={article.excerpt} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt} />
+        <title>{title} {t("research.detailTitle")}</title>
+        <meta name="description" content={L(article, "excerpt", lang)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={L(article, "excerpt", lang)} />
         <meta property="og:image" content={article.cover} />
         <meta property="og:type" content="article" />
       </Helmet>
@@ -103,7 +111,7 @@ export default function ResearchDetail() {
       {/* Cover hero */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
         <div className="relative w-full aspect-video overflow-hidden rounded-2xl">
-          <img src={article.cover} alt={article.title} className="w-full h-full object-cover" />
+          <img src={article.cover} alt={title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
           <div className="absolute top-5 left-4 sm:left-8">
@@ -111,7 +119,7 @@ export default function ResearchDetail() {
               to="/research"
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 backdrop-blur-sm text-white text-sm font-medium hover:bg-black/60 transition-colors border border-white/15"
             >
-              <ArrowLeft size={15} /> Research
+              <ArrowLeft size={15} /> {t("research.backLabel")}
             </Link>
           </div>
 
@@ -121,7 +129,7 @@ export default function ResearchDetail() {
                 {themeName}
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight drop-shadow-lg">
-                {article.title}
+                {title}
               </h1>
             </div>
           </div>
@@ -146,14 +154,14 @@ export default function ResearchDetail() {
             </div>
             <div className="leading-tight">
               <p className={`font-semibold text-sm ${dark ? "text-slate-200" : "text-slate-800"}`}>{article.author.name}</p>
-              <p className="text-xs">{article.author.role}</p>
+              <p className="text-xs">{L(article.author, "role", lang)}</p>
             </div>
           </div>
 
           <div className={`w-px h-4 ${dark ? "bg-white/10" : "bg-slate-200"}`} />
 
           <span className="flex items-center gap-1.5"><Calendar size={13} /> {formattedDate}</span>
-          <span className="flex items-center gap-1.5"><Clock size={13} /> {article.read_time} min read</span>
+          <span className="flex items-center gap-1.5"><Clock size={13} /> {article.read_time} {t("common.minRead")}</span>
           <span className="flex items-center gap-1.5"><Eye size={13} /> {views.toLocaleString()}</span>
           <span className="flex items-center gap-1.5"><MessageCircle size={13} /> {comments.length}</span>
 
@@ -165,7 +173,7 @@ export default function ResearchDetail() {
                   <span key={tag} className={`flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full ${
                     dark ? "bg-white/5 text-slate-400" : "bg-slate-100 text-slate-500"
                   }`}>
-                    <Tag size={9} /> {tag}
+                    <Tag size={9} /> {tagLabel(tag, lang)}
                   </span>
                 ))}
               </div>
@@ -182,7 +190,7 @@ export default function ResearchDetail() {
           className="py-6"
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-            {article.content}
+            {L(article, "content", lang)}
           </ReactMarkdown>
         </motion.article>
 
@@ -190,7 +198,7 @@ export default function ResearchDetail() {
         <div className="pt-6 pb-16 border-t mt-4" style={{ borderColor: dark ? "rgba(255,255,255,0.07)" : "#e2e8f0" }}>
           <h2 className={`text-xl font-bold mb-6 mt-8 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
             <MessageCircle size={20} className="text-blue-600" />
-            Comments
+            {t("research.commentsTitle")}
             {comments.length > 0 && (
               <span className={`text-sm font-normal ${dark ? "text-slate-500" : "text-slate-400"}`}>
                 · {comments.length}
@@ -213,7 +221,7 @@ export default function ResearchDetail() {
                     <div className="flex items-center gap-3 mb-1.5">
                       <span className={`text-sm font-semibold ${dark ? "text-slate-200" : "text-slate-800"}`}>{c.name}</span>
                       <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-                        {new Date(c.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(c.created_at).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
                       </span>
                     </div>
                     <p className={`text-sm leading-relaxed ${dark ? "text-slate-400" : "text-slate-600"}`}>{c.content}</p>
@@ -224,34 +232,34 @@ export default function ResearchDetail() {
           )}
 
           <div className={`rounded-2xl border p-6 ${dark ? "bg-white/3 border-white/8" : "bg-white border-slate-200 shadow-sm"}`}>
-            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>Leave a comment</h3>
+            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>{t("research.leaveComment")}</h3>
 
             {submitted && (
               <div className="mb-4 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm flex items-center gap-2">
-                <Check size={14} /> Your comment has been posted.
+                <Check size={14} /> {t("common.commentPosted")}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Name <span className="text-rose-500">*</span>
+                  {t("common.name")} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Your name"
+                  placeholder={t("common.yourName")}
                   className={inputCls}
                 />
               </div>
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Comment <span className="text-rose-500">*</span>
+                  {t("common.comment")} <span className="text-rose-500">*</span>
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="Share your thoughts on this research..."
+                  placeholder={t("research.commentPlaceholder")}
                   value={form.content}
                   onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
                   className={`${inputCls} resize-none`}
@@ -264,7 +272,7 @@ export default function ResearchDetail() {
                 type="submit"
                 className="self-start flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-700 text-white font-semibold text-sm hover:bg-blue-600 active:scale-[0.98] transition-all"
               >
-                <Send size={14} /> Post Comment
+                <Send size={14} /> {t("common.postComment")}
               </button>
             </form>
           </div>
@@ -275,7 +283,7 @@ export default function ResearchDetail() {
       {related.length > 0 && (
         <div className={`border-t py-14 ${dark ? "border-white/8 bg-[#080d16]" : "border-slate-200 bg-slate-50"}`}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>Related Research</h2>
+            <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>{t("research.relatedTitle")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((a) => (
                 <div key={a.slug} className="h-full">

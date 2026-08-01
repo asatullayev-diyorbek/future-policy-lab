@@ -5,6 +5,8 @@ import { useThemeStore } from "../store/theme"
 import { debates, DEBATE_THEMES } from "../data/debates"
 import PageHero from "../components/PageHero"
 import DebateCard from "../components/DebateCard"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,6 +17,7 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 export default function Debates() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
   const [activeTheme, setActiveTheme] = useState("all")
 
   const filtered = useMemo(() => {
@@ -33,12 +36,12 @@ export default function Debates() {
 
   return (
     <>
-      <Helmet><title>Debates — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("debates.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="03 — Debates"
-        title="Structured Forums for Rigorous Debate"
-        subtitle="Intellectual exchanges fostering critical inquiry and diverse perspective-sharing on today's most pressing public matters."
+        eyebrow={t("debates.eyebrow")}
+        title={t("debates.heroTitle")}
+        subtitle={t("debates.heroSubtitle")}
         image="/debates-header.png"
       />
 
@@ -52,11 +55,11 @@ export default function Debates() {
             className="flex flex-wrap items-center gap-2 mb-10"
           >
             <button onClick={() => setActiveTheme("all")} className={filterCls(activeTheme === "all")}>
-              All
+              {t("common.all")}
             </button>
-            {DEBATE_THEMES.map((t) => (
-              <button key={t.id} onClick={() => setActiveTheme(t.id)} className={filterCls(activeTheme === t.id)}>
-                {t.name}
+            {DEBATE_THEMES.map((dt) => (
+              <button key={dt.id} onClick={() => setActiveTheme(dt.id)} className={filterCls(activeTheme === dt.id)}>
+                {L(dt, "name", lang)}
               </button>
             ))}
           </motion.div>
@@ -77,7 +80,7 @@ export default function Debates() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              No debates open in this theme yet.
+              {t("debates.empty")}
             </p>
           )}
         </div>

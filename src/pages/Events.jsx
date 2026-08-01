@@ -5,6 +5,7 @@ import { useThemeStore } from "../store/theme"
 import { meetingsNews } from "../data/meetingsNews"
 import PageHero from "../components/PageHero"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
+import { useTranslation } from "../i18n/useTranslation"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,6 +16,7 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 export default function Events() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t } = useTranslation()
   const [activeFilter, setActiveFilter] = useState("upcoming")
 
   const events = useMemo(() => {
@@ -41,12 +43,12 @@ export default function Events() {
 
   return (
     <>
-      <Helmet><title>Events — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("events.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="Meetings & News — Events"
-        title="Seminars, Workshops & Panels"
-        subtitle="Upcoming and past sessions hosted by the lab. RSVP to reserve a seat at anything still open."
+        eyebrow={t("events.eyebrow")}
+        title={t("events.heroTitle")}
+        subtitle={t("events.heroSubtitle")}
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
@@ -59,13 +61,13 @@ export default function Events() {
             className="flex flex-wrap items-center gap-2 mb-10"
           >
             <button onClick={() => setActiveFilter("upcoming")} className={filterCls(activeFilter === "upcoming")}>
-              Upcoming
+              {t("events.upcoming")}
             </button>
             <button onClick={() => setActiveFilter("past")} className={filterCls(activeFilter === "past")}>
-              Past
+              {t("events.past")}
             </button>
             <button onClick={() => setActiveFilter("all")} className={filterCls(activeFilter === "all")}>
-              All
+              {t("common.all")}
             </button>
           </motion.div>
 
@@ -85,7 +87,7 @@ export default function Events() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              No {activeFilter === "past" ? "past" : "upcoming"} events right now.
+              {activeFilter === "past" ? t("events.emptyPast") : t("events.emptyUpcoming")}
             </p>
           )}
         </div>

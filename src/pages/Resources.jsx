@@ -7,6 +7,8 @@ import { useThemeStore } from "../store/theme"
 import { resources, RESOURCE_KINDS } from "../data/resources"
 import PageHero from "../components/PageHero"
 import ResourceCard from "../components/ResourceCard"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,14 +17,15 @@ const fadeUp = {
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 
 const KIND_META = {
-  tool: { icon: Wrench, desc: "Frameworks and templates for structuring policy analysis." },
-  dataset: { icon: Database, desc: "Curated datasets for empirical research and student projects." },
-  "reading-list": { icon: BookMarked, desc: "Guidance reading lists to build research literacy and capacity." },
+  tool: { icon: Wrench, desc: "Frameworks and templates for structuring policy analysis.", desc_uz: "Siyosat tahlilini tuzish uchun freymvorklar va shablonlar." },
+  dataset: { icon: Database, desc: "Curated datasets for empirical research and student projects.", desc_uz: "Empirik tadqiqot va talabalar loyihalari uchun tanlangan ma'lumotlar bazalari." },
+  "reading-list": { icon: BookMarked, desc: "Guidance reading lists to build research literacy and capacity.", desc_uz: "Tadqiqot savodxonligi va salohiyatini oshirish uchun o'quv ro'yxatlari." },
 }
 
 export default function Resources() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
   const [activeKind, setActiveKind] = useState("all")
 
   const filtered = useMemo(() => {
@@ -49,12 +52,12 @@ export default function Resources() {
 
   return (
     <>
-      <Helmet><title>Resources — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("resources.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="05 — Resources"
-        title="Tools to Build Research Literacy"
-        subtitle="Curated analytical tools, open datasets, guidance reading lists, and methodology guides designed for young scholars."
+        eyebrow={t("resources.eyebrow")}
+        title={t("resources.heroTitle")}
+        subtitle={t("resources.heroSubtitle")}
         image="/resources-header.png"
       />
 
@@ -90,8 +93,8 @@ export default function Resources() {
                       {count}
                     </span>
                   </div>
-                  <h3 className={`font-bold text-[15px] mb-1.5 ${dark ? "text-white" : "text-slate-900"}`}>{k.name}</h3>
-                  <p className={`text-[13px] leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{meta.desc}</p>
+                  <h3 className={`font-bold text-[15px] mb-1.5 ${dark ? "text-white" : "text-slate-900"}`}>{L(k, "name", lang)}</h3>
+                  <p className={`text-[13px] leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{lang === "uz" ? meta.desc_uz : meta.desc}</p>
                 </motion.button>
               )
             })}
@@ -110,11 +113,11 @@ export default function Resources() {
             className="flex flex-wrap items-center gap-2 mb-12"
           >
             <button onClick={() => setActiveKind("all")} className={filterCls(activeKind === "all")}>
-              All
+              {t("common.all")}
             </button>
             {RESOURCE_KINDS.map((k) => (
               <button key={k.id} onClick={() => setActiveKind(k.id)} className={filterCls(activeKind === k.id)}>
-                {k.name}
+                {L(k, "name", lang)}
               </button>
             ))}
           </motion.div>
@@ -130,7 +133,7 @@ export default function Resources() {
                     viewport={{ once: true, amount: 0.5 }}
                     className={`text-lg font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}
                   >
-                    {kind.name}
+                    {L(kind, "name", lang)}
                   </motion.h2>
                   <motion.div
                     variants={stagger}
@@ -164,7 +167,7 @@ export default function Resources() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              Nothing in this category yet.
+              {t("resources.empty")}
             </p>
           )}
         </div>
@@ -180,18 +183,17 @@ export default function Resources() {
             viewport={{ once: true, amount: 0.3 }}
           >
             <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${dark ? "text-white" : "text-slate-900"}`}>
-              Have a resource in mind?
+              {t("resources.ctaTitle")}
             </h2>
             <p className={`text-sm sm:text-base leading-relaxed mb-8 max-w-xl mx-auto ${dark ? "text-slate-400" : "text-slate-500"}`}>
-              If there's a specific tool, dataset, or reading you'd find useful for your research, let us know —
-              we're always expanding the library.
+              {t("resources.ctaDesc")}
             </p>
             <Link
               to="/contact"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-pink-600 text-white font-bold text-[15px] hover:bg-pink-500 active:scale-95 transition-all"
               style={{ boxShadow: "0 8px 28px rgba(219,39,119,0.3)" }}
             >
-              Suggest a Resource <ArrowRight size={17} />
+              {t("resources.suggestResource")} <ArrowRight size={17} />
             </Link>
           </motion.div>
         </div>

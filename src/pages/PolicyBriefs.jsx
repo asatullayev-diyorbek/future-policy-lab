@@ -5,6 +5,8 @@ import { useThemeStore } from "../store/theme"
 import { policyBriefs, BRIEF_THEMES } from "../data/policyBriefs"
 import PageHero from "../components/PageHero"
 import PolicyBriefCard from "../components/PolicyBriefCard"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -15,6 +17,7 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 export default function PolicyBriefs() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
   const [activeTheme, setActiveTheme] = useState("all")
 
   const filtered = useMemo(() => {
@@ -25,9 +28,7 @@ export default function PolicyBriefs() {
   const filterCls = (active) =>
     `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${
       active
-        ? dark
-          ? "bg-emerald-600 border-emerald-600 text-white"
-          : "bg-emerald-600 border-emerald-600 text-white"
+        ? "bg-emerald-600 border-emerald-600 text-white"
         : dark
           ? "border-white/10 text-slate-400 hover:text-white hover:border-white/20"
           : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
@@ -35,12 +36,12 @@ export default function PolicyBriefs() {
 
   return (
     <>
-      <Helmet><title>Policy Briefs — Future Policy Lab</title></Helmet>
+      <Helmet><title>{t("policyBriefs.title")}</title></Helmet>
 
       <PageHero
-        eyebrow="02 — Policy Briefs"
-        title="Decision-Ready Policy Recommendations"
-        subtitle="Concise, actionable summaries that distill complex data and academic proposals into clear recommendations for advocates and leaders."
+        eyebrow={t("policyBriefs.eyebrow")}
+        title={t("policyBriefs.heroTitle")}
+        subtitle={t("policyBriefs.heroSubtitle")}
         image="/policy-briefs-header.png"
       />
 
@@ -54,11 +55,11 @@ export default function PolicyBriefs() {
             className="flex flex-wrap items-center gap-2 mb-10"
           >
             <button onClick={() => setActiveTheme("all")} className={filterCls(activeTheme === "all")}>
-              All
+              {t("common.all")}
             </button>
-            {BRIEF_THEMES.map((t) => (
-              <button key={t.id} onClick={() => setActiveTheme(t.id)} className={filterCls(activeTheme === t.id)}>
-                {t.name}
+            {BRIEF_THEMES.map((bt) => (
+              <button key={bt.id} onClick={() => setActiveTheme(bt.id)} className={filterCls(activeTheme === bt.id)}>
+                {L(bt, "name", lang)}
               </button>
             ))}
           </motion.div>
@@ -79,7 +80,7 @@ export default function PolicyBriefs() {
             </motion.div>
           ) : (
             <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
-              No policy briefs published in this theme yet.
+              {t("policyBriefs.empty")}
             </p>
           )}
         </div>

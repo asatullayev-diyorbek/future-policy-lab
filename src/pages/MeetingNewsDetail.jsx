@@ -11,11 +11,15 @@ import { recordView, getComments, addComment, isAttending, getRSVP, submitRSVP, 
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
 import RSVPModal from "../components/RSVPModal"
 import NotFound from "./NotFound"
+import { useTranslation } from "../i18n/useTranslation"
+import { L } from "../i18n/localize"
+import { tagLabel } from "../i18n/tagLabels"
 
 export default function MeetingNewsDetail() {
   const { slug } = useParams()
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const { t, lang } = useTranslation()
 
   const item = getMeetingsNewsBySlug(slug)
   const isEvent = item?.type === "event"
@@ -49,9 +53,10 @@ export default function MeetingNewsDetail() {
   const related = getRelatedMeetingsNews(item)
   const isPast = isEvent && new Date(item.date) < new Date()
 
+  const locale = lang === "uz" ? "uz-UZ" : "en-US"
   const displayDate = new Date(isEvent ? item.date : item.published_at)
-  const formattedDate = displayDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-  const formattedTime = isEvent ? displayDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : null
+  const formattedDate = displayDate.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
+  const formattedTime = isEvent ? displayDate.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit" }) : null
 
   const handleRSVPSubmit = (fields) => {
     const result = submitRSVP(item.slug, fields, item.base_attendees)
@@ -73,7 +78,7 @@ export default function MeetingNewsDetail() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
-      setFormError("Name and comment are required.")
+      setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
@@ -108,19 +113,21 @@ export default function MeetingNewsDetail() {
     },
   }
 
+  const title = L(item, "title", lang)
+
   return (
     <>
       <Helmet>
-        <title>{item.title} — Future Policy Lab</title>
-        <meta name="description" content={item.excerpt} />
-        <meta property="og:title" content={item.title} />
-        <meta property="og:description" content={item.excerpt} />
+        <title>{title} — Future Policy Lab</title>
+        <meta name="description" content={L(item, "excerpt", lang)} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={L(item, "excerpt", lang)} />
         <meta property="og:image" content={item.cover} />
       </Helmet>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
         <div className="relative w-full aspect-video overflow-hidden rounded-2xl">
-          <img src={item.cover} alt={item.title} className="w-full h-full object-cover" />
+          <img src={item.cover} alt={title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
           <div className="absolute top-5 left-4 sm:left-8">
@@ -128,13 +135,13 @@ export default function MeetingNewsDetail() {
               to={isEvent ? "/meetings-news/events" : "/meetings-news/news"}
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 backdrop-blur-sm text-white text-sm font-medium hover:bg-black/60 transition-colors border border-white/15"
             >
-              <ArrowLeft size={15} /> {isEvent ? "Events" : "News"}
+              <ArrowLeft size={15} /> {isEvent ? t("events.backLabel") : t("news.backLabel")}
             </Link>
           </div>
 
           {isEvent && isPast && (
             <div className="absolute top-5 right-4 sm:right-8">
-              <span className="px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-semibold">Past event</span>
+              <span className="px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-semibold">{t("events.pastEvent")}</span>
             </div>
           )}
 
@@ -144,10 +151,10 @@ export default function MeetingNewsDetail() {
                 isEvent ? "bg-orange-600" : "bg-slate-700"
               }`}>
                 {isEvent ? <CalendarCheck size={12} /> : <Megaphone size={12} />}
-                {isEvent ? "Event" : "News"}
+                {isEvent ? t("meetingsNews.eventBadge") : t("meetingsNews.newsBadge")}
               </span>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight drop-shadow-lg">
-                {item.title}
+                {title}
               </h1>
             </div>
           </div>
@@ -176,7 +183,7 @@ export default function MeetingNewsDetail() {
                   <span key={tag} className={`flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full ${
                     dark ? "bg-white/5 text-slate-400" : "bg-slate-100 text-slate-500"
                   }`}>
-                    <Tag size={9} /> {tag}
+                    <Tag size={9} /> {tagLabel(tag, lang)}
                   </span>
                 ))}
               </div>
@@ -193,11 +200,11 @@ export default function MeetingNewsDetail() {
               <div className="flex-1">
                 {item.location && (
                   <p className={`flex items-center gap-2 text-sm font-medium mb-2 ${dark ? "text-slate-200" : "text-slate-800"}`}>
-                    <MapPin size={15} className="text-orange-600 shrink-0" /> {item.location}
+                    <MapPin size={15} className="text-orange-600 shrink-0" /> {L(item, "location", lang)}
                   </p>
                 )}
                 <p className={`flex items-center gap-2 text-sm ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  <Users size={15} className="text-orange-600 shrink-0" /> {attendeeCount} attending
+                  <Users size={15} className="text-orange-600 shrink-0" /> {attendeeCount} {t("events.attending")}
                 </p>
               </div>
               {!isPast && (
@@ -206,11 +213,11 @@ export default function MeetingNewsDetail() {
                     <span className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm ${
                       dark ? "bg-white/10 text-white border border-white/15" : "bg-white text-slate-800 border border-slate-300"
                     }`}>
-                      <Check size={16} /> You're attending
+                      <Check size={16} /> {t("events.youreAttending")}
                     </span>
                     <button
                       onClick={handleCancelRSVP}
-                      aria-label="Cancel RSVP"
+                      aria-label={t("events.cancelRsvp")}
                       className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                         dark ? "text-slate-500 hover:bg-white/8 hover:text-white" : "text-slate-400 hover:bg-white hover:text-slate-700"
                       }`}
@@ -223,7 +230,7 @@ export default function MeetingNewsDetail() {
                     onClick={() => setRsvpModalOpen(true)}
                     className="shrink-0 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-orange-600 text-white hover:bg-orange-500 active:scale-95 transition-all"
                   >
-                    <CalendarCheck size={16} /> RSVP to attend
+                    <CalendarCheck size={16} /> {t("events.rsvp")}
                   </button>
                 )
               )}
@@ -231,7 +238,7 @@ export default function MeetingNewsDetail() {
 
             {rsvpConfirmed && (
               <div className="mt-4 flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm">
-                <Check size={14} /> You're registered{rsvp?.email ? ` — a confirmation will be sent to ${rsvp.email}` : ""}.
+                <Check size={14} /> {t("events.registered")}{rsvp?.email ? ` — ${t("events.confirmationSent")} ${rsvp.email}` : ""}.
               </div>
             )}
           </div>
@@ -239,7 +246,7 @@ export default function MeetingNewsDetail() {
 
         {rsvpModalOpen && (
           <RSVPModal
-            eventTitle={item.title}
+            eventTitle={title}
             onClose={() => setRsvpModalOpen(false)}
             onSubmit={handleRSVPSubmit}
           />
@@ -252,7 +259,7 @@ export default function MeetingNewsDetail() {
           className="py-6"
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-            {item.content}
+            {L(item, "content", lang)}
           </ReactMarkdown>
         </motion.article>
 
@@ -260,7 +267,7 @@ export default function MeetingNewsDetail() {
         <div className="pt-6 pb-16 border-t mt-4" style={{ borderColor: dark ? "rgba(255,255,255,0.07)" : "#e2e8f0" }}>
           <h2 className={`text-xl font-bold mb-6 mt-8 flex items-center gap-2 ${dark ? "text-white" : "text-slate-900"}`}>
             <MessageCircle size={20} className="text-orange-600" />
-            Comments
+            {t("common.comments")}
             {comments.length > 0 && (
               <span className={`text-sm font-normal ${dark ? "text-slate-500" : "text-slate-400"}`}>
                 · {comments.length}
@@ -283,7 +290,7 @@ export default function MeetingNewsDetail() {
                     <div className="flex items-center gap-3 mb-1.5">
                       <span className={`text-sm font-semibold ${dark ? "text-slate-200" : "text-slate-800"}`}>{c.name}</span>
                       <span className={`text-xs ${dark ? "text-slate-600" : "text-slate-400"}`}>
-                        {new Date(c.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                        {new Date(c.created_at).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}
                       </span>
                     </div>
                     <p className={`text-sm leading-relaxed ${dark ? "text-slate-400" : "text-slate-600"}`}>{c.content}</p>
@@ -294,34 +301,34 @@ export default function MeetingNewsDetail() {
           )}
 
           <div className={`rounded-2xl border p-6 ${dark ? "bg-white/3 border-white/8" : "bg-white border-slate-200 shadow-sm"}`}>
-            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>Leave a comment</h3>
+            <h3 className={`text-base font-bold mb-5 ${dark ? "text-white" : "text-slate-900"}`}>{t("common.leaveComment")}</h3>
 
             {submitted && (
               <div className="mb-4 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm flex items-center gap-2">
-                <Check size={14} /> Your comment has been posted.
+                <Check size={14} /> {t("common.commentPosted")}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Name <span className="text-rose-500">*</span>
+                  {t("common.name")} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  placeholder="Your name"
+                  placeholder={t("common.yourName")}
                   className={inputCls}
                 />
               </div>
               <div>
                 <label className={`block text-xs font-medium mb-1.5 ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                  Comment <span className="text-rose-500">*</span>
+                  {t("common.comment")} <span className="text-rose-500">*</span>
                 </label>
                 <textarea
                   rows={4}
-                  placeholder={isEvent ? "Questions about the event? Ask here..." : "Share your thoughts..."}
+                  placeholder={isEvent ? t("events.commentPlaceholder") : t("news.commentPlaceholder")}
                   value={form.content}
                   onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
                   className={`${inputCls} resize-none`}
@@ -334,7 +341,7 @@ export default function MeetingNewsDetail() {
                 type="submit"
                 className="self-start flex items-center gap-2 px-6 py-2.5 rounded-xl bg-orange-600 text-white font-semibold text-sm hover:bg-orange-500 active:scale-[0.98] transition-all"
               >
-                <Send size={14} /> Post Comment
+                <Send size={14} /> {t("common.postComment")}
               </button>
             </form>
           </div>
@@ -345,7 +352,7 @@ export default function MeetingNewsDetail() {
         <div className={`border-t py-14 ${dark ? "border-white/8 bg-[#080d16]" : "border-slate-200 bg-slate-50"}`}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 className={`text-xl font-bold mb-7 ${dark ? "text-white" : "text-slate-900"}`}>
-              {isEvent ? "More Events" : "More News"}
+              {isEvent ? t("events.relatedTitle") : t("news.relatedTitle")}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((m) => (
