@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Research from "./pages/Research"
+import ResearchDetail from "./pages/ResearchDetail"
 import PolicyBriefs from "./pages/PolicyBriefs"
 import Debates from "./pages/Debates"
 import MeetingsNews from "./pages/MeetingsNews"
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/research" element={<Research />} />
+          <Route path="/research/:slug" element={<ResearchDetail />} />
           <Route path="/policy-briefs" element={<PolicyBriefs />} />
           <Route path="/debates" element={<Debates />} />
           <Route path="/meetings-news" element={<MeetingsNews />} />
