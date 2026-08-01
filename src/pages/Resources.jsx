@@ -1,25 +1,35 @@
+import { useState, useMemo } from "react"
 import { Helmet } from "react-helmet-async"
-import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { Database, BookMarked, Wrench, ArrowRight } from "lucide-react"
 import { useThemeStore } from "../store/theme"
+import { resources, RESOURCE_KINDS } from "../data/resources"
 import PageHero from "../components/PageHero"
+import ResourceCard from "../components/ResourceCard"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } }
-
-const CATEGORIES = [
-  { icon: Wrench, title: "Analytical Tools", desc: "Frameworks and templates for structuring policy analysis." },
-  { icon: Database, title: "Open Datasets", desc: "Curated datasets for empirical research and student projects." },
-  { icon: BookMarked, title: "Reading Lists & Methodology Guides", desc: "Guidance reading lists to build research literacy and capacity among young scholars." },
-]
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 
 export default function Resources() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+  const [activeKind, setActiveKind] = useState("all")
+
+  const filtered = useMemo(() => {
+    if (activeKind === "all") return resources
+    return resources.filter((r) => r.kind === activeKind)
+  }, [activeKind])
+
+  const filterCls = (active) =>
+    `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${
+      active
+        ? "bg-pink-600 border-pink-600 text-white"
+        : dark
+          ? "border-white/10 text-slate-400 hover:text-white hover:border-white/20"
+          : "border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
+    }`
 
   return (
     <>
@@ -33,54 +43,43 @@ export default function Resources() {
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-5"
-          >
-            {CATEGORIES.map(({ icon: Icon, title, desc }) => (
-              <motion.div
-                key={title}
-                variants={fadeUp}
-                className={`p-6 rounded-2xl border ${dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white"}`}
-              >
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${dark ? "bg-pink-600/15" : "bg-pink-50"}`}>
-                  <Icon size={20} className="text-pink-600" />
-                </div>
-                <h3 className={`font-bold text-[15px] mb-1.5 ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
-                <p className={`text-sm leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-white"}`}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className={`p-10 rounded-2xl border ${dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-slate-50"}`}
+            className="flex flex-wrap items-center gap-2 mb-10"
           >
-            <h3 className={`font-bold text-xl mb-3 ${dark ? "text-white" : "text-slate-900"}`}>
-              Our resource library is being built
-            </h3>
-            <p className={`text-sm leading-relaxed mb-6 max-w-lg mx-auto ${dark ? "text-slate-400" : "text-slate-600"}`}>
-              We're assembling the first set of datasets, guides, and tools. If there's a specific resource you'd
-              find useful for your research, let us know.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-pink-600 text-white font-bold text-sm hover:bg-pink-500 active:scale-95 transition-all"
-            >
-              Suggest a Resource <ArrowRight size={15} />
-            </Link>
+            <button onClick={() => setActiveKind("all")} className={filterCls(activeKind === "all")}>
+              All
+            </button>
+            {RESOURCE_KINDS.map((k) => (
+              <button key={k.id} onClick={() => setActiveKind(k.id)} className={filterCls(activeKind === k.id)}>
+                {k.name}
+              </button>
+            ))}
           </motion.div>
+
+          {filtered.length > 0 ? (
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.05 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+            >
+              {filtered.map((resource) => (
+                <motion.div key={resource.slug} variants={fadeUp} className="h-full">
+                  <ResourceCard resource={resource} />
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <p className={`text-center py-16 text-sm ${dark ? "text-slate-500" : "text-slate-400"}`}>
+              Nothing in this category yet.
+            </p>
+          )}
         </div>
       </section>
     </>

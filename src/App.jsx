@@ -13,6 +13,7 @@ import DebateDetail from "./pages/DebateDetail"
 import MeetingsNews from "./pages/MeetingsNews"
 import MeetingNewsDetail from "./pages/MeetingNewsDetail"
 import Resources from "./pages/Resources"
+import ResourceDetail from "./pages/ResourceDetail"
 import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
 
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/meetings-news" element={<MeetingsNews />} />
           <Route path="/meetings-news/:slug" element={<MeetingNewsDetail />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/resources/:slug" element={<ResourceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
