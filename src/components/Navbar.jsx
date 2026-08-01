@@ -10,7 +10,8 @@ const NAV_LINKS = [
   { to: "/research", label: "Research" },
   { to: "/policy-briefs", label: "Policy Briefs" },
   { to: "/debates", label: "Debates" },
-  { to: "/meetings-news", label: "Meetings & News" },
+  { to: "/meetings-news/events", label: "Meetings" },
+  { to: "/meetings-news/news", label: "News" },
   { to: "/resources", label: "Resources" },
 ]
 
@@ -26,13 +27,13 @@ export default function Navbar() {
   }, [location.pathname])
 
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 1024) setMenuOpen(false) }
+    const onResize = () => { if (window.innerWidth >= 1280) setMenuOpen(false) }
     window.addEventListener("resize", onResize)
     return () => window.removeEventListener("resize", onResize)
   }, [])
 
   const linkCls = (isActive) =>
-    `px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 whitespace-nowrap ${
+    `px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 whitespace-nowrap ${
       isActive
         ? dark
           ? "text-blue-400 bg-blue-500/10 font-semibold"
@@ -68,7 +69,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="shrink-0 flex items-center gap-2.5 group transition-opacity hover:opacity-80">
             <img src="/logo-mark.png" alt="Future Policy Lab" className="h-9 w-auto object-contain shrink-0" />
-            <div className="hidden sm:flex flex-col leading-none gap-[3px]">
+            <div className="hidden xl:flex flex-col leading-none gap-[3px]">
               <span className={`font-extrabold text-[15px] tracking-tight ${dark ? "text-white" : "text-slate-900"}`}>
                 Future Policy <span className="text-blue-500">Lab</span>
               </span>
@@ -79,7 +80,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-0.5">
+          <nav className="hidden xl:flex items-center gap-0.5">
             {NAV_LINKS.map((l) => (
               <NavLink key={l.to} to={l.to} end={l.end} className={({ isActive }) => linkCls(isActive)}>
                 {l.label}
@@ -105,7 +106,7 @@ export default function Navbar() {
             <button
               onClick={() => setMenuOpen((v) => !v)}
               aria-label="Menu"
-              className={`lg:hidden w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 ${
+              className={`xl:hidden w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 ${
                 dark
                   ? "text-slate-400 hover:bg-white/8 hover:text-white"
                   : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
@@ -118,7 +119,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out border-t ${
+      <div className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out border-t ${
         menuOpen ? "max-h-[560px] opacity-100" : "max-h-0 opacity-0 border-transparent"
       } ${dark ? "border-white/8 bg-[#060B14]" : "border-slate-200 bg-white"}`}>
         <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">

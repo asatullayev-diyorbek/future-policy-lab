@@ -32,7 +32,8 @@ const FOOTER_LINKS = [
   { to: "/research", label: "Research" },
   { to: "/policy-briefs", label: "Policy Briefs" },
   { to: "/debates", label: "Debates" },
-  { to: "/meetings-news", label: "Meetings & News" },
+  { to: "/meetings-news/events", label: "Meetings" },
+  { to: "/meetings-news/news", label: "News" },
   { to: "/resources", label: "Resources" },
 ]
 
