@@ -3,7 +3,7 @@ import { policyBriefs } from "../data/policyBriefs"
 import { debates } from "../data/debates"
 import { meetingsNews } from "../data/meetingsNews"
 import { resources } from "../data/resources"
-import { getComments, getViewCount } from "./engagement"
+import { getSiteEngagementStats } from "./engagement"
 
 const ALL_CONTENT = [
   ...researchArticles,
@@ -13,21 +13,17 @@ const ALL_CONTENT = [
   ...resources,
 ]
 
-export function getSiteStats() {
-  let totalViews = 0
-  let totalComments = 0
+const BASE_VIEWS_TOTAL = ALL_CONTENT.reduce((sum, item) => sum + (item.base_views ?? 0), 0)
 
-  for (const item of ALL_CONTENT) {
-    totalViews += getViewCount(item.slug, item.base_views)
-    totalComments += getComments(item.slug).length
-  }
+export async function getSiteStats() {
+  const { viewsDelta, comments } = await getSiteEngagementStats()
 
   return {
     research: researchArticles.length,
     policyBriefs: policyBriefs.length,
     debates: debates.length,
     resources: resources.length,
-    views: totalViews,
-    comments: totalComments,
+    views: BASE_VIEWS_TOTAL + viewsDelta,
+    comments,
   }
 }

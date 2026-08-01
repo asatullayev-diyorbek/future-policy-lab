@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Mail, ArrowRight } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { useTranslation } from "../i18n/useTranslation"
+import { subscribeNewsletter } from "../utils/engagement"
 
 const TelegramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
@@ -34,6 +35,7 @@ export default function Footer() {
   const { t } = useTranslation()
   const [email, setEmail] = useState("")
   const [sent, setSent] = useState(false)
+  const [subscribing, setSubscribing] = useState(false)
 
   const FOOTER_LINKS = [
     { to: "/about", label: t("nav.about") },
@@ -45,12 +47,20 @@ export default function Footer() {
     { to: "/resources", label: t("nav.resources") },
   ]
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault()
-    if (!email.trim()) return
-    setSent(true)
-    setEmail("")
-    setTimeout(() => setSent(false), 3000)
+    if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email)) return
+    setSubscribing(true)
+    try {
+      await subscribeNewsletter(email)
+      setSent(true)
+      setEmail("")
+      setTimeout(() => setSent(false), 3000)
+    } catch {
+      // silently ignore — footer subscribe is low-stakes, no error UI needed
+    } finally {
+      setSubscribing(false)
+    }
   }
 
   return (
@@ -154,7 +164,8 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-600 active:scale-95 transition-all shrink-0"
+                  disabled={subscribing}
+                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-700 text-white text-sm font-bold hover:bg-blue-600 active:scale-95 transition-all shrink-0 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <ArrowRight size={15} />
                 </button>

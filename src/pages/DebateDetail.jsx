@@ -54,8 +54,8 @@ export default function DebateDetail() {
 
   useEffect(() => {
     if (!debate) return
-    setViews(recordView(debate.slug, debate.base_views))
-    setComments(getComments(debate.slug))
+    recordView("debate", debate.slug, debate.base_views).then(setViews)
+    getComments("debate", debate.slug).then(setComments)
     setSubmitted(false)
     window.scrollTo(0, 0)
   }, [debate])
@@ -79,18 +79,22 @@ export default function DebateDetail() {
   const againstPct = totalStanced ? Math.round((againstCount / totalStanced) * 100) : 0
   const undecidedPct = totalStanced ? 100 - forPct - againstPct : 0
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
       setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
-    const next = addComment(debate.slug, form)
-    setComments(next)
-    setForm({ name: "", content: "", stance: "undecided" })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    try {
+      const next = await addComment("debate", debate.slug, form)
+      setComments(next)
+      setForm({ name: "", content: "", stance: "undecided" })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3500)
+    } catch {
+      setFormError(t("common.nameRequired"))
+    }
   }
 
   const inputCls = `w-full px-4 py-2.5 rounded-xl text-sm outline-none border transition-colors ${

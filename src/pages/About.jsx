@@ -25,7 +25,7 @@ export default function About() {
   const [stats, setStats] = useState({ research: 0, policyBriefs: 0, debates: 0, resources: 0, views: 0, comments: 0 })
 
   useEffect(() => {
-    setStats(getSiteStats())
+    getSiteStats().then(setStats)
   }, [])
 
   const STAT_ITEMS = [

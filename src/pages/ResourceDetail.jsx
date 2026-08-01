@@ -39,8 +39,8 @@ export default function ResourceDetail() {
 
   useEffect(() => {
     if (!resource) return
-    setViews(recordView(resource.slug, resource.base_views))
-    setComments(getComments(resource.slug))
+    recordView("resource", resource.slug, resource.base_views).then(setViews)
+    getComments("resource", resource.slug).then(setComments)
     setSubmitted(false)
     window.scrollTo(0, 0)
   }, [resource])
@@ -60,18 +60,22 @@ export default function ResourceDetail() {
 
   const format = L(resource, "format", lang)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
       setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
-    const next = addComment(resource.slug, form)
-    setComments(next)
-    setForm({ name: "", content: "" })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    try {
+      const next = await addComment("resource", resource.slug, form)
+      setComments(next)
+      setForm({ name: "", content: "" })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3500)
+    } catch {
+      setFormError(t("common.nameRequired"))
+    }
   }
 
   const inputCls = `w-full px-4 py-2.5 rounded-xl text-sm outline-none border transition-colors ${

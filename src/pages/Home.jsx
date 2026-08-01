@@ -94,7 +94,7 @@ export default function Home() {
   const [stats, setStats] = useState({ research: 0, policyBriefs: 0, debates: 0, views: 0 })
 
   useEffect(() => {
-    setStats(getSiteStats())
+    getSiteStats().then(setStats)
   }, [])
 
   const HOME_STATS = [

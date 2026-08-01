@@ -9,6 +9,7 @@ import {
 import { useThemeStore } from "../store/theme"
 import PageHero from "../components/PageHero"
 import { useTranslation } from "../i18n/useTranslation"
+import { submitContact } from "../utils/engagement"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -32,6 +33,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", topic: "", message: "" })
   const [errors, setErrors] = useState({})
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -49,13 +51,21 @@ export default function Contact() {
     return next
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const next = validate()
     setErrors(next)
     if (Object.keys(next).length > 0) return
-    setSent(true)
-    setForm({ name: "", email: "", topic: "", message: "" })
+    setSending(true)
+    try {
+      await submitContact(form)
+      setSent(true)
+      setForm({ name: "", email: "", topic: "", message: "" })
+    } catch {
+      setErrors({ message: t("contact.errSendFailed") })
+    } finally {
+      setSending(false)
+    }
   }
 
   const inputCls = (field) => `w-full px-4 py-3 rounded-xl border text-sm outline-none transition-colors ${
@@ -228,9 +238,10 @@ export default function Contact() {
 
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-700 text-white font-bold text-sm hover:bg-blue-600 active:scale-95 transition-all mt-2"
+                      disabled={sending}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-700 text-white font-bold text-sm hover:bg-blue-600 active:scale-95 transition-all mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      {t("contact.send")} <Send size={15} />
+                      {sending ? t("common.loading") : t("contact.send")} <Send size={15} />
                     </button>
                   </form>
                 </>

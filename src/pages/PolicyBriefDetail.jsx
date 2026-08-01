@@ -30,8 +30,8 @@ export default function PolicyBriefDetail() {
 
   useEffect(() => {
     if (!brief) return
-    setViews(recordView(brief.slug, brief.base_views))
-    setComments(getComments(brief.slug))
+    recordView("policy-brief", brief.slug, brief.base_views).then(setViews)
+    getComments("policy-brief", brief.slug).then(setComments)
     setSubmitted(false)
     window.scrollTo(0, 0)
   }, [brief])
@@ -54,18 +54,22 @@ export default function PolicyBriefDetail() {
       ? brief.recommendations_uz
       : brief.recommendations
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
       setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
-    const next = addComment(brief.slug, form)
-    setComments(next)
-    setForm({ name: "", content: "" })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    try {
+      const next = await addComment("policy-brief", brief.slug, form)
+      setComments(next)
+      setForm({ name: "", content: "" })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3500)
+    } catch {
+      setFormError(t("common.nameRequired"))
+    }
   }
 
   const inputCls = `w-full px-4 py-2.5 rounded-xl text-sm outline-none border transition-colors ${

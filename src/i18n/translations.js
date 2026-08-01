@@ -262,6 +262,7 @@ export const translations = {
       errEmailInvalid: "Enter a valid email address.",
       errMessageRequired: "Tell us a bit about your message.",
       errMessageShort: "Message should be at least 10 characters.",
+      errSendFailed: "Something went wrong sending your message. Please try again.",
     },
     notFound: {
       title: "Page Not Found — Future Policy Lab",
@@ -535,6 +536,7 @@ export const translations = {
       errEmailInvalid: "To'g'ri email manzilini kiriting.",
       errMessageRequired: "Xabaringiz haqida biroz yozing.",
       errMessageShort: "Xabar kamida 10 ta belgidan iborat bo'lishi kerak.",
+      errSendFailed: "Xabarni yuborishda xatolik yuz berdi. Qaytadan urinib ko'ring.",
     },
     notFound: {
       title: "Sahifa topilmadi — Future Policy Lab",

@@ -30,8 +30,8 @@ export default function ResearchDetail() {
 
   useEffect(() => {
     if (!article) return
-    setViews(recordView(article.slug, article.base_views))
-    setComments(getComments(article.slug))
+    recordView("research", article.slug, article.base_views).then(setViews)
+    getComments("research", article.slug).then(setComments)
     setSubmitted(false)
     window.scrollTo(0, 0)
   }, [article])
@@ -47,18 +47,22 @@ export default function ResearchDetail() {
     year: "numeric", month: "long", day: "numeric",
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
       setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
-    const next = addComment(article.slug, form)
-    setComments(next)
-    setForm({ name: "", content: "" })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    try {
+      const next = await addComment("research", article.slug, form)
+      setComments(next)
+      setForm({ name: "", content: "" })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3500)
+    } catch {
+      setFormError(t("common.nameRequired"))
+    }
   }
 
   const inputCls = `w-full px-4 py-2.5 rounded-xl text-sm outline-none border transition-colors ${

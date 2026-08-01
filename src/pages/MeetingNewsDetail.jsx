@@ -37,13 +37,13 @@ export default function MeetingNewsDetail() {
 
   useEffect(() => {
     if (!item) return
-    setViews(recordView(item.slug, item.base_views))
-    setComments(getComments(item.slug))
+    recordView("meeting-news", item.slug, item.base_views).then(setViews)
+    getComments("meeting-news", item.slug).then(setComments)
     setSubmitted(false)
     if (isEvent) {
       setAttending(isAttending(item.slug))
       setRsvp(getRSVP(item.slug))
-      setAttendeeCount(getAttendeeCount(item.slug, item.base_attendees))
+      getAttendeeCount(item.slug, item.base_attendees).then(setAttendeeCount)
     }
     window.scrollTo(0, 0)
   }, [item, isEvent])
@@ -58,35 +58,43 @@ export default function MeetingNewsDetail() {
   const formattedDate = displayDate.toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
   const formattedTime = isEvent ? displayDate.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit" }) : null
 
-  const handleRSVPSubmit = (fields) => {
-    const result = submitRSVP(item.slug, fields, item.base_attendees)
-    setAttending(result.attending)
-    setAttendeeCount(result.count)
-    setRsvp(getRSVP(item.slug))
-    setRsvpModalOpen(false)
-    setRsvpConfirmed(true)
-    setTimeout(() => setRsvpConfirmed(false), 3500)
+  const handleRSVPSubmit = async (fields) => {
+    try {
+      const result = await submitRSVP(item.slug, fields, item.base_attendees)
+      setAttending(result.attending)
+      setAttendeeCount(result.count)
+      setRsvp(getRSVP(item.slug))
+      setRsvpModalOpen(false)
+      setRsvpConfirmed(true)
+      setTimeout(() => setRsvpConfirmed(false), 3500)
+    } catch {
+      // leave modal open so the visitor can retry
+    }
   }
 
-  const handleCancelRSVP = () => {
-    const result = cancelRSVP(item.slug, item.base_attendees)
+  const handleCancelRSVP = async () => {
+    const result = await cancelRSVP(item.slug, item.base_attendees)
     setAttending(result.attending)
     setAttendeeCount(result.count)
     setRsvp(null)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.content.trim()) {
       setFormError(t("common.nameRequired"))
       return
     }
     setFormError("")
-    const next = addComment(item.slug, form)
-    setComments(next)
-    setForm({ name: "", content: "" })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    try {
+      const next = await addComment("meeting-news", item.slug, form)
+      setComments(next)
+      setForm({ name: "", content: "" })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3500)
+    } catch {
+      setFormError(t("common.nameRequired"))
+    }
   }
 
   const inputCls = `w-full px-4 py-2.5 rounded-xl text-sm outline-none border transition-colors ${
