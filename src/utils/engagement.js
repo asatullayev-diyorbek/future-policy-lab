@@ -36,13 +36,12 @@ export function getComments(slug) {
   return readJSON(`fpl_comments_${slug}`, [])
 }
 
-export function addComment(slug, { name, content }) {
+export function addComment(slug, fields) {
   const comments = getComments(slug)
   const comment = {
     id: Date.now(),
-    name,
-    content,
     created_at: new Date().toISOString(),
+    ...fields,
   }
   const next = [comment, ...comments]
   writeJSON(`fpl_comments_${slug}`, next)

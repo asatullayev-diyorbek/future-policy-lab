@@ -9,6 +9,7 @@ import ResearchDetail from "./pages/ResearchDetail"
 import PolicyBriefs from "./pages/PolicyBriefs"
 import PolicyBriefDetail from "./pages/PolicyBriefDetail"
 import Debates from "./pages/Debates"
+import DebateDetail from "./pages/DebateDetail"
 import MeetingsNews from "./pages/MeetingsNews"
 import Resources from "./pages/Resources"
 import Contact from "./pages/Contact"
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/policy-briefs" element={<PolicyBriefs />} />
           <Route path="/policy-briefs/:slug" element={<PolicyBriefDetail />} />
           <Route path="/debates" element={<Debates />} />
+          <Route path="/debates/:slug" element={<DebateDetail />} />
           <Route path="/meetings-news" element={<MeetingsNews />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/contact" element={<Contact />} />
