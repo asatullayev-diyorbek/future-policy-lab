@@ -29,6 +29,7 @@ export default function Resources() {
         eyebrow="05 — Resources"
         title="Tools to Build Research Literacy"
         subtitle="Curated analytical tools, open datasets, guidance reading lists, and methodology guides designed for young scholars."
+        image="/resources-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
