@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
-import { Target, Compass, Sparkles } from "lucide-react"
+import { FlaskConical, FileText, MessageSquare, Library, Eye, MessageCircle } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { AVENUES, PILLARS } from "../data/content"
+import { getSiteStats } from "../utils/siteStats"
 import PageHero from "../components/PageHero"
+import AnimatedStat from "../components/AnimatedStat"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -14,6 +17,21 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } }
 export default function About() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+
+  const [stats, setStats] = useState({ research: 0, policyBriefs: 0, debates: 0, resources: 0, views: 0, comments: 0 })
+
+  useEffect(() => {
+    setStats(getSiteStats())
+  }, [])
+
+  const STAT_ITEMS = [
+    { key: "research", label: "Research Papers", icon: FlaskConical, color: "text-blue-600", bg: "bg-blue-50", bgDark: "bg-blue-600/12" },
+    { key: "policyBriefs", label: "Policy Briefs", icon: FileText, color: "text-emerald-600", bg: "bg-emerald-50", bgDark: "bg-emerald-600/12" },
+    { key: "debates", label: "Active Debates", icon: MessageSquare, color: "text-violet-600", bg: "bg-violet-50", bgDark: "bg-violet-600/12" },
+    { key: "resources", label: "Resources", icon: Library, color: "text-pink-600", bg: "bg-pink-50", bgDark: "bg-pink-600/12" },
+    { key: "views", label: "Total Views", icon: Eye, color: "text-orange-600", bg: "bg-orange-50", bgDark: "bg-orange-600/12", suffix: "+" },
+    { key: "comments", label: "Community Comments", icon: MessageCircle, color: "text-teal-600", bg: "bg-teal-50", bgDark: "bg-teal-600/12" },
+  ]
 
   return (
     <>
@@ -39,6 +57,47 @@ export default function About() {
               evidence rather than speculation. Through five core avenues of engagement, we aim to make policy
               discussions accessible to students, young researchers, and future leaders.
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Platform stats */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-slate-50"}`}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            className="text-center mb-10"
+          >
+            <span className={`text-xs font-bold uppercase tracking-widest ${dark ? "text-blue-400" : "text-blue-700"}`}>
+              By the Numbers
+            </span>
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mt-2 ${dark ? "text-white" : "text-slate-900"}`}>
+              The Lab in Numbers
+            </h2>
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+          >
+            {STAT_ITEMS.map(({ key, label, icon, color, bg, bgDark, suffix }) => (
+              <AnimatedStat
+                key={key}
+                value={stats[key]}
+                label={label}
+                icon={icon}
+                color={color}
+                bg={bg}
+                bgDark={bgDark}
+                suffix={suffix}
+              />
+            ))}
           </motion.div>
         </div>
       </section>

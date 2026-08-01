@@ -32,6 +32,11 @@ export function recordView(slug, baseViews) {
   return baseViews + (counts[slug] ?? 0)
 }
 
+export function getViewCount(slug, baseViews) {
+  const counts = readJSON("fpl_view_counts", {})
+  return baseViews + (counts[slug] ?? 0)
+}
+
 export function getComments(slug) {
   return readJSON(`fpl_comments_${slug}`, [])
 }
