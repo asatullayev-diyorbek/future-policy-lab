@@ -11,6 +11,8 @@ import PolicyBriefDetail from "./pages/PolicyBriefDetail"
 import Debates from "./pages/Debates"
 import DebateDetail from "./pages/DebateDetail"
 import MeetingsNews from "./pages/MeetingsNews"
+import Events from "./pages/Events"
+import News from "./pages/News"
 import MeetingNewsDetail from "./pages/MeetingNewsDetail"
 import Resources from "./pages/Resources"
 import ResourceDetail from "./pages/ResourceDetail"
@@ -37,6 +39,8 @@ export default function App() {
           <Route path="/debates" element={<Debates />} />
           <Route path="/debates/:slug" element={<DebateDetail />} />
           <Route path="/meetings-news" element={<MeetingsNews />} />
+          <Route path="/meetings-news/events" element={<Events />} />
+          <Route path="/meetings-news/news" element={<News />} />
           <Route path="/meetings-news/:slug" element={<MeetingNewsDetail />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/:slug" element={<ResourceDetail />} />
