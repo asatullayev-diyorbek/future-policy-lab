@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
-import { ArrowRight, Users, BookOpen, Globe2 } from "lucide-react"
+import { ArrowRight, Users, BookOpen, Globe2, FlaskConical, FileText, MessageSquare, Eye } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { AVENUES, PILLARS } from "../data/content"
+import { getSiteStats } from "../utils/siteStats"
+import AnimatedStat from "../components/AnimatedStat"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -15,10 +18,27 @@ const stagger = {
   show:   { transition: { staggerChildren: 0.1 } },
 }
 
+const wordStagger = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+}
+
+const wordUp = {
+  hidden: { opacity: 0, y: 22, rotateX: -40 },
+  show:   { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+}
+
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.94 },
   show:   { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
+
+const HOME_STATS = [
+  { key: "research", label: "Research Papers", icon: FlaskConical, color: "text-blue-600", bg: "bg-blue-50", bgDark: "bg-blue-600/12" },
+  { key: "policyBriefs", label: "Policy Briefs", icon: FileText, color: "text-emerald-600", bg: "bg-emerald-50", bgDark: "bg-emerald-600/12" },
+  { key: "debates", label: "Active Debates", icon: MessageSquare, color: "text-violet-600", bg: "bg-violet-50", bgDark: "bg-violet-600/12" },
+  { key: "views", label: "Total Views", icon: Eye, color: "text-orange-600", bg: "bg-orange-50", bgDark: "bg-orange-600/12", suffix: "+" },
+]
 
 function SectionTitle({ eyebrow, title, subtitle, dark, center = true }) {
   return (
@@ -44,9 +64,42 @@ function SectionTitle({ eyebrow, title, subtitle, dark, center = true }) {
   )
 }
 
+function FloatingBlobs({ dark }) {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: 420, height: 420, top: "-8%", right: "6%",
+          background: dark ? "rgba(37,99,235,0.16)" : "rgba(59,130,246,0.12)",
+          filter: "blur(90px)",
+        }}
+        animate={{ x: [0, 30, -10, 0], y: [0, -24, 14, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          width: 320, height: 320, bottom: "-10%", left: "2%",
+          background: dark ? "rgba(99,102,241,0.14)" : "rgba(99,102,241,0.10)",
+          filter: "blur(80px)",
+        }}
+        animate={{ x: [0, -24, 16, 0], y: [0, 20, -12, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+    </div>
+  )
+}
+
 export default function Home() {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
+
+  const [stats, setStats] = useState({ research: 0, policyBriefs: 0, debates: 0, views: 0 })
+
+  useEffect(() => {
+    setStats(getSiteStats())
+  }, [])
 
   return (
     <>
@@ -62,6 +115,8 @@ export default function Home() {
           </defs>
           <rect width="100%" height="100%" fill="url(#hero-dots)" />
         </svg>
+
+        <FloatingBlobs dark={dark} />
 
         <div
           className="absolute inset-y-0 right-0 w-[55%] pointer-events-none"
@@ -88,14 +143,26 @@ export default function Home() {
                 Youth-Led Academic & Policy Platform
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className={`text-5xl sm:text-6xl lg:text-[3.6rem] font-extrabold leading-[1.08] tracking-tight mb-5 ${
+              <h1 className={`text-5xl sm:text-6xl lg:text-[3.6rem] font-extrabold leading-[1.08] tracking-tight mb-5 ${
                 dark ? "text-white" : "text-slate-900"
-              }`}>
-                Research. Evidence.<br />
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
+              }`} style={{ perspective: 800 }}>
+                <motion.span variants={wordStagger} initial="hidden" animate="show" className="block">
+                  {["Research.", "Evidence."].map((word) => (
+                    <motion.span key={word} variants={wordUp} className="inline-block mr-3">
+                      {word}
+                    </motion.span>
+                  ))}
+                </motion.span>
+                <motion.span
+                  variants={fadeUp}
+                  initial="hidden"
+                  animate="show"
+                  transition={{ delay: 0.5 }}
+                  className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent inline-block"
+                >
                   Be Who We Are.
-                </span>
-              </motion.h1>
+                </motion.span>
+              </h1>
 
               <motion.p variants={fadeUp} className={`text-base sm:text-lg leading-relaxed mb-9 max-w-2xl ${
                 dark ? "text-slate-400" : "text-slate-500"
@@ -106,24 +173,28 @@ export default function Home() {
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex items-center gap-3 flex-wrap">
-                <Link
-                  to="/research"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 active:scale-95 transition-all"
-                  style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.35)" }}
-                >
-                  Explore Our Research
-                  <ArrowRight size={17} />
-                </Link>
-                <Link
-                  to="/about"
-                  className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-[15px] border transition-all active:scale-95 ${
-                    dark
-                      ? "border-white/12 text-slate-200 hover:bg-white/5"
-                      : "border-slate-300 text-slate-700 hover:bg-slate-50"
-                  }`}
-                >
-                  About Us
-                </Link>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Link
+                    to="/research"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 transition-colors"
+                    style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.35)" }}
+                  >
+                    Explore Our Research
+                    <ArrowRight size={17} />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Link
+                    to="/about"
+                    className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-[15px] border transition-colors ${
+                      dark
+                        ? "border-white/12 text-slate-200 hover:bg-white/5"
+                        : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                    }`}
+                  >
+                    About Us
+                  </Link>
+                </motion.div>
               </motion.div>
             </motion.div>
 
@@ -133,11 +204,13 @@ export default function Home() {
               animate="show"
               className="flex justify-center lg:justify-end"
             >
-              <img
+              <motion.img
                 src="/header.png"
                 alt="Future Policy Lab — research, policy, and analysis"
                 className="w-full max-w-[560px] object-contain select-none"
                 draggable={false}
+                animate={{ y: [0, -14, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               />
             </motion.div>
           </div>
@@ -157,18 +230,50 @@ export default function Home() {
               <motion.div
                 key={label}
                 variants={fadeUp}
+                whileHover={{ y: -3 }}
                 className={`flex items-center gap-3.5 px-5 py-5 rounded-2xl border transition-colors ${
                   dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white shadow-sm"
                 }`}
               >
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${dark ? "bg-blue-600/15" : "bg-blue-50"}`}>
+                <motion.div
+                  whileHover={{ rotate: 8, scale: 1.08 }}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${dark ? "bg-blue-600/15" : "bg-blue-50"}`}
+                >
                   <Icon size={18} className="text-blue-700" />
-                </div>
+                </motion.div>
                 <div>
                   <p className={`text-sm font-bold leading-tight ${dark ? "text-white" : "text-slate-900"}`}>{value}</p>
                   <p className={`text-[11.5px] leading-snug ${dark ? "text-slate-500" : "text-slate-500"}`}>{label}</p>
                 </div>
               </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════ LIVE NUMBERS BAR */}
+      <section className={`py-8 border-y ${dark ? "bg-[#060a12] border-white/[0.06]" : "bg-slate-50 border-slate-200"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            className={`grid grid-cols-2 sm:grid-cols-4 divide-x ${dark ? "divide-white/8" : "divide-slate-200"}`}
+          >
+            {HOME_STATS.map(({ key, label, icon, color, bg, bgDark, suffix }) => (
+              <div key={key} className="flex justify-center py-1">
+                <AnimatedStat
+                  variant="bar"
+                  value={stats[key]}
+                  label={label}
+                  icon={icon}
+                  color={color}
+                  bg={bg}
+                  bgDark={bgDark}
+                  suffix={suffix}
+                />
+              </div>
             ))}
           </motion.div>
         </div>
@@ -191,17 +296,17 @@ export default function Home() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
             {AVENUES.map(({ icon: Icon, number, title, slug, summary, color, bg, bgDark }) => (
-              <motion.div key={title} variants={scaleIn}>
+              <motion.div key={title} variants={scaleIn} whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300, damping: 22 }}>
                 <Link
                   to={slug}
                   className={`group flex flex-col h-full p-6 rounded-2xl border transition-all duration-200 ${
                     dark
                       ? "border-white/8 bg-white/3 hover:bg-white/5 hover:border-white/15"
-                      : "border-slate-200 bg-white hover:border-blue-200 hover:shadow-md"
+                      : "border-slate-200 bg-white hover:border-blue-200 hover:shadow-lg"
                   }`}
                 >
                   <div className="flex items-start justify-between mb-5">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${dark ? bgDark : bg}`}>
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${dark ? bgDark : bg}`}>
                       <Icon size={22} className={color} />
                     </div>
                     <span className={`font-mono text-xs font-bold ${dark ? "text-slate-700" : "text-slate-300"}`}>
@@ -244,11 +349,13 @@ export default function Home() {
               <motion.div
                 key={title}
                 variants={fadeUp}
-                className={`flex flex-col items-start p-7 rounded-2xl border transition-colors ${
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                className={`group flex flex-col items-start p-7 rounded-2xl border transition-colors ${
                   dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-slate-50"
                 }`}
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${dark ? bgDark : bg}`}>
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${dark ? bgDark : bg}`}>
                   <Icon size={22} className={color} />
                 </div>
                 <h3 className={`font-bold text-lg mb-2 ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
@@ -269,9 +376,13 @@ export default function Home() {
             viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-5"
           >
-            <motion.div variants={fadeUp} className={`p-8 rounded-2xl border ${
-              dark ? "border-white/8 bg-gradient-to-br from-blue-600/10 to-transparent" : "border-blue-100 bg-gradient-to-br from-blue-50 to-white"
-            }`}>
+            <motion.div
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className={`p-8 rounded-2xl border ${
+                dark ? "border-white/8 bg-gradient-to-br from-blue-600/10 to-transparent" : "border-blue-100 bg-gradient-to-br from-blue-50 to-white"
+              }`}
+            >
               <h3 className={`font-bold text-xl mb-3 ${dark ? "text-white" : "text-slate-900"}`}>Meet Us & News</h3>
               <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-slate-400" : "text-slate-600"}`}>
                 This is where upcoming seminars, workshops, and online discussions are posted. Everyone is welcome
@@ -286,9 +397,13 @@ export default function Home() {
               </Link>
             </motion.div>
 
-            <motion.div variants={fadeUp} className={`p-8 rounded-2xl border ${
-              dark ? "border-white/8 bg-gradient-to-br from-violet-600/10 to-transparent" : "border-violet-100 bg-gradient-to-br from-violet-50 to-white"
-            }`}>
+            <motion.div
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              className={`p-8 rounded-2xl border ${
+                dark ? "border-white/8 bg-gradient-to-br from-violet-600/10 to-transparent" : "border-violet-100 bg-gradient-to-br from-violet-50 to-white"
+              }`}
+            >
               <h3 className={`font-bold text-xl mb-3 ${dark ? "text-white" : "text-slate-900"}`}>Forum</h3>
               <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-slate-400" : "text-slate-600"}`}>
                 A space for continuous dialogue, collaboration, and debate on today's most pressing policy questions.
@@ -307,8 +422,18 @@ export default function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════ CTA */}
-      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-white"}`}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <section className={`relative overflow-hidden py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-white"}`}>
+        <motion.div
+          className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+          style={{
+            width: 500, height: 500, marginLeft: -250, marginTop: -250,
+            background: dark ? "rgba(37,99,235,0.14)" : "rgba(59,130,246,0.10)",
+            filter: "blur(100px)",
+          }}
+          animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -321,14 +446,16 @@ export default function Home() {
             <p className={`text-sm sm:text-base leading-relaxed mb-8 ${dark ? "text-slate-400" : "text-slate-500"}`}>
               Evidence-Based Youth Research Initiative.
             </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 active:scale-95 transition-all"
-              style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.3)" }}
-            >
-              Get Involved
-              <ArrowRight size={17} />
-            </Link>
+            <motion.div className="inline-block" whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 transition-colors"
+                style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.3)" }}
+              >
+                Get Involved
+                <ArrowRight size={17} />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>

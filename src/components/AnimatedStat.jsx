@@ -12,7 +12,7 @@ function formatNum(n) {
   return n.toString()
 }
 
-export default function AnimatedStat({ value, label, icon: Icon, color, bg, bgDark, suffix = "" }) {
+export default function AnimatedStat({ value, label, icon: Icon, color, bg, bgDark, suffix = "", variant = "card" }) {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
   const [display, setDisplay] = useState(0)
@@ -33,6 +33,24 @@ export default function AnimatedStat({ value, label, icon: Icon, color, bg, bgDa
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
   }, [inView, value])
+
+  if (variant === "bar") {
+    return (
+      <motion.div ref={cardRef} variants={fadeUp} className="flex items-center gap-3 px-2">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${dark ? bgDark : bg}`}>
+          <Icon size={18} className={color} />
+        </div>
+        <div>
+          <div className={`text-2xl font-extrabold tracking-tight tabular-nums leading-none ${dark ? "text-white" : "text-slate-900"}`}>
+            {formatNum(display)}{suffix}
+          </div>
+          <div className={`text-[11px] mt-1 font-medium ${dark ? "text-slate-500" : "text-slate-500"}`}>
+            {label}
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
