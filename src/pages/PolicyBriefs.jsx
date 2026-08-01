@@ -41,6 +41,7 @@ export default function PolicyBriefs() {
         eyebrow="02 — Policy Briefs"
         title="Decision-Ready Policy Recommendations"
         subtitle="Concise, actionable summaries that distill complex data and academic proposals into clear recommendations for advocates and leaders."
+        image="/policy-briefs-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>

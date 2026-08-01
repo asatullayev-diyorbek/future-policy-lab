@@ -26,16 +26,16 @@ export default function PageHero({ eyebrow, title, subtitle, image }) {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <div className={image ? "grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center" : ""}>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-9 sm:py-11">
+        <div className={image ? "grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center" : ""}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className={image ? "max-w-2xl" : "max-w-2xl"}
+            className="max-w-2xl"
           >
             {eyebrow && (
-              <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-5 ${
+              <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold mb-3.5 ${
                 dark
                   ? "bg-blue-600/10 border-blue-500/25 text-blue-400"
                   : "bg-blue-50 border-blue-200 text-blue-700"
@@ -44,13 +44,13 @@ export default function PageHero({ eyebrow, title, subtitle, image }) {
                 {eyebrow}
               </span>
             )}
-            <h1 className={`text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4 ${
+            <h1 className={`text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] mb-2.5 ${
               dark ? "text-white" : "text-slate-900"
             }`}>
               {title}
             </h1>
             {subtitle && (
-              <p className={`text-base sm:text-lg leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
+              <p className={`text-sm sm:text-base leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
                 {subtitle}
               </p>
             )}
@@ -61,12 +61,12 @@ export default function PageHero({ eyebrow, title, subtitle, image }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex justify-center lg:justify-end"
+              className="hidden lg:flex justify-end"
             >
               <img
                 src={image}
                 alt=""
-                className="w-full max-w-[520px] object-contain select-none"
+                className="w-full max-w-[300px] object-contain select-none"
                 draggable={false}
               />
             </motion.div>
