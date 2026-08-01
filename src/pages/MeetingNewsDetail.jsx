@@ -4,11 +4,12 @@ import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { Eye, ArrowLeft, Calendar, Clock, MapPin, Users, MessageCircle, Send, Tag, Check, CalendarCheck, Megaphone } from "lucide-react"
+import { Eye, ArrowLeft, Calendar, Clock, MapPin, Users, MessageCircle, Send, Tag, Check, CalendarCheck, Megaphone, X } from "lucide-react"
 import { useThemeStore } from "../store/theme"
 import { getMeetingsNewsBySlug, getRelatedMeetingsNews } from "../data/meetingsNews"
-import { recordView, getComments, addComment, isAttending, toggleRSVP, getAttendeeCount } from "../utils/engagement"
+import { recordView, getComments, addComment, isAttending, getRSVP, submitRSVP, cancelRSVP, getAttendeeCount } from "../utils/engagement"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
+import RSVPModal from "../components/RSVPModal"
 import NotFound from "./NotFound"
 
 export default function MeetingNewsDetail() {
@@ -22,7 +23,10 @@ export default function MeetingNewsDetail() {
   const [views, setViews] = useState(item?.base_views ?? 0)
   const [comments, setComments] = useState([])
   const [attending, setAttending] = useState(false)
+  const [rsvp, setRsvp] = useState(null)
   const [attendeeCount, setAttendeeCount] = useState(item?.base_attendees ?? 0)
+  const [rsvpModalOpen, setRsvpModalOpen] = useState(false)
+  const [rsvpConfirmed, setRsvpConfirmed] = useState(false)
   const [form, setForm] = useState({ name: "", content: "" })
   const [submitted, setSubmitted] = useState(false)
   const [formError, setFormError] = useState("")
@@ -34,6 +38,7 @@ export default function MeetingNewsDetail() {
     setSubmitted(false)
     if (isEvent) {
       setAttending(isAttending(item.slug))
+      setRsvp(getRSVP(item.slug))
       setAttendeeCount(getAttendeeCount(item.slug, item.base_attendees))
     }
     window.scrollTo(0, 0)
@@ -48,10 +53,21 @@ export default function MeetingNewsDetail() {
   const formattedDate = displayDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
   const formattedTime = isEvent ? displayDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : null
 
-  const handleRSVP = () => {
-    const result = toggleRSVP(item.slug, item.base_attendees)
+  const handleRSVPSubmit = (fields) => {
+    const result = submitRSVP(item.slug, fields, item.base_attendees)
     setAttending(result.attending)
     setAttendeeCount(result.count)
+    setRsvp(getRSVP(item.slug))
+    setRsvpModalOpen(false)
+    setRsvpConfirmed(true)
+    setTimeout(() => setRsvpConfirmed(false), 3500)
+  }
+
+  const handleCancelRSVP = () => {
+    const result = cancelRSVP(item.slug, item.base_attendees)
+    setAttending(result.attending)
+    setAttendeeCount(result.count)
+    setRsvp(null)
   }
 
   const handleSubmit = (e) => {
@@ -170,35 +186,63 @@ export default function MeetingNewsDetail() {
 
         {/* Event RSVP block */}
         {isEvent && (
-          <div className={`my-8 p-6 rounded-2xl border flex flex-col sm:flex-row sm:items-center gap-5 ${
+          <div className={`my-8 p-6 rounded-2xl border ${
             dark ? "border-orange-500/20 bg-orange-600/8" : "border-orange-200 bg-orange-50"
           }`}>
-            <div className="flex-1">
-              {item.location && (
-                <p className={`flex items-center gap-2 text-sm font-medium mb-2 ${dark ? "text-slate-200" : "text-slate-800"}`}>
-                  <MapPin size={15} className="text-orange-600 shrink-0" /> {item.location}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+              <div className="flex-1">
+                {item.location && (
+                  <p className={`flex items-center gap-2 text-sm font-medium mb-2 ${dark ? "text-slate-200" : "text-slate-800"}`}>
+                    <MapPin size={15} className="text-orange-600 shrink-0" /> {item.location}
+                  </p>
+                )}
+                <p className={`flex items-center gap-2 text-sm ${dark ? "text-slate-400" : "text-slate-600"}`}>
+                  <Users size={15} className="text-orange-600 shrink-0" /> {attendeeCount} attending
                 </p>
+              </div>
+              {!isPast && (
+                attending ? (
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm ${
+                      dark ? "bg-white/10 text-white border border-white/15" : "bg-white text-slate-800 border border-slate-300"
+                    }`}>
+                      <Check size={16} /> You're attending
+                    </span>
+                    <button
+                      onClick={handleCancelRSVP}
+                      aria-label="Cancel RSVP"
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
+                        dark ? "text-slate-500 hover:bg-white/8 hover:text-white" : "text-slate-400 hover:bg-white hover:text-slate-700"
+                      }`}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setRsvpModalOpen(true)}
+                    className="shrink-0 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm bg-orange-600 text-white hover:bg-orange-500 active:scale-95 transition-all"
+                  >
+                    <CalendarCheck size={16} /> RSVP to attend
+                  </button>
+                )
               )}
-              <p className={`flex items-center gap-2 text-sm ${dark ? "text-slate-400" : "text-slate-600"}`}>
-                <Users size={15} className="text-orange-600 shrink-0" /> {attendeeCount} attending
-              </p>
             </div>
-            {!isPast && (
-              <button
-                onClick={handleRSVP}
-                className={`shrink-0 flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all active:scale-95 ${
-                  attending
-                    ? dark
-                      ? "bg-white/10 text-white border border-white/15"
-                      : "bg-white text-slate-800 border border-slate-300"
-                    : "bg-orange-600 text-white hover:bg-orange-500"
-                }`}
-              >
-                {attending ? <Check size={16} /> : <CalendarCheck size={16} />}
-                {attending ? "You're attending" : "RSVP to attend"}
-              </button>
+
+            {rsvpConfirmed && (
+              <div className="mt-4 flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-sm">
+                <Check size={14} /> You're registered{rsvp?.email ? ` — a confirmation will be sent to ${rsvp.email}` : ""}.
+              </div>
             )}
           </div>
+        )}
+
+        {rsvpModalOpen && (
+          <RSVPModal
+            eventTitle={item.title}
+            onClose={() => setRsvpModalOpen(false)}
+            onSubmit={handleRSVPSubmit}
+          />
         )}
 
         <motion.article

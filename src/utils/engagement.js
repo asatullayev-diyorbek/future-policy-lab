@@ -48,19 +48,27 @@ export function addComment(slug, fields) {
   return next
 }
 
-export function isAttending(slug) {
-  return localStorage.getItem(`fpl_rsvp_${slug}`) === "1"
+export function getRSVP(slug) {
+  return readJSON(`fpl_rsvp_${slug}`, null)
 }
 
-export function toggleRSVP(slug, baseAttendees) {
-  const key = `fpl_rsvp_${slug}`
-  const attending = localStorage.getItem(key) === "1"
-  if (attending) {
-    localStorage.removeItem(key)
-  } else {
-    localStorage.setItem(key, "1")
-  }
-  return { attending: !attending, count: getAttendeeCount(slug, baseAttendees) }
+export function isAttending(slug) {
+  return getRSVP(slug) !== null
+}
+
+export function submitRSVP(slug, { name, email, phone }, baseAttendees) {
+  writeJSON(`fpl_rsvp_${slug}`, {
+    name,
+    email,
+    phone,
+    registered_at: new Date().toISOString(),
+  })
+  return { attending: true, count: getAttendeeCount(slug, baseAttendees) }
+}
+
+export function cancelRSVP(slug, baseAttendees) {
+  localStorage.removeItem(`fpl_rsvp_${slug}`)
+  return { attending: false, count: getAttendeeCount(slug, baseAttendees) }
 }
 
 export function getAttendeeCount(slug, baseAttendees) {
