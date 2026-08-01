@@ -47,3 +47,22 @@ export function addComment(slug, fields) {
   writeJSON(`fpl_comments_${slug}`, next)
   return next
 }
+
+export function isAttending(slug) {
+  return localStorage.getItem(`fpl_rsvp_${slug}`) === "1"
+}
+
+export function toggleRSVP(slug, baseAttendees) {
+  const key = `fpl_rsvp_${slug}`
+  const attending = localStorage.getItem(key) === "1"
+  if (attending) {
+    localStorage.removeItem(key)
+  } else {
+    localStorage.setItem(key, "1")
+  }
+  return { attending: !attending, count: getAttendeeCount(slug, baseAttendees) }
+}
+
+export function getAttendeeCount(slug, baseAttendees) {
+  return baseAttendees + (isAttending(slug) ? 1 : 0)
+}
