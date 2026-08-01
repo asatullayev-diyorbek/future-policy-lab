@@ -41,6 +41,7 @@ export default function Research() {
         eyebrow="01 — Research"
         title="Original, Evidence-Based Research"
         subtitle="Data-backed academic papers and empirical studies addressing systemic challenges in education, governance, economic development, technology, and sustainability."
+        image="/research-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>

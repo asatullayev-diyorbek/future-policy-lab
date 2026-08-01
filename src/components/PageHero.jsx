@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useThemeStore } from "../store/theme"
 
-export default function PageHero({ eyebrow, title, subtitle }) {
+export default function PageHero({ eyebrow, title, subtitle, image }) {
   const { theme } = useThemeStore()
   const dark = theme === "dark"
 
@@ -27,33 +27,51 @@ export default function PageHero({ eyebrow, title, subtitle }) {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-2xl"
-        >
-          {eyebrow && (
-            <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-5 ${
-              dark
-                ? "bg-blue-600/10 border-blue-500/25 text-blue-400"
-                : "bg-blue-50 border-blue-200 text-blue-700"
+        <div className={image ? "grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center" : ""}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className={image ? "max-w-2xl" : "max-w-2xl"}
+          >
+            {eyebrow && (
+              <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-5 ${
+                dark
+                  ? "bg-blue-600/10 border-blue-500/25 text-blue-400"
+                  : "bg-blue-50 border-blue-200 text-blue-700"
+              }`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                {eyebrow}
+              </span>
+            )}
+            <h1 className={`text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4 ${
+              dark ? "text-white" : "text-slate-900"
             }`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              {eyebrow}
-            </span>
+              {title}
+            </h1>
+            {subtitle && (
+              <p className={`text-base sm:text-lg leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
+                {subtitle}
+              </p>
+            )}
+          </motion.div>
+
+          {image && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex justify-center lg:justify-end"
+            >
+              <img
+                src={image}
+                alt=""
+                className="w-full max-w-[520px] object-contain select-none"
+                draggable={false}
+              />
+            </motion.div>
           )}
-          <h1 className={`text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4 ${
-            dark ? "text-white" : "text-slate-900"
-          }`}>
-            {title}
-          </h1>
-          {subtitle && (
-            <p className={`text-base sm:text-lg leading-relaxed ${dark ? "text-slate-400" : "text-slate-500"}`}>
-              {subtitle}
-            </p>
-          )}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
