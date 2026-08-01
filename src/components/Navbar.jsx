@@ -77,13 +77,13 @@ export default function Navbar() {
                 Future Policy <span className="text-blue-500">Lab</span>
               </span>
               <span className={`text-[10px] font-semibold uppercase tracking-widest ${dark ? "text-slate-500" : "text-slate-400"}`}>
-                {t("nav.tagline")}
+                Youth-Led Academic &amp; Policy Platform
               </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden xl:flex items-center gap-0.5">
+          <nav className="hidden xl:flex items-center gap-0">
             {NAV_LINKS.map((l) => (
               <NavLink key={l.to} to={l.to} end={l.end} className={({ isActive }) => linkCls(isActive)}>
                 {l.label}
