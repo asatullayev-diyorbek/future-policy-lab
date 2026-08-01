@@ -1,0 +1,81 @@
+import { FlaskConical, FileText, MessageSquare, CalendarDays, Library, Target, Compass, Sparkles } from "lucide-react"
+
+export const AVENUES = [
+  {
+    icon: FlaskConical,
+    number: "01",
+    title: "Research",
+    slug: "/research",
+    color: "text-blue-600",
+    bg: "bg-blue-50",
+    bgDark: "bg-blue-600/10",
+    summary: "Original, data-backed academic papers and empirical studies addressing systemic challenges in education, governance, economic development, technology, and sustainability.",
+  },
+  {
+    icon: FileText,
+    number: "02",
+    title: "Policy Briefs",
+    slug: "/policy-briefs",
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+    bgDark: "bg-emerald-600/10",
+    summary: "Concise, actionable summaries that distill complex data and academic proposals into clear, decision-ready policy recommendations for advocates and leaders.",
+  },
+  {
+    icon: MessageSquare,
+    number: "03",
+    title: "Debates",
+    slug: "/debates",
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+    bgDark: "bg-violet-600/10",
+    summary: "Structured forums and intellectual exchanges fostering rigorous debate, critical inquiry, and diverse perspective-sharing on today's most pressing public matters.",
+  },
+  {
+    icon: CalendarDays,
+    number: "04",
+    title: "Meetings & News",
+    slug: "/meetings-news",
+    color: "text-orange-600",
+    bg: "bg-orange-50",
+    bgDark: "bg-orange-600/10",
+    summary: "Regular announcements, collaborative workshops, panel discussions, and updates highlighting key policy developments and upcoming lab initiatives.",
+  },
+  {
+    icon: Library,
+    number: "05",
+    title: "Resources",
+    slug: "/resources",
+    color: "text-pink-600",
+    bg: "bg-pink-50",
+    bgDark: "bg-pink-600/10",
+    summary: "Curated analytical tools, open datasets, guidance reading lists, and methodology guides designed to build research literacy and capacity among young scholars.",
+  },
+]
+
+export const PILLARS = [
+  {
+    icon: Target,
+    title: "Comprehensive",
+    desc: "Tackling complex challenges through original findings across education, governance, technology, the environment, and society.",
+    color: "text-blue-600",
+    bg: "bg-blue-50",
+    bgDark: "bg-blue-600/12",
+  },
+  {
+    icon: Compass,
+    title: "Concise",
+    desc: "Guided by root causes and key drivers to translate important issues and academic proposals into actionable recommendations.",
+    color: "text-emerald-600",
+    bg: "bg-emerald-50",
+    bgDark: "bg-emerald-600/12",
+  },
+  {
+    icon: Sparkles,
+    title: "Action-Oriented",
+    desc: "Designed for students, researchers, and policy advocates to turn complex data into clear solutions.",
+    color: "text-violet-600",
+    bg: "bg-violet-50",
+    bgDark: "bg-violet-600/12",
+  },
+]

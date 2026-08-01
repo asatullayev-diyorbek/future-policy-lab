@@ -1,0 +1,337 @@
+import { Link } from "react-router-dom"
+import { Helmet } from "react-helmet-async"
+import { motion } from "framer-motion"
+import { ArrowRight, Users, BookOpen, Globe2 } from "lucide-react"
+import { useThemeStore } from "../store/theme"
+import { AVENUES, PILLARS } from "../data/content"
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+}
+
+const stagger = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.1 } },
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.94 },
+  show:   { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+}
+
+function SectionTitle({ eyebrow, title, subtitle, dark, center = true }) {
+  return (
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.3 }}
+      className={`mb-10 ${center ? "text-center mx-auto" : ""} max-w-2xl`}
+    >
+      {eyebrow && (
+        <span className={`text-xs font-bold uppercase tracking-widest ${dark ? "text-blue-400" : "text-blue-700"}`}>
+          {eyebrow}
+        </span>
+      )}
+      <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mt-2 mb-2 ${dark ? "text-white" : "text-slate-900"}`}>
+        {title}
+      </h2>
+      {subtitle && (
+        <p className={`text-sm sm:text-base ${dark ? "text-slate-400" : "text-slate-500"}`}>{subtitle}</p>
+      )}
+    </motion.div>
+  )
+}
+
+export default function Home() {
+  const { theme } = useThemeStore()
+  const dark = theme === "dark"
+
+  return (
+    <>
+      <Helmet><title>Future Policy Lab — Youth-Led Academic & Policy Platform</title></Helmet>
+
+      {/* ═══════════════════════════════════════════════════ HERO */}
+      <section className={`relative overflow-hidden ${dark ? "bg-[#080d16]" : "bg-white"}`}>
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hero-dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="1.5" cy="1.5" r="1.5" fill={dark ? "rgba(148,163,184,0.1)" : "rgba(148,163,184,0.3)"} />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-dots)" />
+        </svg>
+
+        <div
+          className="absolute inset-y-0 right-0 w-[55%] pointer-events-none"
+          style={{
+            background: dark
+              ? "radial-gradient(ellipse at 80% 40%, rgba(29,78,216,0.16) 0%, transparent 65%)"
+              : "radial-gradient(ellipse at 80% 40%, rgba(29,78,216,0.09) 0%, transparent 65%)",
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-16 lg:pt-24 lg:pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.div variants={fadeUp} className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-semibold mb-6 ${
+                dark
+                  ? "bg-blue-600/10 border-blue-500/25 text-blue-400"
+                  : "bg-blue-50 border-blue-200 text-blue-700"
+              }`}>
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                Youth-Led Academic & Policy Platform
+              </motion.div>
+
+              <motion.h1 variants={fadeUp} className={`text-5xl sm:text-6xl lg:text-[3.6rem] font-extrabold leading-[1.08] tracking-tight mb-5 ${
+                dark ? "text-white" : "text-slate-900"
+              }`}>
+                Research. Evidence.<br />
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">
+                  Be Who We Are.
+                </span>
+              </motion.h1>
+
+              <motion.p variants={fadeUp} className={`text-base sm:text-lg leading-relaxed mb-9 max-w-2xl ${
+                dark ? "text-slate-400" : "text-slate-500"
+              }`}>
+                Future Policy Lab is a youth-led policy platform that brings together rigorous research, critical
+                analysis, and public dialogue. Our mission is to encourage independent thinking and provide
+                practical ideas grounded in empirical evidence rather than speculation.
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="flex items-center gap-3 flex-wrap">
+                <Link
+                  to="/research"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 active:scale-95 transition-all"
+                  style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.35)" }}
+                >
+                  Explore Our Research
+                  <ArrowRight size={17} />
+                </Link>
+                <Link
+                  to="/about"
+                  className={`inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-[15px] border transition-all active:scale-95 ${
+                    dark
+                      ? "border-white/12 text-slate-200 hover:bg-white/5"
+                      : "border-slate-300 text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  About Us
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              className="flex justify-center lg:justify-end"
+            >
+              <img
+                src="/header.png"
+                alt="Future Policy Lab — research, policy, and analysis"
+                className="w-full max-w-[560px] object-contain select-none"
+                draggable={false}
+              />
+            </motion.div>
+          </div>
+
+          {/* Stat strip */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16"
+          >
+            {[
+              { icon: BookOpen, label: "Research & Policy Briefs", value: "Evidence-Based" },
+              { icon: Users, label: "Students, Researchers, Advocates", value: "Youth-Led" },
+              { icon: Globe2, label: "Education, Governance, Tech & More", value: "Cross-Sector" },
+            ].map(({ icon: Icon, label, value }) => (
+              <motion.div
+                key={label}
+                variants={fadeUp}
+                className={`flex items-center gap-3.5 px-5 py-5 rounded-2xl border transition-colors ${
+                  dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-white shadow-sm"
+                }`}
+              >
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${dark ? "bg-blue-600/15" : "bg-blue-50"}`}>
+                  <Icon size={18} className="text-blue-700" />
+                </div>
+                <div>
+                  <p className={`text-sm font-bold leading-tight ${dark ? "text-white" : "text-slate-900"}`}>{value}</p>
+                  <p className={`text-[11.5px] leading-snug ${dark ? "text-slate-500" : "text-slate-500"}`}>{label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════ FIVE AVENUES */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <SectionTitle
+            eyebrow="How We Work"
+            title="Five Core Avenues of Engagement"
+            subtitle="We aim to make policy discussions accessible to students, young researchers, and future leaders."
+            dark={dark}
+          />
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {AVENUES.map(({ icon: Icon, number, title, slug, summary, color, bg, bgDark }) => (
+              <motion.div key={title} variants={scaleIn}>
+                <Link
+                  to={slug}
+                  className={`group flex flex-col h-full p-6 rounded-2xl border transition-all duration-200 ${
+                    dark
+                      ? "border-white/8 bg-white/3 hover:bg-white/5 hover:border-white/15"
+                      : "border-slate-200 bg-white hover:border-blue-200 hover:shadow-md"
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${dark ? bgDark : bg}`}>
+                      <Icon size={22} className={color} />
+                    </div>
+                    <span className={`font-mono text-xs font-bold ${dark ? "text-slate-700" : "text-slate-300"}`}>
+                      {number}
+                    </span>
+                  </div>
+                  <h3 className={`font-bold text-lg mb-2 ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
+                  <p className={`text-[13.5px] leading-relaxed mb-4 flex-1 ${dark ? "text-slate-500" : "text-slate-500"}`}>
+                    {summary}
+                  </p>
+                  <span className={`inline-flex items-center gap-1.5 text-sm font-semibold transition-transform group-hover:translate-x-1 ${
+                    dark ? "text-blue-400" : "text-blue-700"
+                  }`}>
+                    Learn more <ArrowRight size={14} />
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════ PEC0 CORE PILLARS */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-white"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <SectionTitle
+            eyebrow="Our Work"
+            title="Core Pillars"
+            subtitle="Tackling complex challenges with an approach that is comprehensive, concise, and action-oriented."
+            dark={dark}
+          />
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-5"
+          >
+            {PILLARS.map(({ icon: Icon, title, desc, color, bg, bgDark }) => (
+              <motion.div
+                key={title}
+                variants={fadeUp}
+                className={`flex flex-col items-start p-7 rounded-2xl border transition-colors ${
+                  dark ? "border-white/8 bg-white/3" : "border-slate-200 bg-slate-50"
+                }`}
+              >
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${dark ? bgDark : bg}`}>
+                  <Icon size={22} className={color} />
+                </div>
+                <h3 className={`font-bold text-lg mb-2 ${dark ? "text-white" : "text-slate-900"}`}>{title}</h3>
+                <p className={`text-sm leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════ MEET US & FORUM TEASER */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+          >
+            <motion.div variants={fadeUp} className={`p-8 rounded-2xl border ${
+              dark ? "border-white/8 bg-gradient-to-br from-blue-600/10 to-transparent" : "border-blue-100 bg-gradient-to-br from-blue-50 to-white"
+            }`}>
+              <h3 className={`font-bold text-xl mb-3 ${dark ? "text-white" : "text-slate-900"}`}>Meet Us & News</h3>
+              <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-slate-400" : "text-slate-600"}`}>
+                This is where upcoming seminars, workshops, and online discussions are posted. Everyone is welcome
+                to join. We also post updates announcing new research papers, guidance reading lists, datasets, and
+                materials to help members strengthen their analytical skills.
+              </p>
+              <Link
+                to="/meetings-news"
+                className={`inline-flex items-center gap-1.5 text-sm font-semibold ${dark ? "text-blue-400" : "text-blue-700"}`}
+              >
+                See what's happening <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className={`p-8 rounded-2xl border ${
+              dark ? "border-white/8 bg-gradient-to-br from-violet-600/10 to-transparent" : "border-violet-100 bg-gradient-to-br from-violet-50 to-white"
+            }`}>
+              <h3 className={`font-bold text-xl mb-3 ${dark ? "text-white" : "text-slate-900"}`}>Forum</h3>
+              <p className={`text-sm leading-relaxed mb-6 ${dark ? "text-slate-400" : "text-slate-600"}`}>
+                A space for continuous dialogue, collaboration, and debate on today's most pressing policy questions.
+                Join the discussion with fellow researchers, exchange insights, and help shape tomorrow's policy
+                landscape.
+              </p>
+              <Link
+                to="/debates"
+                className={`inline-flex items-center gap-1.5 text-sm font-semibold ${dark ? "text-violet-400" : "text-violet-700"}`}
+              >
+                Join the discussion <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════ CTA */}
+      <section className={`py-16 sm:py-20 ${dark ? "bg-[#080d16]" : "bg-white"}`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <h2 className={`text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 ${dark ? "text-white" : "text-slate-900"}`}>
+              Future Policy Lab
+            </h2>
+            <p className={`text-sm sm:text-base leading-relaxed mb-8 ${dark ? "text-slate-400" : "text-slate-500"}`}>
+              Evidence-Based Youth Research Initiative.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-blue-700 text-white font-bold text-[15px] hover:bg-blue-600 active:scale-95 transition-all"
+              style={{ boxShadow: "0 8px 28px rgba(29,78,216,0.3)" }}
+            >
+              Get Involved
+              <ArrowRight size={17} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </>
+  )
+}
