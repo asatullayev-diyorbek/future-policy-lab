@@ -39,6 +39,7 @@ export default function Debates() {
         eyebrow="03 — Debates"
         title="Structured Forums for Rigorous Debate"
         subtitle="Intellectual exchanges fostering critical inquiry and diverse perspective-sharing on today's most pressing public matters."
+        image="/debates-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
