@@ -47,6 +47,7 @@ export default function MeetingsNews() {
         eyebrow="04 — Meetings & News"
         title="Seminars, Workshops & Lab Updates"
         subtitle="Regular announcements, collaborative workshops, panel discussions, and updates highlighting key policy developments and upcoming lab initiatives."
+        image="/meetings-news-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>
