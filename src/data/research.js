@@ -1,9 +1,9 @@
 export const RESEARCH_THEMES = [
-  { id: "education", name: "Education", name_uz: "Ta'lim" },
-  { id: "governance", name: "Governance", name_uz: "Boshqaruv" },
-  { id: "economic-development", name: "Economic Development", name_uz: "Iqtisodiy rivojlanish" },
-  { id: "technology", name: "Technology", name_uz: "Texnologiya" },
-  { id: "sustainability", name: "Sustainability", name_uz: "Barqarorlik" },
+  { id: "education", name: "Education", name_uz: "Ta'lim", name_ru: "Образование" },
+  { id: "governance", name: "Governance", name_uz: "Boshqaruv", name_ru: "Управление" },
+  { id: "economic-development", name: "Economic Development", name_uz: "Iqtisodiy rivojlanish", name_ru: "Экономическое развитие" },
+  { id: "technology", name: "Technology", name_uz: "Texnologiya", name_ru: "Технологии" },
+  { id: "sustainability", name: "Sustainability", name_uz: "Barqarorlik", name_ru: "Устойчивое развитие" },
 ]
 
 export const researchArticles = [
@@ -12,13 +12,16 @@ export const researchArticles = [
     slug: "access-gaps-secondary-education",
     title: "Closing Access Gaps in Secondary Education",
     title_uz: "O'rta ta'limda kirish imkoniyati tafovutlarini bartaraf etish",
+    title_ru: "Устранение пробелов в доступе к среднему образованию",
     excerpt:
       "An empirical look at dropout drivers among rural secondary students, and which interventions actually move the needle.",
     excerpt_uz:
       "Qishloq hududlaridagi o'rta maktab o'quvchilari orasida o'qishni tashlab ketish sabablariga empirik nazar va qaysi tadbirlar haqiqatan ham natija beradi.",
+    excerpt_ru:
+      "Эмпирический анализ причин отсева сельских школьников и мер, которые действительно меняют ситуацию.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80",
-    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi" },
+    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi", role_ru: "Ведущий исследователь" },
     published_at: "2026-03-14T09:00:00Z",
     read_time: 9,
     base_views: 1240,
@@ -57,20 +60,40 @@ O'qituvchilarni saqlab qolish bonuslari esa, aksincha, to'rt yillik davrda o'qis
 
 ## Siyosiy xulosalar
 
-Ushbu topilmalar mavjud qishloq ta'lim byudjetlarini oshirish emas, balki qayta taqsimlashni taklif qiladi: masofa asosiy cheklov bo'lgan tumanlarda transport infratuzilmasi umumiy pul o'tkazmalarini kengaytirishdan ustuvor bo'lishi kerak. Ushbu tadqiqot bo'yicha qo'shimcha siyosat bayoni Siyosat bayonlari bo'limida mavjud.`,
+    Ushbu topilmalar mavjud qishloq ta'lim byudjetlarini oshirish emas, balki qayta taqsimlashni taklif qiladi: masofa asosiy cheklov bo'lgan tumanlarda transport infratuzilmasi umumiy pul o'tkazmalarini kengaytirishdan ustuvor bo'lishi kerak. Ushbu tadqiqot bo'yicha qo'shimcha siyosat bayoni Siyosat bayonlari bo'limida mavjud.`,
+    content_ru: `В сельских районах уровень отсева из средней школы остаётся почти втрое выше, чем в городах, несмотря на десятилетнюю политику, ориентированную на охват образованием. Это исследование задаёт более узкий вопрос, чем «почему ученики бросают школу»: какие конкретные и доступные для финансирования меры меняют эту траекторию, а какие лишь хорошо выглядят на бумаге.
+
+## Методология
+
+Мы отслеживали административные данные на уровне когорт в 42 районах в течение четырёх учебных лет и дополнили их структурированными интервью со 180 домохозяйствами. Дизайн с группой сравнения позволил отдельно оценить влияние транспортных субсидий, условных денежных выплат и бонусов за удержание учителей.
+
+## Основные выводы
+
+Транспортные субсидии дали наибольший отдельный эффект: посещаемость выросла на 14 пунктов в районах, расположенных более чем в 8 км от ближайшей средней школы. Условные денежные выплаты дали меньший, но всё же значимый эффект, почти полностью сосредоточенный среди семей, где более двух детей школьного возраста.
+
+Напротив, бонусы за удержание учителей не оказали измеримого влияния на отсев за четырёхлетний период, хотя были связаны с улучшением результатов стандартизированных тестов среди учеников, продолживших обучение.
+
+> Мера с наиболее очевидной краткосрочной отдачей не всегда оказывается первой, к которой обращаются политики: в нашей выборке решающим фактором был транспорт, а не деньги.
+
+## Политические выводы
+
+Результаты указывают не на необходимость увеличения, а на перераспределение существующих бюджетов сельского образования: в районах, где расстояние является главным ограничением, транспортная инфраструктура должна иметь приоритет перед повсеместным расширением денежных выплат. Дополнительная политическая записка по этому исследованию опубликована в разделе «Политические записки».`,
   },
   {
     id: 2,
     slug: "municipal-transparency-and-trust",
     title: "Municipal Transparency and Public Trust",
     title_uz: "Munitsipal shaffoflik va jamoat ishonchi",
+    title_ru: "Муниципальная прозрачность и общественное доверие",
     excerpt:
       "Do open-budget portals actually change how residents perceive local government? A survey-based study across 12 municipalities.",
     excerpt_uz:
       "Ochiq byudjet portallari aholining mahalliy hokimiyatga munosabatini haqiqatan ham o'zgartiradimi? 12 ta munitsipalitet bo'yicha so'rov asosidagi tadqiqot.",
+    excerpt_ru:
+      "Действительно ли порталы открытого бюджета меняют восприятие местной власти? Исследование на основе опроса в 12 муниципалитетах.",
     theme: "governance",
     cover: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=80",
-    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
+    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi", role_ru: "Исследователь управления" },
     published_at: "2026-02-02T09:00:00Z",
     read_time: 7,
     base_views: 860,
@@ -110,19 +133,39 @@ Intervyular mexanizm ma'lumotning mavjudligida emas, balki uning tushunarliligid
 ## Tavsiya
 
 Shaffoflikka sarmoya kiritishni ko'rib chiqayotgan munitsipalitetlar texnik portal bilan bir qatorda targ'ibot va oddiy tildagi xulosalar uchun ham byudjet ajratishi kerak — portal zarur, ammo yetarli emas.`,
+    content_ru: `Порталы открытого бюджета внедряются десятками муниципалитетов исходя из предположения, что доступные данные о расходах укрепляют общественное доверие. Мы проверили это предположение с помощью панельного опроса 2 400 жителей 12 муниципалитетов, половина из которых запустила порталы в период наблюдения.
+
+## Что мы измеряли
+
+Доверие измерялось по стандартной шкале из пяти пунктов до запуска портала и повторно через девять месяцев. Мы учитывали исходный уровень доверия, потребление местных новостей и недавние случаи предоставления услуг.
+
+## Результаты
+
+Само по себе внедрение портала не привело к статистически значимому изменению доверия. Эффект появился только в муниципалитетах, которые дополнили портал активной информационной работой: общественными встречами, SMS-рассылками или краткими обзорами расходов на местном языке. В этих случаях доверие выросло на умеренные, но реальные 6 пунктов.
+
+## Первопричина
+
+Интервью показывают, что решающим фактором является не доступность данных, а их понятность. Сырые бюджетные строки без институционального контекста практически непонятны жителям; портал без объяснений становится формальным отчётным инструментом, а не способом укрепления доверия.
+
+## Рекомендация
+
+Муниципалитеты, планирующие инвестиции в прозрачность, должны закладывать средства не только на технический портал, но и на информационную работу и понятные резюме. Портал необходим, но его недостаточно.`,
   },
   {
     id: 3,
     slug: "informal-sector-and-youth-employment",
     title: "The Informal Sector's Role in Youth Employment",
     title_uz: "Norasmiy sektorning yoshlar bandligidagi o'rni",
+    title_ru: "Роль неформального сектора в занятости молодёжи",
     excerpt:
       "Why informal work is not a policy failure to be eliminated, but a labor-market segment that needs its own targeted support.",
     excerpt_uz:
       "Nima uchun norasmiy mehnat bartaraf etilishi kerak bo'lgan siyosiy nuqson emas, balki o'ziga xos maqsadli qo'llab-quvvatlashga muhtoj mehnat bozori segmenti.",
+    excerpt_ru:
+      "Почему неформальная занятость — не политический провал, который нужно устранить, а сегмент рынка труда, требующий адресной поддержки.",
     theme: "economic-development",
     cover: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=80",
-    author: { name: "Sardor Tashkentov", role: "Economic Policy Analyst", role_uz: "Iqtisodiy siyosat tahlilchisi" },
+    author: { name: "Sardor Tashkentov", role: "Economic Policy Analyst", role_uz: "Iqtisodiy siyosat tahlilchisi", role_ru: "Аналитик экономической политики" },
     published_at: "2026-01-18T09:00:00Z",
     read_time: 11,
     base_views: 1560,
@@ -166,19 +209,39 @@ Ko'chma imtiyozlar — ishchini ish beruvchi emas, balki ishchining o'zini kuzat
 ## Xulosa
 
 Norasmiylikni rasmiylashtirish orqali bartaraf etilishi kerak bo'lgan muammo sifatida ko'rish o'rniga, siyosat ishchilarni ular turgan joyda kutib olishi kerak: ish beruvchilar o'rtasida ko'chib yuradigan ko'nikmalar sertifikati bilan birga keladigan ko'chma, kam to'siqli imtiyozlar.`,
+    content_ru: `В нашей выборке около четырёх из десяти работающих молодых людей заняты в неформальном секторе — показатель, который часто считают свидетельством провала политики. Но такой взгляд недооценивает масштаб и функцию неформальной занятости.
+
+## Проблема масштаба
+
+Национальная статистика труда недооценивает неформальную занятость примерно на 18%, поскольку сезонная и платформенная работа не попадает в стандартные категории опросов. Наше полевое исследование охватило шесть отраслей.
+
+## Почему формализация не работает
+
+Программы перевода работников в официальный сектор дают слабый результат не потому, что люди отвергают официальную работу, а потому, что регистрация, налоги и потеря гибкости превышают выгоды для работников младше 25 лет без иждивенцев.
+
+## Что работает лучше
+
+Переносимые льготы — медицинское страхование и пенсионные взносы, которые следуют за работником, а не работодателем, — показали значительно более высокий охват в пилотных регионах. Такой подход отделяет социальную защиту от статуса официальной занятости.
+
+## Вывод
+
+Вместо попытки устранить неформальность принудительной формализацией политика должна поддерживать работников там, где они находятся: через переносимые льготы с низкими барьерами и сертификаты навыков, признаваемые разными работодателями.`,
   },
   {
     id: 4,
     slug: "algorithmic-decision-making-public-services",
     title: "Algorithmic Decision-Making in Public Services",
     title_uz: "Davlat xizmatlarida algoritmik qaror qabul qilish",
+    title_ru: "Алгоритмическое принятие решений в государственных услугах",
     excerpt:
       "A survey of automated eligibility systems in social services, and the due-process gaps they introduce.",
     excerpt_uz:
       "Ijtimoiy xizmatlardagi avtomatlashtirilgan huquq berish tizimlari va ular keltirib chiqaradigan adolatli jarayon bo'shliqlari bo'yicha tadqiqot.",
+    excerpt_ru:
+      "Обзор автоматизированных систем предоставления социальных услуг и пробелов в гарантиях надлежащей процедуры.",
     theme: "technology",
     cover: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80",
-    author: { name: "Malika Islomova", role: "Technology Policy Researcher", role_uz: "Texnologiya siyosati tadqiqotchisi" },
+    author: { name: "Malika Islomova", role: "Technology Policy Researcher", role_uz: "Texnologiya siyosati tadqiqotchisi", role_ru: "Исследователь технологической политики" },
     published_at: "2025-12-05T09:00:00Z",
     read_time: 8,
     base_views: 2040,
@@ -218,19 +281,39 @@ Biz minimal oshkoralik standartini taklif qilamiz: har qanday avtomatik rad etis
 ## Bu nega hozir muhim
 
 Ko'proq xizmatlar avtomatlashtirilgan huquq berishga o'tar ekan, oshkoralik standartlari hozir, tizimlar yanada mustahkamlanmasdan oldin belgilanmasa, samaradorlik yutuqlari va adolatli jarayon himoyasi o'rtasidagi bo'shliq kengayadi.`,
+    content_ru: `Автоматизированные системы всё чаще определяют право на получение государственных льгот. Мы изучили девять таких систем и задали конкретный вопрос: если алгоритм отказывает в льготе, какие реальные средства защиты есть у заявителя?
+
+## Подход к аудиту
+
+Мы запросили документацию, журналы апелляций и, если возможно, спецификации моделей. Три ведомства отказались раскрыть логику моделей, сославшись на конфиденциальность поставщиков — и это само по себе важный результат.
+
+## Пробелы в надлежащей процедуре
+
+В шести из девяти систем заявители не могли увидеть конкретные факторы, лежащие в основе отказа, а получали лишь общий код. Успешность апелляций в этих системах была менее половины показателя систем, раскрывающих причины.
+
+## Практический стандарт
+
+Каждый автоматический отказ должен сопровождаться тремя главными факторами простым языком, а заявителю должна быть доступна проверка человеком в установленный срок. Это не требует раскрытия внутренней логики защищённой модели — необходимо лишь превратить её результат в понятную информацию для обжалования.
+
+## Почему это важно сейчас
+
+По мере автоматизации услуг разрыв между эффективностью и гарантиями справедливой процедуры будет расти, если стандарты раскрытия не установить до того, как системы станут необратимо встроены в управление.`,
   },
   {
     id: 5,
     slug: "water-scarcity-adaptation-strategies",
     title: "Community-Led Water Scarcity Adaptation",
     title_uz: "Jamoat boshchiligidagi suv tanqisligiga moslashish",
+    title_ru: "Адаптация к нехватке воды под руководством сообществ",
     excerpt:
       "Comparing top-down infrastructure investment with community-managed water allocation in drought-prone districts.",
     excerpt_uz:
       "Qurg'oqchilikka moyil tumanlarda yuqoridan-pastga infratuzilma sarmoyasini jamoat boshqaruvidagi suv taqsimoti bilan solishtirish.",
+    excerpt_ru:
+      "Сравнение централизованных инфраструктурных инвестиций с распределением воды под управлением местных сообществ в засушливых районах.",
     theme: "sustainability",
     cover: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=1200&q=80",
-    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi" },
+    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi", role_ru: "Ведущий исследователь" },
     published_at: "2025-11-20T09:00:00Z",
     read_time: 10,
     base_views: 990,
@@ -270,19 +353,39 @@ Infratuzilma yetkazib berish muammosini hal qiladi; u muvofiqlashtirish muammosi
 ## Tavsiya
 
 Kelgusi suv infratuzilmasi sarmoyalari alohida kapital loyiha sifatida emas, balki sukut bo'yicha moliyalashtirilgan va vakolatli mahalliy taqsimot organi bilan birga bo'lishi kerak.`,
+    content_ru: `Засушливые районы обычно получают крупные инфраструктурные инвестиции: новые скважины, трубопроводы и резервуары. Это исследование сравнивает районы, получившие только инфраструктуру, с районами, где инфраструктура сочеталась с комитетами распределения воды под управлением сообщества.
+
+## Дизайн
+
+Мы сравнили восемь районов в течение трёх сухих сезонов: четыре получили только инфраструктуру, а в четырёх дополнительно работали местные комитеты, уполномоченные устанавливать правила использования воды в технических пределах.
+
+## Результаты
+
+В районах с одной лишь инфраструктурой доступность воды сначала улучшилась, но через два сезона снова снизилась, поскольку привычки использования вернулись к прежним нормам. Районы с комитетами сохраняли улучшения все три сезона, а модели использования приблизились к техническим ограничениям, установленным инженерами.
+
+## Интерпретация
+
+Инфраструктура решает проблему предложения, но не проблему координации. Комитеты распределения стали недостающим связующим звеном: они переводят технические ограничения в легитимные местные правила, которым жители действительно следуют.
+
+## Рекомендация
+
+Будущие инвестиции в водную инфраструктуру следует по умолчанию сопровождать финансируемым и наделённым полномочиями местным органом распределения, а не рассматривать как отдельный капитальный проект.`,
   },
   {
     id: 6,
     slug: "digital-literacy-curriculum-outcomes",
     title: "Measuring Digital Literacy Curriculum Outcomes",
     title_uz: "Raqamli savodxonlik o'quv dasturi natijalarini o'lchash",
+    title_ru: "Оценка результатов программы цифровой грамотности",
     excerpt:
       "A before-and-after study of a national digital literacy curriculum rolled out across 60 schools.",
     excerpt_uz:
       "60 ta maktabda joriy etilgan milliy raqamli savodxonlik o'quv dasturining oldingi-keyingi natijalarini o'rganish.",
+    excerpt_ru:
+      "Исследование результатов национальной программы цифровой грамотности до и после её внедрения в 60 школах.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=80",
-    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
+    author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi", role_ru: "Исследователь управления" },
     published_at: "2025-10-09T09:00:00Z",
     read_time: 6,
     base_views: 720,
@@ -322,6 +425,23 @@ Faqat ishonch so'rovnomalari bo'yicha baholangan dasturlar ko'nikma ma'lumotlari
 ## Keyingi qadamlar
 
 Biz texnik ko'nikma modullarini kengaytirish va o'quv dasturining ikkinchi bosqichi uchun amaliy baholashni asosiy baholash mezoni sifatida qabul qilishni tavsiya qilamiz.`,
+    content_ru: `Национальная программа цифровой грамотности была введена 18 месяцев назад в 60 пилотных школах. В этом исследовании измеряется, что ученики действительно усвоили, с помощью оценки навыков, а не самооценки уверенности — и это различие оказалось важным.
+
+## Дизайн оценки
+
+Ученики проходили практическую проверку навыков до запуска программы и через 18 месяцев: распознавали фишинговые попытки, оценивали надёжность источников и выполняли базовые задания в электронных таблицах. Одновременно они отвечали на вопросы о собственной уверенности.
+
+## Разрыв между уверенностью и компетентностью
+
+Самооценка уверенности в цифровых навыках резко выросла — в среднем на 34 пункта. Измеренная компетентность выросла значительно скромнее, на 11 пунктов, почти полностью за счёт оценки надёжности источников, а не технических заданий.
+
+## Почему разрыв важен
+
+Программы, оцениваемые только по опросам уверенности, выглядели бы гораздо успешнее, чем показывают данные о навыках. Это напрямую влияет на финансирование и оценку следующего этапа программы: измерение результатов должно перейти к практическим заданиям.
+
+## Следующие шаги
+
+Мы рекомендуем расширить модули технических навыков и сделать практическую оценку главным показателем для второго этапа программы.`,
   },
 ]
 

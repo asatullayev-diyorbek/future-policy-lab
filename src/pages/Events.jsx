@@ -26,11 +26,11 @@ export default function Events() {
   }, [])
 
   const now = new Date()
-  const filtered = useMemo(() => {
-    if (activeFilter === "upcoming") return events.filter((e) => new Date(e.date) >= now)
-    if (activeFilter === "past") return [...events].filter((e) => new Date(e.date) < now).reverse()
-    return events
-  }, [events, activeFilter])
+  const filtered = activeFilter === "upcoming"
+    ? events.filter((e) => new Date(e.date) >= now)
+    : activeFilter === "past"
+      ? [...events].filter((e) => new Date(e.date) < now).reverse()
+      : events
 
   const filterCls = (active) =>
     `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${

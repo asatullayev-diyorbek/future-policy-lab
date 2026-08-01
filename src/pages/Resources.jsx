@@ -17,9 +17,9 @@ const fadeUp = {
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.06 } } }
 
 const KIND_META = {
-  tool: { icon: Wrench, desc: "Frameworks and templates for structuring policy analysis.", desc_uz: "Siyosat tahlilini tuzish uchun freymvorklar va shablonlar." },
-  dataset: { icon: Database, desc: "Curated datasets for empirical research and student projects.", desc_uz: "Empirik tadqiqot va talabalar loyihalari uchun tanlangan ma'lumotlar bazalari." },
-  "reading-list": { icon: BookMarked, desc: "Guidance reading lists to build research literacy and capacity.", desc_uz: "Tadqiqot savodxonligi va salohiyatini oshirish uchun o'quv ro'yxatlari." },
+  tool: { icon: Wrench, desc: "Frameworks and templates for structuring policy analysis.", desc_uz: "Siyosat tahlilini tuzish uchun freymvorklar va shablonlar.", desc_ru: "Схемы и шаблоны для структурирования анализа политики." },
+  dataset: { icon: Database, desc: "Curated datasets for empirical research and student projects.", desc_uz: "Empirik tadqiqot va talabalar loyihalari uchun tanlangan ma'lumotlar bazalari.", desc_ru: "Подборки данных для эмпирических исследований и студенческих проектов." },
+  "reading-list": { icon: BookMarked, desc: "Guidance reading lists to build research literacy and capacity.", desc_uz: "Tadqiqot savodxonligi va salohiyatini oshirish uchun o'quv ro'yxatlari.", desc_ru: "Списки литературы для развития исследовательских навыков." },
 }
 
 export default function Resources() {
@@ -94,7 +94,7 @@ export default function Resources() {
                     </span>
                   </div>
                   <h3 className={`font-bold text-[15px] mb-1.5 ${dark ? "text-white" : "text-slate-900"}`}>{L(k, "name", lang)}</h3>
-                  <p className={`text-[13px] leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{lang === "uz" ? meta.desc_uz : meta.desc}</p>
+                  <p className={`text-[13px] leading-relaxed ${dark ? "text-slate-500" : "text-slate-500"}`}>{L(meta, "desc", lang)}</p>
                 </motion.button>
               )
             })}

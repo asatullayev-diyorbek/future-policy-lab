@@ -58,7 +58,7 @@ export default function ResourceDetail() {
     year: "numeric", month: "long", day: "numeric",
   })
 
-  const format = lang === "uz" && resource.format_uz ? resource.format_uz : resource.format
+  const format = L(resource, "format", lang)
 
   const handleSubmit = (e) => {
     e.preventDefault()

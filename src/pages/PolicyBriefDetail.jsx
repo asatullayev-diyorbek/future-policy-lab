@@ -48,7 +48,11 @@ export default function PolicyBriefDetail() {
     year: "numeric", month: "long", day: "numeric",
   })
 
-  const recommendations = lang === "uz" && brief.recommendations_uz ? brief.recommendations_uz : brief.recommendations
+  const recommendations = lang === "ru" && brief.recommendations_ru
+    ? brief.recommendations_ru
+    : lang === "uz" && brief.recommendations_uz
+      ? brief.recommendations_uz
+      : brief.recommendations
 
   const handleSubmit = (e) => {
     e.preventDefault()

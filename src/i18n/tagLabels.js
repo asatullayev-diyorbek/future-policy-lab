@@ -1,20 +1,20 @@
 export const TAG_LABELS = {
-  "education": { en: "education", uz: "ta'lim" },
-  "rural-access": { en: "rural-access", uz: "qishloq-hududlari" },
-  "policy-evaluation": { en: "policy-evaluation", uz: "siyosat-baholash" },
-  "governance": { en: "governance", uz: "boshqaruv" },
-  "transparency": { en: "transparency", uz: "shaffoflik" },
-  "local-government": { en: "local-government", uz: "mahalliy-hokimiyat" },
-  "economic-development": { en: "economic-development", uz: "iqtisodiy-rivojlanish" },
-  "informal-sector": { en: "informal-sector", uz: "norasmiy-sektor" },
-  "youth": { en: "youth", uz: "yoshlar" },
-  "technology": { en: "technology", uz: "texnologiya" },
-  "algorithmic-accountability": { en: "algorithmic-accountability", uz: "algoritmik-javobgarlik" },
-  "social-services": { en: "social-services", uz: "ijtimoiy-xizmatlar" },
-  "sustainability": { en: "sustainability", uz: "barqarorlik" },
-  "water-policy": { en: "water-policy", uz: "suv-siyosati" },
+  "education": { en: "education", uz: "ta'lim", ru: "образование" },
+  "rural-access": { en: "rural-access", uz: "qishloq-hududlari", ru: "доступ-в-сельской-местности" },
+  "policy-evaluation": { en: "policy-evaluation", uz: "siyosat-baholash", ru: "оценка-политики" },
+  "governance": { en: "governance", uz: "boshqaruv", ru: "управление" },
+  "transparency": { en: "transparency", uz: "shaffoflik", ru: "прозрачность" },
+  "local-government": { en: "local-government", uz: "mahalliy-hokimiyat", ru: "местное-управление" },
+  "economic-development": { en: "economic-development", uz: "iqtisodiy-rivojlanish", ru: "экономическое-развитие" },
+  "informal-sector": { en: "informal-sector", uz: "norasmiy-sektor", ru: "неформальный-сектор" },
+  "youth": { en: "youth", uz: "yoshlar", ru: "молодёжь" },
+  "technology": { en: "technology", uz: "texnologiya", ru: "технологии" },
+  "algorithmic-accountability": { en: "algorithmic-accountability", uz: "algoritmik-javobgarlik", ru: "алгоритмическая-подотчётность" },
+  "social-services": { en: "social-services", uz: "ijtimoiy-xizmatlar", ru: "социальные-услуги" },
+  "sustainability": { en: "sustainability", uz: "barqarorlik", ru: "устойчивое-развитие" },
+  "water-policy": { en: "water-policy", uz: "suv-siyosati", ru: "водная-политика" },
   "community-governance": { en: "community-governance", uz: "jamoat-boshqaruvi" },
-  "digital-literacy": { en: "digital-literacy", uz: "raqamli-savodxonlik" },
+  "digital-literacy": { en: "digital-literacy", uz: "raqamli-savodxonlik", ru: "цифровая-грамотность" },
   "curriculum": { en: "curriculum", uz: "o'quv-dasturi" },
   "budget-policy": { en: "budget-policy", uz: "byudjet-siyosati" },
   "civic-tech": { en: "civic-tech", uz: "fuqarolik-texnologiyasi" },
@@ -38,5 +38,5 @@ export const TAG_LABELS = {
 }
 
 export function tagLabel(tag, lang) {
-  return TAG_LABELS[tag]?.[lang] ?? tag
+  return TAG_LABELS[tag]?.[lang] ?? TAG_LABELS[tag]?.en ?? tag
 }

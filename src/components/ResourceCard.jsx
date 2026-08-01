@@ -6,9 +6,9 @@ import { L } from "../i18n/localize"
 import { localeFor } from "../i18n/localize"
 
 const KIND_META = {
-  tool: { icon: Wrench, label: "Tool", label_uz: "Vosita" },
-  dataset: { icon: Database, label: "Dataset", label_uz: "Ma'lumotlar bazasi" },
-  "reading-list": { icon: BookMarked, label: "Reading List", label_uz: "O'quv ro'yxati" },
+  tool: { icon: Wrench, label: "Tool", label_uz: "Vosita", label_ru: "Инструмент" },
+  dataset: { icon: Database, label: "Dataset", label_uz: "Ma'lumotlar bazasi", label_ru: "Набор данных" },
+  "reading-list": { icon: BookMarked, label: "Reading List", label_uz: "O'quv ro'yxati", label_ru: "Список литературы" },
 }
 
 export default function ResourceCard({ resource }) {
@@ -17,7 +17,7 @@ export default function ResourceCard({ resource }) {
   const { lang } = useTranslation()
   const meta = KIND_META[resource.kind]
   const Icon = meta.icon
-  const label = lang === "uz" ? meta.label_uz : meta.label
+  const label = L(meta, "label", lang)
 
   const formattedDate = new Date(resource.published_at).toLocaleDateString(localeFor(lang), {
     year: "numeric", month: "short", day: "numeric",

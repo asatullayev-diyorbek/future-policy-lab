@@ -8,13 +8,16 @@ export const policyBriefs = [
     slug: "transport-first-rural-education-budgets",
     title: "Transport-First: Reallocating Rural Education Budgets",
     title_uz: "Avval transport: qishloq ta'lim byudjetlarini qayta taqsimlash",
+    title_ru: "Сначала транспорт: перераспределение бюджетов сельского образования",
     excerpt:
       "A two-page brief recommending districts shift funding from blanket cash transfers to targeted transport subsidies.",
     excerpt_uz:
       "Tumanlarga umumiy pul o'tkazmalaridan maqsadli transport subsidiyalariga o'tishni tavsiya qiluvchi ikki sahifali bayon.",
+    excerpt_ru:
+      "Краткая записка с рекомендацией перенаправить часть общих денежных выплат на адресные транспортные субсидии.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80",
-    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi" },
+    author: { name: "Nodira Yusupova", role: "Lead Researcher", role_uz: "Bosh tadqiqotchi", role_ru: "Ведущий исследователь" },
     published_at: "2026-03-20T09:00:00Z",
     read_time: 4,
     base_views: 640,
@@ -29,6 +32,11 @@ export const policyBriefs = [
       "Eng yaqin o'rta maktabdan 8 km dan uzoqroqdagi tumanlarda mavjud pul o'tkazmalari byudjetining 15–20% ini transport subsidiyalariga yo'naltirish.",
       "Milliy miqyosda joriy etishdan oldin qayta taqsimlashni eng yuqori tashlab ketish darajasiga ega o'nta tumanda bir o'quv yili davomida sinab ko'rish.",
       "Faqat ro'yxatga olishni emas, balki davomatni asosiy muvaffaqiyat mezoni sifatida kuzatish.",
+    ],
+    recommendations_ru: [
+      "Перенаправить 15–20% действующих бюджетов денежных выплат в районах, расположенных более чем в 8 км от ближайшей средней школы, на транспортные субсидии.",
+      "До национального внедрения испытать перераспределение в десяти районах с самым высоким отсевом в течение одного учебного года.",
+      "Отслеживать посещаемость, а не только зачисление, как главный показатель успеха.",
     ],
     content: `Districts spend heavily on cash-transfer programs intended to keep students enrolled, but our companion research found that in distance-constrained districts, transport — not household cash — is the binding constraint on attendance.
 
@@ -64,16 +72,35 @@ Eng yaqin o'rta maktabdan 8 km dan uzoqroqdagi tumanlardagi tuman ta'lim mutasad
 3. Davomatni 90 kunda va o'quv yili oxirida qayta o'lchash.
 
 Ushbu tavsiyaning to'liq empirik asosi Tadqiqotlar bo'limida mavjud.`,
+    content_ru: `Районы тратят значительные средства на программы денежных выплат, призванные удержать учеников в школе. Однако наше исследование показало: в районах, где расстояние является ограничением, посещаемость сдерживает не нехватка денег у семей, а отсутствие транспорта.
+
+## Решение
+
+Министерствам образования со стабильными или сокращающимися бюджетами не нужны новые средства, чтобы применить этот вывод. Им следует перераспределить существующие выплаты на транспортные субсидии в тех районах, где главным барьером является расстояние, а не доход.
+
+## Кто должен действовать
+
+Районные отделы образования и бюджетные планировщики министерств в районах, расположенных более чем в 8 км от ближайшей средней школы. Это не универсальная мера: в городских и пригородных районах денежные выплаты остаются более сильным инструментом и не должны перенаправляться.
+
+## План реализации
+
+1. Определить районы по средней удалённости школ, используя существующие записи о зачислении.
+2. Перенаправить фиксированную долю бюджетной статьи денежных выплат на пилот транспортных субсидий.
+3. Измерить посещаемость через 90 дней и повторно в конце учебного года.
+
+Полная эмпирическая база рекомендации доступна в разделе «Исследования».`,
   },
   {
     id: 2,
     slug: "plain-language-budget-disclosure-standard",
     title: "A Plain-Language Standard for Municipal Budget Portals",
     title_uz: "Munitsipal byudjet portallari uchun oddiy til standarti",
+    title_ru: "Стандарт понятного языка для муниципальных бюджетных порталов",
     excerpt:
       "Recommending a minimum outreach requirement to accompany every open-budget transparency portal.",
     excerpt_uz:
       "Har bir ochiq byudjet shaffoflik portali uchun minimal targ'ibot talabini tavsiya qilish.",
+    excerpt_ru: "Каждый портал открытого бюджета должен сопровождаться минимальной информационной работой.",
     theme: "governance",
     cover: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
     author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
@@ -91,6 +118,11 @@ Ushbu tavsiyaning to'liq empirik asosi Tadqiqotlar bo'limida mavjud.`,
       "Har bir yangi byudjet portali oddiy tildagi choraklik xarajat xulosasi bilan birga chiqishini talab qilish.",
       "Portal bilan birga yiliga kamida ikkita targ'ibot nuqtasini — yig'ilish yoki SMS xabarnomani — moliyalashtirish.",
       "Portallarni faqat sahifa ko'rishlar emas, balki ishonch va tushunish mezonlari bo'yicha baholash.",
+    ],
+    recommendations_ru: [
+      "Требовать от каждого нового бюджетного портала квартальное резюме расходов понятным языком.",
+      "Финансировать не менее двух информационных мероприятий в год — встречу с жителями или SMS-рассылку.",
+      "Оценивать порталы по доверию и пониманию, а не только по просмотрам страниц.",
     ],
     content: `Open-budget portals are frequently procured and launched as standalone technical products. Our research found that portals alone do not move public trust — outreach does.
 
@@ -122,16 +154,33 @@ Munitsipal moliya bo'limlari va shaffoflik shartnomalariga tender e'lon qiluvchi
 1. Portal xaridi spetsifikatsiyalariga oddiy tildagi choraklik xulosa talabini qo'shish.
 2. Munitsipalitet aholisi hajmiga mos ravishda yiliga kamida ikkita targ'ibot nuqtasi uchun byudjet ajratish.
 3. Faqat portal analitikasi emas, balki qisqa aholi so'rovlari orqali ishonch va tushunishni kuzatish.`,
+    content_ru: `Порталы открытого бюджета часто запускаются как самостоятельные технические продукты. Наше исследование показало, что портал сам по себе не укрепляет доверие — это делает информационная работа.
+
+## Решение
+
+Муниципалитеты должны перестать считать бюджетный портал полной системой прозрачности и с первого дня закладывать средства на информационный компонент.
+
+## Кто должен действовать
+
+Муниципальные финансовые отделы и поставщики гражданских технологий. Документы закупки должны требовать не только технический продукт, но и понятную работу с жителями.
+
+## План реализации
+
+1. Включить в спецификации закупки требование о квартальном резюме расходов понятным языком.
+2. Ежегодно финансировать не менее двух информационных мероприятий с учётом численности населения.
+3. Отслеживать доверие и понимание через короткие опросы жителей, а не только через аналитику портала.`,
   },
   {
     id: 3,
     slug: "portable-benefits-for-informal-workers",
     title: "Portable Benefits Over Formalization Mandates",
     title_uz: "Rasmiylashtirish talablari o'rniga ko'chma imtiyozlar",
+    title_ru: "Переносимые льготы вместо обязательной формализации",
     excerpt:
       "Why labor policy should decouple social protection from formal employment status for workers under 25.",
     excerpt_uz:
       "Nega mehnat siyosati 25 yoshgacha bo'lgan ishchilar uchun ijtimoiy himoyani rasmiy bandlik maqomidan ajratishi kerak.",
+    excerpt_ru: "Почему социальную защиту работников младше 25 лет следует отделить от статуса официальной занятости.",
     theme: "economic-development",
     cover: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1200&q=80",
     author: { name: "Sardor Tashkentov", role: "Economic Policy Analyst", role_uz: "Iqtisodiy siyosat tahlilchisi" },
@@ -149,6 +198,11 @@ Munitsipal moliya bo'limlari va shaffoflik shartnomalariga tender e'lon qiluvchi
       "Ish beruvchi maqomidan qat'i nazar tibbiy sug'urta va pensiya badallarini qamrab oluvchi ko'chma imtiyozlar sxemasini sinab ko'rish.",
       "Ko'chma imtiyozlarni ish beruvchilar va sohalar bo'ylab ko'chib yuradigan ko'nikmalar sertifikati bilan birlashtirish.",
       "25 yoshgacha bo'lgan ishchilar uchun rasmiylashtirish talablarini asosiy siyosiy vosita sifatida qo'llashdan saqlanish.",
+    ],
+    recommendations_ru: [
+      "Испытать переносимую систему медицинских и пенсионных льгот независимо от статуса работодателя.",
+      "Связать льготы с сертификатом навыков, признаваемым разными работодателями и секторами.",
+      "Не использовать обязательную формализацию как главный инструмент политики для работников младше 25 лет.",
     ],
     content: `Formalization mandates continue to underperform among younger informal workers, largely because the transition costs outweigh the benefits for workers without dependents. Our research points to a more direct lever.
 
@@ -180,6 +234,21 @@ Yoshlar bandligi dasturlarining keyingi bosqichini rejalashtirayotgan mehnat vaz
 1. Rasmiy ish beruvchi ro'yxatidan o'tishni talab qilmaydigan ko'chma badal mexanizmini ishlab chiqish.
 2. Uni kamida uchta sohada tan olinadigan ko'chma ko'nikmalar sertifikati bilan birlashtirish.
 3. Keng miqyosda joriy etishdan oldin norasmiy yoshlar bandligi yuqori bo'lgan ikkita hududda sinab ko'rish.`,
+    content_ru: `Требования к формализации продолжают давать слабый результат среди молодых работников неформального сектора, главным образом потому, что издержки перехода превышают выгоды для работников без иждивенцев. Наше исследование указывает на более прямой инструмент.
+
+## Решение
+
+Вместо продолжения финансирования малоэффективных программ формализации министерствам труда следует испытать переносимые льготы — медицинские и пенсионные взносы, которые следуют за работником, а не работодателем.
+
+## Кто должен действовать
+
+Министерства труда и фонды социального страхования, планирующие следующий цикл программ занятости молодёжи.
+
+## План реализации
+
+1. Разработать механизм переносимых взносов, не требующий официальной регистрации работодателя.
+2. Связать его с сертификатом навыков, признаваемым как минимум в трёх секторах.
+3. До масштабирования испытать подход в двух регионах с высокой неформальной занятостью молодёжи.`,
   },
   {
     id: 4,
@@ -242,6 +311,23 @@ Idoraning AT xaridi mutasaddilari va huquq berish hamda imtiyoz tizimlari bo'yic
 3. Inson tekshiruvi so'rovlari uchun belgilangan javob muddatini — biz 5 ish kunini tavsiya qilamiz — o'rnatish.
 
 Bu mulkiy model ichki tuzilishini ochishni talab qilmaydi, faqat natijalarni ariza beruvchilar harakat qila oladigan ma'lumotga aylantirishni talab qiladi.`,
+    content_ru: `Автоматизированные системы всё чаще определяют доступ к государственным льготам, однако аудит девяти систем показал, что большинство не дают заявителям практических оснований для апелляции.
+
+## Решение
+
+Ведомствам следует уже сейчас принять минимальный стандарт раскрытия причин, пока новые системы не закуплены по контрактам, затрудняющим последующее добавление прозрачности.
+
+## Кто должен действовать
+
+Сотрудники, отвечающие за закупки ИТ, и юридические команды, проверяющие контракты поставщиков систем льгот.
+
+## План реализации
+
+1. Добавить требование о раскрытии причин в спецификации каждой новой автоматизированной системы.
+2. Для существующих систем обязать поставщиков добавлять понятное объяснение факторов в уведомления об отказе.
+3. Установить срок ответа на запрос о проверке человеком — мы рекомендуем пять рабочих дней.
+
+Это не требует раскрытия внутренней логики защищённой модели: необходимо лишь перевести её результаты в информацию, с которой заявитель может действовать.`,
   },
   {
     id: 5,
@@ -300,16 +386,33 @@ Qurg'oqchilikka chidamlilik infratuzilmasi moliyalashtirishning keyingi bosqichi
 1. Har bir yangi suv infratuzilmasi byudjetida taqsimot qo'mitasi moliyalashtirishini ixtiyoriy qo'shimcha emas, balki alohida modda sifatida qo'shish.
 2. Texnik foydalanish chegaralarini markazlashtirilgan holda belgilash; mahalliy qoida belgilashni shu chegaralar doirasida qo'mitaga topshirish.
 3. Erta qaytishni aniqlash uchun sarmoyadan keyin kamida uch mavsum davomida mavjudlikni har yili kuzatish.`,
+    content_ru: `Инвестиции только в инфраструктуру в засушливых районах дают результаты, которые исчезают в течение двух сухих сезонов. В нашем исследовании районы с комитетами распределения воды сохраняли улучшения в течение трёх сезонов.
+
+## Решение
+
+Водные ведомства должны перестать финансировать инфраструктуру как отдельный капитальный проект и сделать финансируемый комитет распределения обязательным компонентом каждой инвестиции.
+
+## Кто должен действовать
+
+Национальные и региональные водные ведомства, планирующие следующий этап финансирования инфраструктуры устойчивости к засухе.
+
+## План реализации
+
+1. Включать финансирование комитета распределения отдельной строкой в каждый новый бюджет водной инфраструктуры.
+2. Централизованно устанавливать технические пределы использования, а местные правила передавать комитету в рамках этих пределов.
+3. Отслеживать доступность воды ежегодно как минимум в течение трёх сезонов после инвестиций, чтобы своевременно заметить возврат к прежним практикам.`,
   },
   {
     id: 6,
     slug: "practical-assessment-digital-literacy-funding",
     title: "Fund Digital Literacy on Practical Assessment, Not Confidence",
     title_uz: "Raqamli savodxonlikni ishonch emas, amaliy baholash asosida moliyalashtirish",
+    title_ru: "Финансировать цифровую грамотность по практическим навыкам, а не по уверенности",
     excerpt:
       "Recommending a shift in curriculum evaluation metrics before the next funding cycle is approved.",
     excerpt_uz:
       "Keyingi moliyalashtirish bosqichi tasdiqlanishidan oldin o'quv dasturini baholash mezonlarini o'zgartirishni tavsiya qilish.",
+    excerpt_ru: "Изменить показатели оценки программы до утверждения следующего цикла финансирования.",
     theme: "education",
     cover: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80",
     author: { name: "Aziz Rakhimov", role: "Governance Fellow", role_uz: "Boshqaruv bo'yicha tadqiqotchi" },
@@ -358,6 +461,21 @@ O'quv dasturi moliyachilar va dasturning ikkinchi bosqichini tasdiqlash uchun ja
 1. Keyingi moliyalashtirishni yangilash uchun amaliy ko'nikmalar baholovini talab qilinadigan mezon sifatida qabul qilish.
 2. Ishonch va ko'nikma o'rtasida eng katta tafovutni ko'rsatgan texnik ko'nikma modullarini kengaytirish.
 3. Ishonch so'rovnomasini faqat ikkinchi darajali, qo'shimcha o'lchov sifatida saqlab qolish.`,
+    content_ru: `После запуска учебной программы уверенность в цифровых навыках резко выросла, но измеренная компетентность увеличилась лишь умеренно. Разрыв сосредоточен в технических заданиях, а не в оценке источников.
+
+## Решение
+
+Министерства, оценивающие следующий цикл финансирования, должны требовать в заявках на продление результаты практической оценки, а не данные опросов уверенности.
+
+## Кто должен действовать
+
+Финансирующие организации и подразделение министерства, ответственное за утверждение второго этапа программы.
+
+## План реализации
+
+1. Утвердить практическую проверку навыков обязательным показателем для следующего продления финансирования.
+2. Расширить модули технических навыков, где обнаружен наибольший разрыв между уверенностью и компетентностью.
+3. Сохранить опрос уверенности только как вторичный дополнительный показатель.`,
   },
 ]
 
