@@ -23,6 +23,7 @@ export default function About() {
         eyebrow="About Us"
         title="Research. Evidence. Be Who We Are."
         subtitle="Future Policy Lab is a youth-led policy platform that brings together rigorous research, critical analysis, and public dialogue."
+        image="/about-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-white"}`}>
