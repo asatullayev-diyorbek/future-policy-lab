@@ -76,6 +76,7 @@ export default function Contact() {
         eyebrow={t("contact.eyebrow")}
         title={t("contact.heroTitle")}
         subtitle={t("contact.heroSubtitle")}
+        image="/contact-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>

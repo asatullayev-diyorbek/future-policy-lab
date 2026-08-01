@@ -277,7 +277,7 @@ export const translations = {
       home: "Bosh sahifa",
       about: "Biz haqimizda",
       research: "Tadqiqotlar",
-      policyBriefs: "Siyosat qisqacha bayonlari",
+      policyBriefs: "Siyosat bayonlari",
       debates: "Munozaralar",
       meetings: "Uchrashuvlar",
       news: "Yangiliklar",
