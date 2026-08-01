@@ -275,11 +275,11 @@ export const translations = {
   uz: {
     nav: {
       home: "Bosh sahifa",
-      about: "Biz haqimizda",
+      about: "Haqimizda",
       research: "Tadqiqotlar",
-      policyBriefs: "Siyosat bayonlari",
+      policyBriefs: "Bayonlar",
       debates: "Munozaralar",
-      meetings: "Uchrashuvlar",
+      meetings: "Tadbirlar",
       news: "Yangiliklar",
       resources: "Resurslar",
       contact: "Aloqa",
