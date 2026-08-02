@@ -78,3 +78,21 @@ export const policyBriefsApi = createResource("policy-briefs")
 export const debatesApi = createResource("debates")
 export const meetingsNewsApi = createResource("meetings-news")
 export const resourcesApi = createResource("resources")
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result.split(",")[1])
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}
+
+export async function uploadImage(file) {
+  const dataBase64 = await fileToBase64(file)
+  const { url } = await request("/upload", {
+    method: "POST",
+    body: JSON.stringify({ filename: file.name, contentType: file.type, dataBase64 }),
+  })
+  return url
+}

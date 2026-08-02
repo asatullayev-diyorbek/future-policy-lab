@@ -4,6 +4,7 @@ import { ArrowLeft, Save } from "lucide-react"
 import { resourcesApi } from "../utils/api"
 import LangTabs from "../components/LangTabs"
 import MarkdownField, { inputCls, labelCls } from "../components/MarkdownField"
+import ImageUpload from "../components/ImageUpload"
 
 const EMPTY = {
   slug: "", kind: "tool", title: "", title_uz: "", title_ru: "",
@@ -114,9 +115,8 @@ export default function ResourceEditor() {
               <option value="reading-list">reading-list</option>
             </select>
           </div>
-          <div>
-            <label className={labelCls}>Cover image URL</label>
-            <input value={form.cover} onChange={set("cover")} className={inputCls} placeholder="https://..." />
+          <div className="sm:col-span-2">
+            <ImageUpload value={form.cover} onChange={(url) => setForm((f) => ({ ...f, cover: url }))} />
           </div>
           <div>
             <label className={labelCls}>Related research slug (optional)</label>

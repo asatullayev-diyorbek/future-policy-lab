@@ -4,6 +4,7 @@ import { ArrowLeft, Save } from "lucide-react"
 import { debatesApi } from "../utils/api"
 import LangTabs from "../components/LangTabs"
 import { inputCls, labelCls } from "../components/MarkdownField"
+import ImageUpload from "../components/ImageUpload"
 
 const THEMES = ["education", "governance", "economic-development", "technology", "sustainability"]
 
@@ -108,9 +109,8 @@ export default function DebateEditor() {
               <option value="closed">closed</option>
             </select>
           </div>
-          <div>
-            <label className={labelCls}>Cover image URL</label>
-            <input value={form.cover} onChange={set("cover")} className={inputCls} placeholder="https://..." />
+          <div className="sm:col-span-2">
+            <ImageUpload value={form.cover} onChange={(url) => setForm((f) => ({ ...f, cover: url }))} />
           </div>
           <div>
             <label className={labelCls}>Published at</label>
