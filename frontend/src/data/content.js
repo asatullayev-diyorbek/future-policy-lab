@@ -49,7 +49,7 @@ export const AVENUES = [
     title: "Meetings & News",
     title_uz: "Uchrashuvlar va yangiliklar",
     title_ru: "Встречи и новости",
-    slug: "/meetings-news",
+    slug: "/events",
     color: "text-orange-600",
     bg: "bg-orange-50",
     bgDark: "bg-orange-600/10",

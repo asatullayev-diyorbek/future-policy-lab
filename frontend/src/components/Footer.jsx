@@ -42,8 +42,8 @@ export default function Footer() {
     { to: "/research", label: t("nav.research") },
     { to: "/policy-briefs", label: t("nav.policyBriefs") },
     { to: "/debates", label: t("nav.debates") },
-    { to: "/meetings-news/events", label: t("nav.meetings") },
-    { to: "/meetings-news/news", label: t("nav.news") },
+    { to: "/events", label: t("nav.meetings") },
+    { to: "/news", label: t("nav.news") },
     { to: "/resources", label: t("nav.resources") },
   ]
 

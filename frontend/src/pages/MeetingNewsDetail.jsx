@@ -154,7 +154,7 @@ export default function MeetingNewsDetail() {
 
           <div className="absolute top-5 left-4 sm:left-8">
             <Link
-              to={isEvent ? "/meetings-news/events" : "/meetings-news/news"}
+              to={isEvent ? "/events" : "/news"}
               className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/40 backdrop-blur-sm text-white text-sm font-medium hover:bg-black/60 transition-colors border border-white/15"
             >
               <ArrowLeft size={15} /> {isEvent ? t("events.backLabel") : t("news.backLabel")}

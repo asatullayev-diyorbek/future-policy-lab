@@ -54,6 +54,7 @@ export default function Events() {
         eyebrow={t("events.eyebrow")}
         title={t("events.heroTitle")}
         subtitle={t("events.heroSubtitle")}
+        image="/meetings-news-header.png"
       />
 
       <section className={`py-16 sm:py-20 ${dark ? "bg-[#0B0F19]" : "bg-slate-50"}`}>

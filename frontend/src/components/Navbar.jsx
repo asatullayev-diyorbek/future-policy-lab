@@ -13,13 +13,13 @@ export default function Navbar() {
 
   const NAV_LINKS = [
     { to: "/", label: t("nav.home"), end: true },
-    { to: "/about", label: t("nav.about") },
     { to: "/research", label: t("nav.research") },
     { to: "/policy-briefs", label: t("nav.policyBriefs") },
     { to: "/debates", label: t("nav.debates") },
-    { to: "/meetings-news/events", label: t("nav.meetings") },
-    { to: "/meetings-news/news", label: t("nav.news") },
+    { to: "/events", label: t("nav.meetings") },
+    { to: "/news", label: t("nav.news") },
     { to: "/resources", label: t("nav.resources") },
+    { to: "/about", label: t("nav.about") },
   ]
 
   const [menuOpen, setMenuOpen] = useState(false)

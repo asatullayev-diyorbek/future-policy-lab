@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { LayoutDashboard, FlaskConical, FileText, MessageSquare, CalendarCheck, Library, LogOut } from "lucide-react"
+import { LayoutDashboard, FlaskConical, FileText, MessageSquare, CalendarCheck, Megaphone, Library, LogOut } from "lucide-react"
 import { clearToken } from "../utils/api"
 
 const NAV = [
@@ -7,7 +7,8 @@ const NAV = [
   { to: "/research", label: "Research", icon: FlaskConical, end: false },
   { to: "/policy-briefs", label: "Policy Briefs", icon: FileText, end: false },
   { to: "/debates", label: "Debates", icon: MessageSquare, end: false },
-  { to: "/meetings-news", label: "Meetings & News", icon: CalendarCheck, end: false },
+  { to: "/events", label: "Events", icon: CalendarCheck, end: false },
+  { to: "/news", label: "News", icon: Megaphone, end: false },
   { to: "/resources", label: "Resources", icon: Library, end: false },
 ]
 

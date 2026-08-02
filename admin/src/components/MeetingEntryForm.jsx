@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams, Link } from "react-router-dom"
 import { ArrowLeft, Save } from "lucide-react"
-import { meetingsNewsApi } from "../utils/api"
-import LangTabs from "../components/LangTabs"
-import MarkdownField, { inputCls, labelCls } from "../components/MarkdownField"
-import ImageUpload from "../components/ImageUpload"
+import LangTabs from "./LangTabs"
+import MarkdownField, { inputCls, labelCls } from "./MarkdownField"
+import ImageUpload from "./ImageUpload"
 
 const EMPTY = {
-  slug: "", type: "event", title: "", title_uz: "", title_ru: "",
+  slug: "", title: "", title_uz: "", title_ru: "",
   excerpt: "", excerpt_uz: "", excerpt_ru: "",
   cover: "", published_at: "", base_views: 0, tags: "",
   content: "", content_uz: "", content_ru: "",
@@ -21,7 +20,7 @@ function toDatetimeLocal(iso) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
-export default function MeetingsNewsEditor() {
+export default function MeetingEntryForm({ isEvent, api, basePath, label }) {
   const { slug: existingSlug } = useParams()
   const isEdit = Boolean(existingSlug)
   const navigate = useNavigate()
@@ -34,7 +33,7 @@ export default function MeetingsNewsEditor() {
 
   useEffect(() => {
     if (!isEdit) return
-    meetingsNewsApi.getOne(existingSlug).then(({ item }) => {
+    api.getOne(existingSlug).then(({ item }) => {
       if (!item) { setError("Entry not found"); setLoading(false); return }
       setForm({
         ...EMPTY,
@@ -49,7 +48,6 @@ export default function MeetingsNewsEditor() {
   }, [existingSlug])
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }))
-  const isEvent = form.type === "event"
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -72,11 +70,11 @@ export default function MeetingsNewsEditor() {
         base_attendees: isEvent ? Number(form.base_attendees) || 0 : null,
       }
       if (isEdit) {
-        await meetingsNewsApi.update(existingSlug, payload)
+        await api.update(existingSlug, payload)
       } else {
-        await meetingsNewsApi.create(payload)
+        await api.create(payload)
       }
-      navigate("/meetings-news")
+      navigate(basePath)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -88,11 +86,11 @@ export default function MeetingsNewsEditor() {
 
   return (
     <div className="max-w-4xl">
-      <Link to="/meetings-news" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white mb-6 transition-colors">
+      <Link to={basePath} className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white mb-6 transition-colors">
         <ArrowLeft size={14} /> Back to list
       </Link>
 
-      <h1 className="font-bold text-white text-xl mb-6">{isEdit ? `Edit: ${existingSlug}` : "New meeting/news entry"}</h1>
+      <h1 className="font-bold text-white text-xl mb-6">{isEdit ? `Edit: ${existingSlug}` : `New ${label.toLowerCase()}`}</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -101,18 +99,11 @@ export default function MeetingsNewsEditor() {
             <input value={form.slug} onChange={set("slug")} disabled={isEdit} className={`${inputCls} disabled:opacity-50`} />
           </div>
           <div>
-            <label className={labelCls}>Type</label>
-            <select value={form.type} onChange={set("type")} className={inputCls}>
-              <option value="event">event</option>
-              <option value="news">news</option>
-            </select>
+            <label className={labelCls}>Published at</label>
+            <input type="datetime-local" value={form.published_at} onChange={set("published_at")} className={inputCls} />
           </div>
           <div className="sm:col-span-2">
             <ImageUpload value={form.cover} onChange={(url) => setForm((f) => ({ ...f, cover: url }))} />
-          </div>
-          <div>
-            <label className={labelCls}>Published at</label>
-            <input type="datetime-local" value={form.published_at} onChange={set("published_at")} className={inputCls} />
           </div>
           <div className="sm:col-span-2">
             <label className={labelCls}>Tags (comma-separated)</label>

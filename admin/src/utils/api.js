@@ -79,6 +79,21 @@ export const debatesApi = createResource("debates")
 export const meetingsNewsApi = createResource("meetings-news")
 export const resourcesApi = createResource("resources")
 
+// Events and News are independent sections in the UI, but share the same
+// meetings_news table on the backend, discriminated by a fixed `type`.
+function scopedMeetingsNewsApi(fixedType) {
+  return {
+    getAll: () => request(`/content/meetings-news?type=${fixedType}`),
+    getOne: meetingsNewsApi.getOne,
+    create: (data) => meetingsNewsApi.create({ ...data, type: fixedType }),
+    update: (slug, data) => meetingsNewsApi.update(slug, { ...data, type: fixedType }),
+    remove: meetingsNewsApi.remove,
+  }
+}
+
+export const eventsApi = scopedMeetingsNewsApi("event")
+export const newsApi = scopedMeetingsNewsApi("news")
+
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()

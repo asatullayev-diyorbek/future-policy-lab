@@ -10,8 +10,10 @@ import PolicyBriefList from "./pages/PolicyBriefList"
 import PolicyBriefEditor from "./pages/PolicyBriefEditor"
 import DebateList from "./pages/DebateList"
 import DebateEditor from "./pages/DebateEditor"
-import MeetingsNewsList from "./pages/MeetingsNewsList"
-import MeetingsNewsEditor from "./pages/MeetingsNewsEditor"
+import EventList from "./pages/EventList"
+import EventEditor from "./pages/EventEditor"
+import NewsList from "./pages/NewsList"
+import NewsEditor from "./pages/NewsEditor"
 import ResourceList from "./pages/ResourceList"
 import ResourceEditor from "./pages/ResourceEditor"
 
@@ -49,10 +51,15 @@ export default function App() {
           <Route path="/debates/:slug/edit" element={<DebateEditor />} />
           <Route path="/debates/:slug/comments" element={<ContentComments contentType="debate" backPath="/debates" />} />
 
-          <Route path="/meetings-news" element={<MeetingsNewsList />} />
-          <Route path="/meetings-news/new" element={<MeetingsNewsEditor />} />
-          <Route path="/meetings-news/:slug/edit" element={<MeetingsNewsEditor />} />
-          <Route path="/meetings-news/:slug/comments" element={<ContentComments contentType="meeting-news" backPath="/meetings-news" />} />
+          <Route path="/events" element={<EventList />} />
+          <Route path="/events/new" element={<EventEditor />} />
+          <Route path="/events/:slug/edit" element={<EventEditor />} />
+          <Route path="/events/:slug/comments" element={<ContentComments contentType="meeting-news" backPath="/events" />} />
+
+          <Route path="/news" element={<NewsList />} />
+          <Route path="/news/new" element={<NewsEditor />} />
+          <Route path="/news/:slug/edit" element={<NewsEditor />} />
+          <Route path="/news/:slug/comments" element={<ContentComments contentType="meeting-news" backPath="/news" />} />
 
           <Route path="/resources" element={<ResourceList />} />
           <Route path="/resources/new" element={<ResourceEditor />} />

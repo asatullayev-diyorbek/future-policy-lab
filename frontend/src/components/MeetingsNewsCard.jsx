@@ -20,7 +20,7 @@ export default function MeetingsNewsCard({ item }) {
 
   return (
     <Link
-      to={`/meetings-news/${item.slug}`}
+      to={`/${isEvent ? "events" : "news"}/${item.slug}`}
       className={`group flex flex-col h-full rounded-2xl border overflow-hidden transition-all duration-200 ${
         dark
           ? "border-white/8 bg-white/3 hover:bg-white/5 hover:border-white/15"

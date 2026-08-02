@@ -26,7 +26,7 @@ export default function Contact() {
     { value: t("contact.topicResearch"), to: "/research", icon: FlaskConical, color: "text-blue-600", bg: "bg-blue-50", bgDark: "bg-blue-600/12" },
     { value: t("contact.topicBrief"), to: "/policy-briefs", icon: FileText, color: "text-emerald-600", bg: "bg-emerald-50", bgDark: "bg-emerald-600/12" },
     { value: t("contact.topicDebate"), to: "/debates", icon: MessageCircle, color: "text-violet-600", bg: "bg-violet-50", bgDark: "bg-violet-600/12" },
-    { value: t("contact.topicEvent"), to: "/meetings-news", icon: CalendarDays, color: "text-orange-600", bg: "bg-orange-50", bgDark: "bg-orange-600/12" },
+    { value: t("contact.topicEvent"), to: "/events", icon: CalendarDays, color: "text-orange-600", bg: "bg-orange-50", bgDark: "bg-orange-600/12" },
     { value: t("contact.topicResource"), to: "/resources", icon: Library, color: "text-pink-600", bg: "bg-pink-50", bgDark: "bg-pink-600/12" },
   ]
 

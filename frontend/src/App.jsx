@@ -11,7 +11,6 @@ const PolicyBriefs = lazy(() => import("./pages/PolicyBriefs"))
 const PolicyBriefDetail = lazy(() => import("./pages/PolicyBriefDetail"))
 const Debates = lazy(() => import("./pages/Debates"))
 const DebateDetail = lazy(() => import("./pages/DebateDetail"))
-const MeetingsNews = lazy(() => import("./pages/MeetingsNews"))
 const Events = lazy(() => import("./pages/Events"))
 const News = lazy(() => import("./pages/News"))
 const MeetingNewsDetail = lazy(() => import("./pages/MeetingNewsDetail"))
@@ -40,10 +39,10 @@ export default function App() {
             <Route path="/policy-briefs/:slug" element={<PolicyBriefDetail />} />
             <Route path="/debates" element={<Debates />} />
             <Route path="/debates/:slug" element={<DebateDetail />} />
-            <Route path="/meetings-news" element={<MeetingsNews />} />
-            <Route path="/meetings-news/events" element={<Events />} />
-            <Route path="/meetings-news/news" element={<News />} />
-            <Route path="/meetings-news/:slug" element={<MeetingNewsDetail />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/:slug" element={<MeetingNewsDetail />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/:slug" element={<MeetingNewsDetail />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/:slug" element={<ResourceDetail />} />
             <Route path="/contact" element={<Contact />} />

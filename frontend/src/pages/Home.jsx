@@ -389,7 +389,7 @@ export default function Home() {
                 {t("home.meetNewsDesc")}
               </p>
               <Link
-                to="/meetings-news"
+                to="/events"
                 className={`inline-flex items-center gap-1.5 text-sm font-semibold ${dark ? "text-blue-400" : "text-blue-700"}`}
               >
                 {t("home.seeWhatsHappening")} <ArrowRight size={14} />
