@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { useThemeStore } from "../store/theme"
-import { policyBriefs, BRIEF_THEMES } from "../data/policyBriefs"
+import { BRIEF_THEMES } from "../data/policyBriefs"
+import { getAllPolicyBriefs } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import PolicyBriefCard from "../components/PolicyBriefCard"
 import { useTranslation } from "../i18n/useTranslation"
@@ -19,11 +20,16 @@ export default function PolicyBriefs() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
   const [activeTheme, setActiveTheme] = useState("all")
+  const [policyBriefs, setPolicyBriefs] = useState([])
+
+  useEffect(() => {
+    getAllPolicyBriefs().then(setPolicyBriefs)
+  }, [])
 
   const filtered = useMemo(() => {
     if (activeTheme === "all") return policyBriefs
     return policyBriefs.filter((b) => b.theme === activeTheme)
-  }, [activeTheme])
+  }, [activeTheme, policyBriefs])
 
   const filterCls = (active) =>
     `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${

@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { useThemeStore } from "../store/theme"
-import { meetingsNews } from "../data/meetingsNews"
+import { getAllMeetingsNews } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
 import { useTranslation } from "../i18n/useTranslation"
@@ -18,12 +18,17 @@ export default function Events() {
   const dark = theme === "dark"
   const { t } = useTranslation()
   const [activeFilter, setActiveFilter] = useState("upcoming")
+  const [meetingsNews, setMeetingsNews] = useState([])
+
+  useEffect(() => {
+    getAllMeetingsNews().then(setMeetingsNews)
+  }, [])
 
   const events = useMemo(() => {
     return meetingsNews
       .filter((m) => m.type === "event")
       .sort((a, b) => new Date(a.date) - new Date(b.date))
-  }, [])
+  }, [meetingsNews])
 
   const now = new Date()
   const filtered = activeFilter === "upcoming"

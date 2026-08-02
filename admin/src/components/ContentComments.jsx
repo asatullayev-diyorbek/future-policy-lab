@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import { ArrowLeft, Trash2 } from "lucide-react"
 import { getComments, deleteComment } from "../utils/api"
 
-export default function ResearchComments() {
+export default function ContentComments({ contentType, backPath }) {
   const { slug } = useParams()
   const [comments, setComments] = useState([])
   const [loading, setLoading] = useState(true)
@@ -14,7 +14,7 @@ export default function ResearchComments() {
     setLoading(true)
     setError("")
     try {
-      setComments(await getComments("research", slug))
+      setComments(await getComments(contentType, slug))
     } catch (err) {
       setError(err.message)
     } finally {
@@ -39,7 +39,7 @@ export default function ResearchComments() {
 
   return (
     <div className="max-w-3xl">
-      <Link to="/research" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white mb-6 transition-colors">
+      <Link to={backPath} className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-white mb-6 transition-colors">
         <ArrowLeft size={14} /> Back to list
       </Link>
 
@@ -60,6 +60,7 @@ export default function ResearchComments() {
                   <span className="text-[11px] text-slate-500">
                     {new Date(c.created_at).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })}
                   </span>
+                  {c.stance && <span className="text-[11px] px-1.5 py-0.5 rounded bg-white/5 text-slate-400">{c.stance}</span>}
                 </div>
                 <p className="text-sm text-slate-300 whitespace-pre-wrap">{c.content}</p>
               </div>

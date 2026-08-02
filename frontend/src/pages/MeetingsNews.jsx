@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { CalendarCheck, Megaphone, ArrowRight, MapPin, Calendar } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { meetingsNews } from "../data/meetingsNews"
+import { getAllMeetingsNews } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import { useTranslation } from "../i18n/useTranslation"
 import { L, localeFor } from "../i18n/localize"
@@ -19,6 +20,11 @@ export default function MeetingsNews() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
   const locale = localeFor(lang)
+  const [meetingsNews, setMeetingsNews] = useState([])
+
+  useEffect(() => {
+    getAllMeetingsNews().then(setMeetingsNews)
+  }, [])
 
   const events = meetingsNews
     .filter((m) => m.type === "event")

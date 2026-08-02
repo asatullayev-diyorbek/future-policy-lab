@@ -6,8 +6,9 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Eye, Clock, ArrowLeft, Calendar, MessageCircle, Send, Tag, Check, ListChecks, ArrowRight, FlaskConical } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { getBriefBySlug, getRelatedBriefs, BRIEF_THEMES } from "../data/policyBriefs"
+import { BRIEF_THEMES } from "../data/policyBriefs"
 import { getResearchBySlug } from "../utils/researchApi"
+import { getPolicyBriefBySlug } from "../utils/contentApi"
 import { recordView, getComments, addComment } from "../utils/engagement"
 import PolicyBriefCard from "../components/PolicyBriefCard"
 import NotFound from "./NotFound"
@@ -21,8 +22,10 @@ export default function PolicyBriefDetail() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
 
-  const brief = getBriefBySlug(slug)
-  const [views, setViews] = useState(brief?.base_views ?? 0)
+  const [brief, setBrief] = useState(null)
+  const [related, setRelated] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [views, setViews] = useState(0)
   const [comments, setComments] = useState([])
   const [form, setForm] = useState({ name: "", content: "" })
   const [submitted, setSubmitted] = useState(false)
@@ -30,23 +33,34 @@ export default function PolicyBriefDetail() {
   const [relatedResearch, setRelatedResearch] = useState(null)
 
   useEffect(() => {
-    if (!brief) return
-    recordView("policy-brief", brief.slug, brief.base_views).then(setViews)
-    getComments("policy-brief", brief.slug).then(setComments)
-    setSubmitted(false)
-    window.scrollTo(0, 0)
-    if (brief.related_research_slug) {
-      getResearchBySlug(brief.related_research_slug).then(({ article }) => setRelatedResearch(article))
-    } else {
-      setRelatedResearch(null)
-    }
-  }, [brief])
+    let cancelled = false
+    setLoading(true)
+    getPolicyBriefBySlug(slug).then(({ brief: b, related: r }) => {
+      if (cancelled) return
+      setBrief(b)
+      setRelated(r)
+      setViews(b?.base_views ?? 0)
+      setLoading(false)
+      setSubmitted(false)
+      window.scrollTo(0, 0)
+      if (b) {
+        recordView("policy-brief", b.slug, b.base_views).then(setViews)
+        getComments("policy-brief", b.slug).then(setComments)
+        if (b.related_research_slug) {
+          getResearchBySlug(b.related_research_slug).then(({ article }) => setRelatedResearch(article))
+        } else {
+          setRelatedResearch(null)
+        }
+      }
+    })
+    return () => { cancelled = true }
+  }, [slug])
 
+  if (loading) return null
   if (!brief) return <NotFound />
 
   const bt = BRIEF_THEMES.find((b) => b.id === brief.theme)
   const themeName = bt ? L(bt, "name", lang) : brief.theme
-  const related = getRelatedBriefs(brief)
 
   const locale = localeFor(lang)
   const formattedDate = new Date(brief.published_at).toLocaleDateString(locale, {

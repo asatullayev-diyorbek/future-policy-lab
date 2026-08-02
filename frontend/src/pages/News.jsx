@@ -1,8 +1,8 @@
-import { useMemo } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { useThemeStore } from "../store/theme"
-import { meetingsNews } from "../data/meetingsNews"
+import { getAllMeetingsNews } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
 import { useTranslation } from "../i18n/useTranslation"
@@ -18,11 +18,17 @@ export default function News() {
   const dark = theme === "dark"
   const { t } = useTranslation()
 
+  const [meetingsNews, setMeetingsNews] = useState([])
+
+  useEffect(() => {
+    getAllMeetingsNews().then(setMeetingsNews)
+  }, [])
+
   const news = useMemo(() => {
     return meetingsNews
       .filter((m) => m.type === "news")
       .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
-  }, [])
+  }, [meetingsNews])
 
   return (
     <>

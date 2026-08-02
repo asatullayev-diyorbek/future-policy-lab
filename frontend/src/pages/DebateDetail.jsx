@@ -4,7 +4,8 @@ import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { Eye, Users, ArrowLeft, Calendar, MessageCircle, Send, Check, ThumbsUp, ThumbsDown, HelpCircle, Scale } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { getDebateBySlug, getRelatedDebates, DEBATE_THEMES } from "../data/debates"
+import { DEBATE_THEMES } from "../data/debates"
+import { getDebateBySlug } from "../utils/contentApi"
 import { recordView, getComments, addComment } from "../utils/engagement"
 import DebateCard from "../components/DebateCard"
 import NotFound from "./NotFound"
@@ -45,26 +46,39 @@ export default function DebateDetail() {
     { id: "undecided", label: t("debates.undecided"), icon: HelpCircle, color: "slate" },
   ]
 
-  const debate = getDebateBySlug(slug)
-  const [views, setViews] = useState(debate?.base_views ?? 0)
+  const [debate, setDebate] = useState(null)
+  const [related, setRelated] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [views, setViews] = useState(0)
   const [comments, setComments] = useState([])
   const [form, setForm] = useState({ name: "", content: "", stance: "undecided" })
   const [submitted, setSubmitted] = useState(false)
   const [formError, setFormError] = useState("")
 
   useEffect(() => {
-    if (!debate) return
-    recordView("debate", debate.slug, debate.base_views).then(setViews)
-    getComments("debate", debate.slug).then(setComments)
-    setSubmitted(false)
-    window.scrollTo(0, 0)
-  }, [debate])
+    let cancelled = false
+    setLoading(true)
+    getDebateBySlug(slug).then(({ debate: d, related: r }) => {
+      if (cancelled) return
+      setDebate(d)
+      setRelated(r)
+      setViews(d?.base_views ?? 0)
+      setLoading(false)
+      setSubmitted(false)
+      window.scrollTo(0, 0)
+      if (d) {
+        recordView("debate", d.slug, d.base_views).then(setViews)
+        getComments("debate", d.slug).then(setComments)
+      }
+    })
+    return () => { cancelled = true }
+  }, [slug])
 
+  if (loading) return null
   if (!debate) return <NotFound />
 
   const dt = DEBATE_THEMES.find((d) => d.id === debate.theme)
   const themeName = dt ? L(dt, "name", lang) : debate.theme
-  const related = getRelatedDebates(debate)
 
   const locale = localeFor(lang)
   const formattedDate = new Date(debate.published_at).toLocaleDateString(locale, {

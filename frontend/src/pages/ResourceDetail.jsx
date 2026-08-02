@@ -9,8 +9,9 @@ import {
   Wrench, Database, BookMarked, Download, FlaskConical, ArrowRight,
 } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { getResourceBySlug, getRelatedResources, RESOURCE_KINDS } from "../data/resources"
+import { RESOURCE_KINDS } from "../data/resources"
 import { getResearchBySlug } from "../utils/researchApi"
+import { getResourceBySlug } from "../utils/contentApi"
 import { recordView, getComments, addComment } from "../utils/engagement"
 import ResourceCard from "../components/ResourceCard"
 import NotFound from "./NotFound"
@@ -30,8 +31,10 @@ export default function ResourceDetail() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
 
-  const resource = getResourceBySlug(slug)
-  const [views, setViews] = useState(resource?.base_views ?? 0)
+  const [resource, setResource] = useState(null)
+  const [related, setRelated] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [views, setViews] = useState(0)
   const [comments, setComments] = useState([])
   const [form, setForm] = useState({ name: "", content: "" })
   const [submitted, setSubmitted] = useState(false)
@@ -39,24 +42,35 @@ export default function ResourceDetail() {
   const [relatedResearch, setRelatedResearch] = useState(null)
 
   useEffect(() => {
-    if (!resource) return
-    recordView("resource", resource.slug, resource.base_views).then(setViews)
-    getComments("resource", resource.slug).then(setComments)
-    setSubmitted(false)
-    window.scrollTo(0, 0)
-    if (resource.related_research_slug) {
-      getResearchBySlug(resource.related_research_slug).then(({ article }) => setRelatedResearch(article))
-    } else {
-      setRelatedResearch(null)
-    }
-  }, [resource])
+    let cancelled = false
+    setLoading(true)
+    getResourceBySlug(slug).then(({ resource: res, related: r }) => {
+      if (cancelled) return
+      setResource(res)
+      setRelated(r)
+      setViews(res?.base_views ?? 0)
+      setLoading(false)
+      setSubmitted(false)
+      window.scrollTo(0, 0)
+      if (res) {
+        recordView("resource", res.slug, res.base_views).then(setViews)
+        getComments("resource", res.slug).then(setComments)
+        if (res.related_research_slug) {
+          getResearchBySlug(res.related_research_slug).then(({ article }) => setRelatedResearch(article))
+        } else {
+          setRelatedResearch(null)
+        }
+      }
+    })
+    return () => { cancelled = true }
+  }, [slug])
 
+  if (loading) return null
   if (!resource) return <NotFound />
 
   const kindMeta = KIND_META[resource.kind]
   const rk = RESOURCE_KINDS.find((k) => k.id === resource.kind)
   const kindName = rk ? L(rk, "name", lang) : resource.kind
-  const related = getRelatedResources(resource)
 
   const locale = localeFor(lang)
   const formattedDate = new Date(resource.published_at).toLocaleDateString(locale, {

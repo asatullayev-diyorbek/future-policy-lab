@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { Wrench, Database, BookMarked, ArrowRight } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { resources, RESOURCE_KINDS } from "../data/resources"
+import { RESOURCE_KINDS } from "../data/resources"
+import { getAllResources } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import ResourceCard from "../components/ResourceCard"
 import { useTranslation } from "../i18n/useTranslation"
@@ -27,11 +28,16 @@ export default function Resources() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
   const [activeKind, setActiveKind] = useState("all")
+  const [resources, setResources] = useState([])
+
+  useEffect(() => {
+    getAllResources().then(setResources)
+  }, [])
 
   const filtered = useMemo(() => {
     if (activeKind === "all") return resources
     return resources.filter((r) => r.kind === activeKind)
-  }, [activeKind])
+  }, [activeKind, resources])
 
   const grouped = useMemo(() => {
     if (activeKind !== "all") return null
@@ -39,7 +45,7 @@ export default function Resources() {
       kind: k,
       items: resources.filter((r) => r.kind === k.id),
     })).filter((g) => g.items.length > 0)
-  }, [activeKind])
+  }, [activeKind, resources])
 
   const filterCls = (active) =>
     `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${

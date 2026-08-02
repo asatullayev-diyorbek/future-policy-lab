@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Navigate } from "react-router-dom"
 import { Lock } from "lucide-react"
 import { login, getToken } from "../utils/api"
 
@@ -11,8 +11,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
 
   if (getToken()) {
-    navigate("/", { replace: true })
-    return null
+    return <Navigate to="/" replace />
   }
 
   const handleSubmit = async (e) => {

@@ -121,7 +121,7 @@ export async function subscribeNewsletter(email) {
 
 export async function getSiteEngagementStats() {
   try {
-    return await apiFetch("/stats")
+    return await apiFetch("/admin?stats=1")
   } catch {
     return { viewsDelta: 0, comments: 0 }
   }

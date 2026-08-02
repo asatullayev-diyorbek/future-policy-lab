@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Eye, ArrowLeft, Calendar, Clock, MapPin, Users, MessageCircle, Send, Tag, Check, CalendarCheck, Megaphone, X } from "lucide-react"
 import { useThemeStore } from "../store/theme"
-import { getMeetingsNewsBySlug, getRelatedMeetingsNews } from "../data/meetingsNews"
+import { getMeetingsNewsBySlug } from "../utils/contentApi"
 import { recordView, getComments, addComment, isAttending, getRSVP, submitRSVP, cancelRSVP, getAttendeeCount } from "../utils/engagement"
 import MeetingsNewsCard from "../components/MeetingsNewsCard"
 import RSVPModal from "../components/RSVPModal"
@@ -21,14 +21,16 @@ export default function MeetingNewsDetail() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
 
-  const item = getMeetingsNewsBySlug(slug)
+  const [item, setItem] = useState(null)
+  const [related, setRelated] = useState([])
+  const [loading, setLoading] = useState(true)
   const isEvent = item?.type === "event"
 
-  const [views, setViews] = useState(item?.base_views ?? 0)
+  const [views, setViews] = useState(0)
   const [comments, setComments] = useState([])
   const [attending, setAttending] = useState(false)
   const [rsvp, setRsvp] = useState(null)
-  const [attendeeCount, setAttendeeCount] = useState(item?.base_attendees ?? 0)
+  const [attendeeCount, setAttendeeCount] = useState(0)
   const [rsvpModalOpen, setRsvpModalOpen] = useState(false)
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false)
   const [form, setForm] = useState({ name: "", content: "" })
@@ -36,21 +38,33 @@ export default function MeetingNewsDetail() {
   const [formError, setFormError] = useState("")
 
   useEffect(() => {
-    if (!item) return
-    recordView("meeting-news", item.slug, item.base_views).then(setViews)
-    getComments("meeting-news", item.slug).then(setComments)
-    setSubmitted(false)
-    if (isEvent) {
-      setAttending(isAttending(item.slug))
-      setRsvp(getRSVP(item.slug))
-      getAttendeeCount(item.slug, item.base_attendees).then(setAttendeeCount)
-    }
-    window.scrollTo(0, 0)
-  }, [item, isEvent])
+    let cancelled = false
+    setLoading(true)
+    getMeetingsNewsBySlug(slug).then(({ item: it, related: r }) => {
+      if (cancelled) return
+      setItem(it)
+      setRelated(r)
+      setViews(it?.base_views ?? 0)
+      setAttendeeCount(it?.base_attendees ?? 0)
+      setLoading(false)
+      setSubmitted(false)
+      window.scrollTo(0, 0)
+      if (it) {
+        recordView("meeting-news", it.slug, it.base_views).then(setViews)
+        getComments("meeting-news", it.slug).then(setComments)
+        if (it.type === "event") {
+          setAttending(isAttending(it.slug))
+          setRsvp(getRSVP(it.slug))
+          getAttendeeCount(it.slug, it.base_attendees).then(setAttendeeCount)
+        }
+      }
+    })
+    return () => { cancelled = true }
+  }, [slug])
 
+  if (loading) return null
   if (!item) return <NotFound />
 
-  const related = getRelatedMeetingsNews(item)
   const isPast = isEvent && new Date(item.date) < new Date()
 
   const locale = localeFor(lang)

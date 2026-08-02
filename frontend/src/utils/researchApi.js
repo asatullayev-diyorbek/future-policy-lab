@@ -19,7 +19,7 @@ function normalizeArticle(a) {
 
 export async function getAllResearch() {
   try {
-    const rows = await apiFetch("/research")
+    const rows = await apiFetch("/content/research")
     return rows.map(normalizeArticle)
   } catch {
     return []
@@ -28,7 +28,7 @@ export async function getAllResearch() {
 
 export async function getResearchBySlug(slug) {
   try {
-    const { article, related } = await apiFetch(`/research/${encodeURIComponent(slug)}`)
+    const { article, related } = await apiFetch(`/content/research/${encodeURIComponent(slug)}`)
     return { article: normalizeArticle(article), related: (related ?? []).map(normalizeArticle) }
   } catch {
     return { article: null, related: [] }

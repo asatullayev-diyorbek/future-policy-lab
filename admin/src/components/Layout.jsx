@@ -1,10 +1,14 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { LayoutDashboard, FlaskConical, LogOut } from "lucide-react"
+import { LayoutDashboard, FlaskConical, FileText, MessageSquare, CalendarCheck, Library, LogOut } from "lucide-react"
 import { clearToken } from "../utils/api"
 
 const NAV = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/research", label: "Research", icon: FlaskConical, end: false },
+  { to: "/policy-briefs", label: "Policy Briefs", icon: FileText, end: false },
+  { to: "/debates", label: "Debates", icon: MessageSquare, end: false },
+  { to: "/meetings-news", label: "Meetings & News", icon: CalendarCheck, end: false },
+  { to: "/resources", label: "Resources", icon: Library, end: false },
 ]
 
 export default function Layout() {

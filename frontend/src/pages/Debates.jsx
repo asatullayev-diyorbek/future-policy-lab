@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { motion } from "framer-motion"
 import { useThemeStore } from "../store/theme"
-import { debates, DEBATE_THEMES } from "../data/debates"
+import { DEBATE_THEMES } from "../data/debates"
+import { getAllDebates } from "../utils/contentApi"
 import PageHero from "../components/PageHero"
 import DebateCard from "../components/DebateCard"
 import { useTranslation } from "../i18n/useTranslation"
@@ -19,11 +20,16 @@ export default function Debates() {
   const dark = theme === "dark"
   const { t, lang } = useTranslation()
   const [activeTheme, setActiveTheme] = useState("all")
+  const [debates, setDebates] = useState([])
+
+  useEffect(() => {
+    getAllDebates().then(setDebates)
+  }, [])
 
   const filtered = useMemo(() => {
     if (activeTheme === "all") return debates
     return debates.filter((d) => d.theme === activeTheme)
-  }, [activeTheme])
+  }, [activeTheme, debates])
 
   const filterCls = (active) =>
     `px-3.5 py-1.5 rounded-full text-[13px] font-semibold border transition-all duration-150 ${

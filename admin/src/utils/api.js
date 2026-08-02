@@ -38,7 +38,7 @@ async function request(path, options = {}) {
 }
 
 export async function login(username, password) {
-  const res = await fetch(`${API_BASE}/auth/login`, {
+  const res = await fetch(`${API_BASE}/admin`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -54,11 +54,27 @@ export async function login(username, password) {
 
 export const getDashboard = () => request("/admin")
 
-export const getAllResearch = () => request("/research")
-export const getResearch = (slug) => request(`/research/${encodeURIComponent(slug)}`)
-export const createResearch = (data) => request("/research", { method: "POST", body: JSON.stringify(data) })
-export const updateResearch = (slug, data) => request(`/research/${encodeURIComponent(slug)}`, { method: "PUT", body: JSON.stringify(data) })
-export const deleteResearch = (slug) => request(`/research/${encodeURIComponent(slug)}`, { method: "DELETE" })
+function createResource(type) {
+  return {
+    getAll: () => request(`/content/${type}`),
+    getOne: (slug) => request(`/content/${type}/${encodeURIComponent(slug)}`),
+    create: (data) => request(`/content/${type}`, { method: "POST", body: JSON.stringify(data) }),
+    update: (slug, data) => request(`/content/${type}/${encodeURIComponent(slug)}`, { method: "PUT", body: JSON.stringify(data) }),
+    remove: (slug) => request(`/content/${type}/${encodeURIComponent(slug)}`, { method: "DELETE" }),
+  }
+}
+
+const researchApi = createResource("research")
+export const getAllResearch = researchApi.getAll
+export const getResearch = researchApi.getOne
+export const createResearch = researchApi.create
+export const updateResearch = researchApi.update
+export const deleteResearch = researchApi.remove
 
 export const getComments = (type, slug) => request(`/comments?type=${type}&slug=${encodeURIComponent(slug)}`)
 export const deleteComment = (id) => request(`/comments/${id}`, { method: "DELETE" })
+
+export const policyBriefsApi = createResource("policy-briefs")
+export const debatesApi = createResource("debates")
+export const meetingsNewsApi = createResource("meetings-news")
+export const resourcesApi = createResource("resources")
